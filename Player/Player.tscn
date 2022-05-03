@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Player/PlayerPawn.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+height = 12.0
+
+[node name="Player" type="KinematicBody2D" groups=["Net", "Player"]]
+script = ExtResource( 2 )
+
+[node name="oval" type="TextureRect" parent="."]
+margin_left = -32.0
+margin_top = -20.0
+margin_right = 32.0
+margin_bottom = 44.0
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -18 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Network_tick_rate" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, -5 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -5 )
+shape = SubResource( 1 )
+
+[connection signal="timeout" from="Network_tick_rate" to="." method="_on_Network_tick_rate_timeout"]

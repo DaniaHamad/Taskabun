@@ -1,0 +1,455 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Assets/tile.png" type="Texture" id=1]
+[ext_resource path="res://Game/Task.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Background/TaskEasyGreen.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Background/TaskMediumYellow.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Background/TaskHardRed.png" type="Texture" id=5]
+[ext_resource path="res://Game/GameScenesAssets/Snakebosslogo.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Game/Game.gd" type="Script" id=7]
+[ext_resource path="res://Game/GameScenesAssets/Tree-1-4.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Game/GameScenesAssets/Bench.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Game/GameScenesAssets/Bin.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Game/PopUpMessages/DiceAllPlayers.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Snakes/BlackWhiteSnake.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Assets/Background/tilefiller.png" type="Texture" id=13]
+[ext_resource path="res://Snakes/BlueSnake.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Snakes/SkeletonSnake.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Snakes/TwinSnake.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Snakes/PinkWhiteSnake.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Snakes/GreenSnake.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Game/PopUpMessages/YourTurn.tscn" type="PackedScene" id=19]
+
+[sub_resource type="TileSet" id=1]
+0/name = "tile.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "tile.png 1"
+1/texture = ExtResource( 1 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 0, 64, 64 )
+1/tile_mode = 1
+1/autotile/bitmask_mode = 0
+1/autotile/bitmask_flags = [  ]
+1/autotile/icon_coordinate = Vector2( 0, 0 )
+1/autotile/tile_size = Vector2( 32, 32 )
+1/autotile/spacing = 0
+1/autotile/occluder_map = [  ]
+1/autotile/navpoly_map = [  ]
+1/autotile/priority_map = [  ]
+1/autotile/z_index_map = [  ]
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "tilefiller.png 2"
+2/texture = ExtResource( 13 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 0, 0, 64, 64 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+3/name = "tilefiller.png 3"
+3/texture = ExtResource( 13 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 32, 0, 32, 32 )
+3/tile_mode = 0
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
+
+[node name="Game" type="Node2D"]
+z_index = -1
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_horizontal_guides_": [ -704.0 ],
+"_edit_vertical_guides_": [ 640.0 ]
+}
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+format = 1
+tile_data = PoolIntArray( -720896, 2, 0, -720895, 2, 0, -720894, 2, 0, -720893, 2, 0, -720892, 2, 0, -720891, 2, 0, -720890, 2, 0, -720889, 2, 0, -720888, 2, 0, -720887, 2, 0, -655360, 0, 0, -655359, 0, 0, -655358, 0, 0, -655357, 0, 0, -655356, 0, 0, -655355, 0, 0, -655354, 0, 0, -655353, 0, 0, -655352, 0, 0, -655351, 0, 0, -589824, 0, 0, -589823, 0, 0, -589822, 0, 0, -589821, 0, 0, -589820, 0, 0, -589819, 0, 0, -589818, 0, 0, -589817, 0, 0, -589816, 0, 0, -589815, 0, 0, -524288, 0, 0, -524287, 0, 0, -524286, 0, 0, -524285, 0, 0, -524284, 0, 0, -524283, 0, 0, -524282, 0, 0, -524281, 0, 0, -524280, 0, 0, -524279, 0, 0, -458752, 0, 0, -458751, 0, 0, -458750, 0, 0, -458749, 0, 0, -458748, 0, 0, -458747, 0, 0, -458746, 0, 0, -458745, 0, 0, -458744, 0, 0, -458743, 0, 0, -393216, 0, 0, -393215, 0, 0, -393214, 0, 0, -393213, 0, 0, -393212, 0, 0, -393211, 0, 0, -393210, 0, 0, -393209, 0, 0, -393208, 0, 0, -393207, 0, 0, -327680, 0, 0, -327679, 0, 0, -327678, 0, 0, -327677, 0, 0, -327676, 0, 0, -327675, 0, 0, -327674, 0, 0, -327673, 0, 0, -327672, 0, 0, -327671, 0, 0, -262144, 0, 0, -262143, 0, 0, -262142, 0, 0, -262141, 0, 0, -262140, 0, 0, -262139, 0, 0, -262138, 0, 0, -262137, 0, 0, -262136, 0, 0, -262135, 0, 0, -196608, 0, 0, -196607, 0, 0, -196606, 0, 0, -196605, 0, 0, -196604, 0, 0, -196603, 0, 0, -196602, 0, 0, -196601, 0, 0, -196600, 0, 0, -196599, 0, 0, -131072, 0, 0, -131071, 0, 0, -131070, 0, 0, -131069, 0, 0, -131068, 0, 0, -131067, 0, 0, -131066, 0, 0, -131065, 0, 0, -131064, 0, 0, -131063, 0, 0, -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 21, -44 )
+current = true
+limit_left = 0
+limit_top = -704
+limit_right = 640
+limit_bottom = 0
+smoothing_enabled = true
+
+[node name="Tasks" type="YSort" parent="."]
+
+[node name="GreenTasks" type="YSort" parent="Tasks"]
+
+[node name="TaskEasyGreen3" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 160, -32 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen4" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 224, -32 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen6" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 352, -32 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen8" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 480, -32 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen10" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 608, -32 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen11" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 32, -96 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen14" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 224, -96 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen16" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 352, -96 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen17" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 416, -96 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen18" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 480, -96 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen22" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 96, -160 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen23" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 160, -160 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen25" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 288, -160 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen27" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 416, -160 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen29" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 544, -160 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen31" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 32, -224 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen34" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 224, -224 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen35" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 288, -224 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen36" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 352, -224 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen40" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 608, -224 )
+texture = ExtResource( 3 )
+
+[node name="YellowTasks" type="YSort" parent="Tasks"]
+
+[node name="TaskMediumYellow" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 32, -288 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow2" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 96, -288 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow4" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 224, -288 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow7" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 416, -288 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow9" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 544, -288 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow13" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 160, -352 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow14" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 224, -352 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow16" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 352, -352 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow18" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 480, -352 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow19" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 544, -352 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow20" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 608, -352 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow21" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 32, -416 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow22" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 96, -416 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow24" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 224, -416 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow26" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 352, -416 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow28" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 480, -416 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow29" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 544, -416 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow32" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 96, -480 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow33" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 160, -480 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow35" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 288, -480 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow37" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 416, -480 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow39" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 544, -480 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow41" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 32, -544 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow42" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 96, -544 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow44" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 224, -544 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow46" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 352, -544 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow50" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 608, -544 )
+texture = ExtResource( 4 )
+
+[node name="RedTasks" type="YSort" parent="Tasks"]
+
+[node name="TaskRedHard3" parent="Tasks/RedTasks" instance=ExtResource( 2 )]
+position = Vector2( 160, -608 )
+texture = ExtResource( 5 )
+
+[node name="TaskRedHard5" parent="Tasks/RedTasks" instance=ExtResource( 2 )]
+position = Vector2( 288, -608 )
+texture = ExtResource( 5 )
+
+[node name="TaskRedHard7" parent="Tasks/RedTasks" instance=ExtResource( 2 )]
+position = Vector2( 416, -608 )
+texture = ExtResource( 5 )
+
+[node name="TaskRedHard9" parent="Tasks/RedTasks" instance=ExtResource( 2 )]
+position = Vector2( 544, -608 )
+texture = ExtResource( 5 )
+
+[node name="Snakebosslogo" parent="Tasks/RedTasks" instance=ExtResource( 6 )]
+position = Vector2( 32, -608 )
+
+[node name="YSortWorld" type="YSort" parent="."]
+
+[node name="Trees 1-4" type="YSort" parent="YSortWorld"]
+
+[node name="Tree-1-4" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 65, -71 )
+
+[node name="Tree-1-5" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 128, -195 )
+
+[node name="Tree-1-8" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 255, -260 )
+
+[node name="Tree-1-6" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 511, -68 )
+
+[node name="Tree-1-7" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 384, -132 )
+
+[node name="Tree-1-9" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 513, -323 )
+
+[node name="Tree-1-10" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 321, -373 )
+
+[node name="Tree-1-11" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 128, -432 )
+
+[node name="Tree-1-12" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 385, -454 )
+
+[node name="Tree-1-13" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 448, -569 )
+
+[node name="Benches" type="YSort" parent="YSortWorld"]
+
+[node name="Bench" parent="YSortWorld/Benches" instance=ExtResource( 9 )]
+position = Vector2( 34, -74 )
+
+[node name="Bench2" parent="YSortWorld/Benches" instance=ExtResource( 9 )]
+position = Vector2( 223, -131 )
+
+[node name="Bench3" parent="YSortWorld/Benches" instance=ExtResource( 9 )]
+position = Vector2( 480, -198 )
+
+[node name="Bench4" parent="YSortWorld/Benches" instance=ExtResource( 9 )]
+position = Vector2( 95, -261 )
+
+[node name="Bench5" parent="YSortWorld/Benches" instance=ExtResource( 9 )]
+position = Vector2( 615, -324 )
+
+[node name="Bench6" parent="YSortWorld/Benches" instance=ExtResource( 9 )]
+position = Vector2( 358, -458 )
+
+[node name="Bench7" parent="YSortWorld/Benches" instance=ExtResource( 9 )]
+position = Vector2( 160, -520 )
+
+[node name="Bins" type="YSort" parent="YSortWorld"]
+
+[node name="Bin" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 86, -67 )
+
+[node name="Bin2" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 254, -127 )
+
+[node name="Bin3" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 444, -198 )
+
+[node name="Bin4" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 50, -192 )
+
+[node name="Bin5" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 190, -256 )
+
+[node name="Bin6" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 575, -320 )
+
+[node name="Bin7" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 192, -383 )
+
+[node name="Bin8" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 415, -448 )
+
+[node name="Bin9" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 54, -512 )
+
+[node name="Bin10" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 586, -629 )
+
+[node name="Players" type="YSort" parent="YSortWorld"]
+
+[node name="Snakes" type="YSort" parent="YSortWorld"]
+
+[node name="GreenSnake" parent="YSortWorld/Snakes" instance=ExtResource( 18 )]
+position = Vector2( 288, -32 )
+
+[node name="BlueSnake" parent="YSortWorld/Snakes" instance=ExtResource( 14 )]
+position = Vector2( 224, -160 )
+
+[node name="PinkWhiteSnake" parent="YSortWorld/Snakes" instance=ExtResource( 17 )]
+position = Vector2( 352, -288 )
+
+[node name="BlackWhiteSnake" parent="YSortWorld/Snakes" instance=ExtResource( 12 )]
+position = Vector2( 160, -416 )
+
+[node name="TwinSnake" parent="YSortWorld/Snakes" instance=ExtResource( 16 )]
+position = Vector2( 288, -544 )
+
+[node name="SkeletonSnake" parent="YSortWorld/Snakes" instance=ExtResource( 15 )]
+position = Vector2( 224, -608 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DiceAllPlayers" parent="CanvasLayer" instance=ExtResource( 11 )]
+visible = false
+position = Vector2( 192, 112 )
+
+[node name="YourTurn" parent="CanvasLayer" instance=ExtResource( 19 )]
+visible = false
+position = Vector2( 192, 112 )
+
+[connection signal="pressed" from="CanvasLayer/DiceAllPlayers/Roll1" to="." method="_on_Roll1_pressed"]
+[connection signal="pressed" from="CanvasLayer/DiceAllPlayers/Roll2" to="." method="_on_Roll2_pressed"]
+[connection signal="pressed" from="CanvasLayer/DiceAllPlayers/Roll3" to="." method="_on_Roll3_pressed"]
+[connection signal="pressed" from="CanvasLayer/DiceAllPlayers/Roll4" to="." method="_on_Roll4_pressed"]
+[connection signal="pressed" from="CanvasLayer/YourTurn/RollButton" to="." method="_on_RollButton_pressed"]
+
+[editable path="CanvasLayer/DiceAllPlayers"]
+[editable path="CanvasLayer/YourTurn"]
