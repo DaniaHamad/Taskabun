@@ -6,16 +6,24 @@ var scoreSystem = load("res://Game/ScoreBoardSystem.tscn")
 var numberOfPlayers=0
 
 var Oddrow = true
-
+var backwards = false
 onready var tasks =  $Tasks
 
 onready var camera = $Camera2D
 onready var diceAllPlayers = $CanvasLayer/DiceAllPlayers
 onready var yourTurn = $CanvasLayer/YourTurn
+onready var snakeBattlePopUp = $CanvasLayer/SnakeBattlePopUp
 onready var snakes = $YSortWorld/Snakes
+onready var canvas = $CanvasLayer
 
 var player #we are the current player
 var rolls=0 
+
+var snakeCollidedWith
+var taskCollidedWith
+
+var clearedTask=false
+var clearedSnake=false
 
 var greenWayEmptyTilePos=[
 	[96.0,-32.0],
@@ -286,7 +294,7 @@ sync func player_turn():
 func _on_RollButton_pressed():
 	var diceNum = randi()%6+1
 	#print(str(player.name))
-	rpc("move_dice_message",str(player.name),diceNum)
+	rpc("move_dice_message",str(player.name),4)
 	
 
 sync func move_dice_message(playerToMoveName,diceNum):
@@ -303,7 +311,6 @@ sync func move_dice_message(playerToMoveName,diceNum):
 	rpc("show_Score")
 	player.get_node("follow").set_remote_node("")
 	var playerToMove = players.get_node(str(playerToMoveName))
-	playerToMove.get_node("follow").set_remote_node(camera.get_path())#give the player the camera
 	if player.name == str(playerToMoveName):
 		move_player(str(playerToMoveName),diceNum)
 
@@ -320,6 +327,7 @@ func move_player(playerToMoveName,diceNum):
 	rpc("show_Score")
 	yield(get_tree().create_timer(2),"timeout")
 	var playerToMove = players.get_node(str(playerToMoveName)) #bring me the player
+	playerToMove.get_node("follow").set_remote_node(camera.get_path())#give the player the camera
 	var onTile #the tile the player is on
 	var scoreHolder# bring the player's score
 	for score in Persistent_nodes.get_node("CanvasLayer").get_children():
@@ -331,44 +339,78 @@ func move_player(playerToMoveName,diceNum):
 	if onTile ==100:
 		rpc("player_turn")
 		return 
-	var goalTile = onTile+diceNum
-	if goalTile >100:
-		goalTile =100
+
 	var hopTile = onTile
+	var oneTile =1
 	var movement = 64
 	if !Oddrow:
 		movement*=-1
+	
+	if backwards:
+		movement*=-1
+		oneTile*=-1
+		diceNum*=-1
+	
+	var goalTile = onTile+diceNum
+	if goalTile >100:
+		goalTile =100
+	elif goalTile<1:
+		goalTile=1
+	#print("goal Tile "+ str(goalTile))
+	#print("hope tile "+ str(hopTile))
+
 	var calculateMove = playerToMove.position.x
 	while(hopTile!=goalTile):
 		calculateMove+=movement
+	#	print(calculateMove)
 		if calculateMove>625:#odd is true then go up be false
-			playerToMove.position.y -=movement
+	#		print("#odd is true then go down be false")
+			if !backwards:
+				playerToMove.position.y -=movement
+			else:
+				playerToMove.position.y +=movement
 			calculateMove = playerToMove.position.x
 			movement*=-1
 			Oddrow=false  
 		elif calculateMove<10:#odd is false then go up be true
-			playerToMove.position.y +=movement
+	#		print("#odd is false then go down be true")
+			if !backwards:
+				playerToMove.position.y +=movement
+			else:
+				playerToMove.position.y -=movement
 			calculateMove = playerToMove.position.x
 			movement*=-1 
 			Oddrow=true 
 		else:
 			playerToMove.position.x +=movement
 			calculateMove = playerToMove.position.x
-		hopTile+=1
+		hopTile+=oneTile
 		scoreHolder.tile = hopTile
 		scoreHolder.get_node("TileNumber").text = str(hopTile)
 		yield(get_tree().create_timer(1),"timeout")
+	backwards=false
 	rpc("refresh_ranking",str(playerToMoveName)) #rpc sync
 	yield(get_tree().create_timer(3),"timeout")
 	match where_Is_The_Player_Standing(playerToMoveName):
 		"green":
 			rpc("pop_empty_tile_pos",playerToMoveName,"green")
+			loopTurns()
 		"yellow":
 			rpc("pop_empty_tile_pos",playerToMoveName,"yellow")
+			loopTurns()
 		"red" :
 			rpc("pop_empty_tile_pos",playerToMoveName,"red")
+			loopTurns()
+		"Snake":
+			rpc("Show_SnakeBattlePopUp",playerToMoveName,snakeCollidedWith)
+		"Task":
+			loopTurns()
+		_:
+			loopTurns()
+
+func loopTurns():
 	yield(get_tree().create_timer(3),"timeout")
-	rpc("move_snakes",randi()%greenWayEmptyTilePos.size(),randi()%yellowWayEmptyTilePos.size(),randi()%redWayEmptyTilePos.size())
+	rpc("move_snakes",(randi()%greenWayEmptyTilePos.size()),(randi()%yellowWayEmptyTilePos.size()),(randi()%redWayEmptyTilePos.size()))
 	yield(get_tree().create_timer(3),"timeout")
 	rpc("player_turn")
 
@@ -415,21 +457,24 @@ func where_Is_The_Player_Standing(playerHasMovedName):
 	for i in snakes.get_children():
 		if i.is_in_group("Snake"):
 			if player.position.x == i.position.x&&player.position.y==i.position.y:
-				playersEmptyPos[player.playerCount-1] = temp
+				rpc("add_player_empty_pos",playerHasMovedName)
 				print("collided with "+i.name)
-				return i.name
+				snakeCollidedWith = i.name
+				return "Snake"
 
 	if greenTaskPos.has(temp):
 		print("Player has been collided with a green task ")
-
-		return "greenTask"
+		taskCollidedWith = "greenTask"
+		return "Task"
 	if yellowTaskPos.has(temp):
 		print("Player has been collided with a yellow task ")
-		return "yellowTask"
+		taskCollidedWith = "yellowTask"
+		return "Task"
 	
 	if redTaskPos.has(temp):
 		print("Player has been collided with a red task ")
-		return "RedTask"
+		taskCollidedWith = "RedTask"
+		return "Task"
 	print("Player is on empty tile")
 	return check_if_on_empty_tile(playerHasMovedName)
 	
@@ -446,6 +491,14 @@ sync func add_empty_tile_pos(playerHasMovedName,wayType):
 		"red":
 			redWayEmptyTilePos.append(temp)
 	print(str(temp)+" has been added to "+wayType+" arrayEmpty")
+	
+sync func add_player_empty_pos(playerHasMovedName):
+	var playerToMove = players.get_node(str(playerHasMovedName))
+	var temp = [playerToMove.position.x,playerToMove.position.y]
+	playersEmptyPos[playerToMove.playerCount-1] = temp
+
+
+
 
 sync func pop_empty_tile_pos(playerHasMovedName,wayType):
 	var playerHasMoved = players.get_node(str(playerHasMovedName))#new
@@ -464,7 +517,7 @@ func check_if_on_empty_tile(playerMove):
 	var playerHasMoved = players.get_node(str(playerMove))
 	playersEmptyPos[playerHasMoved.playerCount-1]=[playerHasMoved.position.x,playerHasMoved.position.y]
 	var temp = playersEmptyPos[playerHasMoved.playerCount-1]
-	print(str(temp))
+	#print(str(temp))
 	if (temp[0]!=32||temp[1]!=-32)&&(temp[0]!=32||temp[1]!=-608):
 		
 		if temp[1]<=-32.0&&temp[1]>=-224.0:
@@ -488,30 +541,98 @@ sync func move_snakes(randGreen,randYellow,randRed):
 	print("entered move_snakes")
 	var snakePos = []
 	var newPos=[]
-	var rand
+	var randG = randGreen
+	var randY = randYellow
+	var randR = randRed
+	#print("RandGreen= "+randGreen+" \n RandYellow= "+randYellow+" \n RandRed= "+randRed)
 	for snake in snakes.get_children():
 		if snake.is_in_group("Snake"):
 			snakePos = [snake.position.x,snake.position.y]
 			if snake.is_in_group("Green"):
-				rand = randGreen
-				snake.position.x = greenWayEmptyTilePos[rand][0]
-				snake.position.y = greenWayEmptyTilePos[rand][1]
-				greenWayEmptyTilePos.remove(greenWayEmptyTilePos.find([snake.position.x,snake.position.y]))
-				if !playersEmptyPos.has([snake.position.x,snake.position.y]):
-					greenWayEmptyTilePos.append(snakePos)
+				if snake.name =="BlueSnake":
+					print("RandGreen= "+str(randG))
+					if randG>=greenWayEmptyTilePos.size():
+						randG-=1
+					snake.position.x = greenWayEmptyTilePos[randG][0]
+					snake.position.y = greenWayEmptyTilePos[randG][1]
+					greenWayEmptyTilePos.remove(greenWayEmptyTilePos.find([snake.position.x,snake.position.y]))
+					if !playersEmptyPos.has(snakePos):
+						greenWayEmptyTilePos.append(snakePos)
 			elif snake.is_in_group("Yellow"):
-				rand = randYellow
-				snake.position.x = yellowWayEmptyTilePos[rand][0]
-				snake.position.y = yellowWayEmptyTilePos[rand][1]
+				if randY>=yellowWayEmptyTilePos.size():
+					randY-=1
+				snake.position.x = yellowWayEmptyTilePos[randY][0]
+				snake.position.y = yellowWayEmptyTilePos[randY][1]
 				yellowWayEmptyTilePos.remove(yellowWayEmptyTilePos.find([snake.position.x,snake.position.y]))
-				if !playersEmptyPos.has([snake.position.x,snake.position.y]):
+				if !playersEmptyPos.has(snakePos):
 					yellowWayEmptyTilePos.append(snakePos)
 			elif snake.is_in_group("Red"):
-				rand=randRed
-				snake.position.x = redWayEmptyTilePos[rand][0]
-				snake.position.y = redWayEmptyTilePos[rand][1]
+				if randR>=redWayEmptyTilePos.size():
+					randR-=1
+				snake.position.x = redWayEmptyTilePos[randR][0]
+				snake.position.y = redWayEmptyTilePos[randR][1]
 				redWayEmptyTilePos.remove(redWayEmptyTilePos.find([snake.position.x,snake.position.y]))
-				if !playersEmptyPos.has([snake.position.x,snake.position.y]):
+				if !playersEmptyPos.has(snakePos):
 					redWayEmptyTilePos.append(snakePos)
 	yield(get_tree().create_timer(3),"timeout")
 
+sync func Show_SnakeBattlePopUp(playerWillFight,snakeOpponent):
+	rpc("hide_Score")
+	var playerFight = players.get_node(str(playerWillFight))
+	var snakeFight = snakes.get_node(str(snakeOpponent))
+	snakeBattlePopUp.get_node("BattleBetween").text = str(snakeFight.get_snakeName())+ " vs "+str(playerFight.username)
+
+	var snakeImage = snakeBattlePopUp.get_node("Snake")
+	var playerImage = snakeBattlePopUp.get_node("Player")
+	snakeImage.texture = load("res://Assets/Snakes/"+str(snakeOpponent)+"Head.png")
+	playerImage.texture = load(playerFight.get_mycharhead())
+	if player.name == playerWillFight:
+		snakeBattlePopUp.get_node("Fight").show()
+		snakeBattlePopUp.get_node("Forfeit").show()
+	snakeBattlePopUp.show()
+
+func _on_Fight_pressed():
+	rpc("change_to_Snake_Battle",snakeCollidedWith,player.name)
+
+sync func change_to_Snake_Battle(snakeWillFight,playerWillFightName):
+	print("Will change to battle scene for "+str(snakeWillFight)+" and "+str(player.name))
+	snakeBattlePopUp.get_node("Fight").hide()
+	snakeBattlePopUp.get_node("Forfeit").hide()
+	snakeBattlePopUp.hide()
+
+	canvas.add_child(load("res://Snakes/SnakesBattle/SnakeBattle.tscn").instance())
+	var child = canvas.get_node("SnakeBattle")
+	child.position = yourTurn.position
+	child.set_fighter(str(playerWillFightName))
+	child.set_opponent(str(snakeWillFight))
+
+func _on_Forfeit_pressed():
+	rpc("player_Go_Backwards",snakeCollidedWith,player.name)
+
+sync func player_Go_Backwards(collidedSnake,forfeitPlayer):
+	var snake = snakes.get_node(collidedSnake)
+	var forfiet = players.get_node(forfeitPlayer)
+	print("Will go backward according to "+str(collidedSnake)+" and "+str(forfeitPlayer))
+	snakeBattlePopUp.get_node("Fight").hide()
+	snakeBattlePopUp.get_node("Forfeit").hide()
+	snakeBattlePopUp.hide()
+	for child in players.get_children():
+		if child.is_in_group("Player"):
+			child.get_node("follow").set_remote_node("")#remove all the camera from all
+	forfiet.get_node("follow").set_remote_node(camera.get_path())
+	if forfeitPlayer== player.name:
+		backwards = true
+		move_player(forfeitPlayer,snake.get_goBack())
+
+	
+func player_is_dead():
+	rpc("player_Go_Backwards",snakeCollidedWith,player.name)
+	rpc("delete_node",canvas.name,"SnakeBattle")
+func snake_is_dead():
+	print("Snake is dead!")
+	rpc("delete_node",canvas.name,"SnakeBattle")
+	loopTurns()
+
+sync func delete_node(parentName,childName):
+	var parent = get_node(str(parentName))
+	parent.get_node(str(childName)).queue_free()

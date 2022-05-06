@@ -5,6 +5,7 @@ const speed = 400
 
 var playerCount =1 setget set_playerCount
 var mychar="" setget set_mychar,get_mychar
+var mycharhead="" setget set_mycharhead,get_mycharhead
 var myOval="" setget set_myOval
 
 
@@ -15,6 +16,7 @@ var username_text_instance = null
 puppet var puppet_myOval="" setget puppet_myOval_set
 puppet var puppet_playerCount =1 setget puppet_playerCount_set
 puppet var puppet_char = "" setget puppet_char_set
+puppet var puppet_charhead = "" setget puppet_charhead_set
 puppet var puppet_position = Vector2(0, 0) setget puppet_position_set
 puppet var puppet_username = "" setget puppet_username_set
 
@@ -93,6 +95,23 @@ func puppet_char_set(new_value):
 		if not is_network_master():
 			$Sprite.texture=load(puppet_char)
 			mychar = puppet_char
+
+func set_mycharhead(new_value):
+	mycharhead = new_value
+	if get_tree().has_network_peer():
+		if is_network_master():
+			rset("puppet_charhead", mycharhead)
+			
+func get_mycharhead():
+	return mycharhead	
+
+func puppet_charhead_set(new_value):
+	puppet_charhead = new_value
+	if get_tree().has_network_peer():
+		if not is_network_master():
+			mycharhead = puppet_charhead
+
+
 
 func username_set(new_value) -> void:
 	username = new_value

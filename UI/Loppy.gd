@@ -184,8 +184,9 @@ func instance_player(id) -> void:
 	
 	get_node(c).hide()
 	var s="res://Assets/players/body"+str(player_char)+".png"
-	
+	var s2 ="res://Assets/players/head"+str(player_char)+".png"
 	player_instance.mychar=s
+	player_instance.mycharhead=s2
 	
 	match player_instance.playerCount:
 		1:
