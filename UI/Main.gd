@@ -8,7 +8,22 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var background = TextureRect.new()
+	background.texture = load("res://Assets/background.png")
+	background.name = "background"
+	background.rect_size=(Vector2(384,216))
+	background.expand = true
+	var textureRect = TextureRect.new()
+	textureRect.texture = load("res://Assets/glowing square.png")
+	textureRect.name = "TextureRect"
+	textureRect.expand = true
+	textureRect.rect_min_size = Vector2(384,216)
+	textureRect.rect_size=Vector2(412,282)
+			
+	textureRect.rect_position=Vector2(-14,-31)
+	textureRect.set_stretch_mode(5)
+	Persistent_nodes.add_child(background)
+	Persistent_nodes.add_child(textureRect)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

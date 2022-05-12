@@ -45,6 +45,7 @@ func _on_Create_pressed():
 		GameName=$control/GameName.text
 		var c=-1;
 		if c==-1:
+			
 			$control.hide()
 			$YSort/glowing.close_and_end()
 		else:

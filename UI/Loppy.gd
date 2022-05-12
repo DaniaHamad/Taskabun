@@ -61,7 +61,6 @@ func _player_disconnected(id) -> void:
 		
 sync func remove_player(id):
 	if Persistent_nodes.has_node(str(id)):
-		Persistent_nodes.get_node(str(id)).username_text_instance.queue_free()
 		Persistent_nodes.get_node(str(id)).queue_free()	
 		Persistent_nodes.get_node("CanvasLayer").get_node(str(id)).queue_free()
 	yield(get_tree().create_timer(.7),"timeout")	

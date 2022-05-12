@@ -164,10 +164,10 @@ __meta__ = {
 [node name="Spawn_locations" type="Node" parent="."]
 
 [node name="oval" type="TextureRect" parent="Spawn_locations"]
-margin_left = 38.0
-margin_top = 135.0
-margin_right = 117.0
-margin_bottom = 187.0
+margin_left = 46.0
+margin_top = 128.0
+margin_right = 110.0
+margin_bottom = 192.0
 texture = ExtResource( 10 )
 expand = true
 __meta__ = {

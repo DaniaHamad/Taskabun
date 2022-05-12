@@ -70,7 +70,7 @@ func join_server() -> void:
 #then our peer of network needs to be destroied >>null
 func reset_network_connection() -> void:
 	if get_tree().has_network_peer():
-		get_tree().network_peer = null
+		get_tree().set_network_peer(null)
 
 func _connected_to_server() -> void:
 	print("Successfully connected to the server")
@@ -85,9 +85,9 @@ func _server_disconnected() -> void:
 	
 	reset_network_connection()
 	
-	if Global.ui != null:
-		var prompt = Global.instance_node(load("res://Simple_prompt.tscn"), Global.ui)
-		prompt.set_text("Disconnected from server")
+	#if Global.ui != null:
+	#	var prompt = Global.instance_node(load("res://Simple_prompt.tscn"), Global.ui)
+	#	prompt.set_text("Disconnected from server")
 
 func _client_connection_timeout():
 	if client_connected_to_server == false:
@@ -95,8 +95,8 @@ func _client_connection_timeout():
 		
 		reset_network_connection()
 		
-		var connection_timeout_prompt = Global.instance_node(load("res://Simple_prompt.tscn"), get_tree().current_scene)
-		connection_timeout_prompt.set_text("Connection timed out")
+		#var connection_timeout_prompt = Global.instance_node(load("res://Simple_prompt.tscn"), get_tree().current_scene)
+		#connection_timeout_prompt.set_text("Connection timed out")
 
 func _connection_failed():
 #	for child in Persistent_nodes.get_children():
@@ -105,9 +105,9 @@ func _connection_failed():
 	
 	reset_network_connection()
 	
-	if Global.ui != null:
-		var prompt = Global.instance_node(load("res://Simple_prompt.tscn"), Global.ui)
-		prompt.set_text("Connection failed")
+	#if Global.ui != null:
+	#	var prompt = Global.instance_node(load("res://Simple_prompt.tscn"), Global.ui)
+	#	prompt.set_text("Connection failed")
 
 func puppet_networked_object_name_index_set(new_value):
 	networked_object_name_index = new_value

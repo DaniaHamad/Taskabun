@@ -15,6 +15,8 @@ onready var yourTurn = $CanvasLayer/YourTurn
 onready var snakeBattlePopUp = $CanvasLayer/SnakeBattlePopUp
 onready var snakes = $YSortWorld/Snakes
 onready var canvas = $CanvasLayer
+onready var lastTilePopup =$CanvasLayer/LastTilePopUp 
+onready var playersRanks = $CanvasLayer/PlayersRanks
 
 var player #we are the current player
 var rolls=0 
@@ -86,7 +88,7 @@ func _ready():
 	instance_player(get_tree().get_network_unique_id()) #player and score enter game
 	rpc("move_Children") #from persistent_node to ysort players
 	store_Tile_Pos()
-	#yield(move_camera(speed),"completed")#move the camera until it's completed
+	yield(move_camera(speed),"completed")#move the camera until it's completed
 	player = players.get_node(str(get_tree().get_network_unique_id())) #we are the current player (this is me)
 
 
@@ -111,7 +113,6 @@ sync func remove_player(id):
 	if Persistent_nodes.get_node("CanvasLayer").has_node(str(id)):
 		Persistent_nodes.get_node("CanvasLayer").get_node(str(id)).queue_free()
 	if players.has_node(str(id)):
-		players.get_node(str(id)).username_text_instance.queue_free()
 		players.get_node(str(id)).queue_free()
 	yield(get_tree().create_timer(.7),"timeout")	
 	#var c=1	
@@ -157,7 +158,6 @@ sync func move_Children():
 			var followPlayer = RemoteTransform2D.new()
 			followPlayer.name = "follow"
 			child.add_child(followPlayer)
-	#players.get_node(str(1)).get_node("follow").set_remote_node($Camera2D.get_path())
 
 
 
@@ -171,14 +171,12 @@ func move_camera(delta):
 		yield(get_tree().create_timer(.1),"timeout")
 
 
-#	yield(get_tree().create_timer(.7),"timeout")
 	speed=0
 	while(camera.position.y!=originalPosition):
 		speed+=delta
 		camera.global_position = lerp(camera.global_position,Vector2(-90,originalPosition) , speed)
 		yield(get_tree().create_timer(.1),"timeout")
 
-	#yield(get_tree().create_timer(.3),"timeout")
 	yield(get_tree(), "idle_frame")
 
 
@@ -294,7 +292,7 @@ sync func player_turn():
 func _on_RollButton_pressed():
 	var diceNum = randi()%6+1
 	#print(str(player.name))
-	rpc("move_dice_message",str(player.name),4)
+	rpc("move_dice_message",str(player.name),diceNum)
 	
 
 sync func move_dice_message(playerToMoveName,diceNum):
@@ -336,8 +334,9 @@ func move_player(playerToMoveName,diceNum):
 				scoreHolder = score 
 				break
 	onTile = int(scoreHolder.get_node("TileNumber").text)
+
 	if onTile ==100:
-		rpc("player_turn")
+		last_tile(player.name)
 		return 
 
 	var hopTile = onTile
@@ -391,6 +390,9 @@ func move_player(playerToMoveName,diceNum):
 	backwards=false
 	rpc("refresh_ranking",str(playerToMoveName)) #rpc sync
 	yield(get_tree().create_timer(3),"timeout")
+	if hopTile ==100:
+		last_tile(player.name)
+		return
 	match where_Is_The_Player_Standing(playerToMoveName):
 		"green":
 			rpc("pop_empty_tile_pos",playerToMoveName,"green")
@@ -529,7 +531,7 @@ func check_if_on_empty_tile(playerMove):
 		elif temp[1]==-608:
 			print("Player has been is on an empty red way tile")
 			return "red"
-		
+
 	print("non")
 	return null
 
@@ -549,21 +551,24 @@ sync func move_snakes(randGreen,randYellow,randRed):
 		if snake.is_in_group("Snake"):
 			snakePos = [snake.position.x,snake.position.y]
 			if snake.is_in_group("Green"):
-				if snake.name =="BlueSnake":
-					print("RandGreen= "+str(randG))
-					if randG>=greenWayEmptyTilePos.size():
-						randG-=1
-					snake.position.x = greenWayEmptyTilePos[randG][0]
-					snake.position.y = greenWayEmptyTilePos[randG][1]
+				#print("RandGreen= "+str(randG))
+				if randG>=greenWayEmptyTilePos.size():
+					randG-=1
+				snake.position.x = greenWayEmptyTilePos[randG][0]
+				snake.position.y = greenWayEmptyTilePos[randG][1]
+				var removeTile= greenWayEmptyTilePos.find([snake.position.x,snake.position.y])
+				if removeTile!=-1:
 					greenWayEmptyTilePos.remove(greenWayEmptyTilePos.find([snake.position.x,snake.position.y]))
-					if !playersEmptyPos.has(snakePos):
-						greenWayEmptyTilePos.append(snakePos)
+				if !playersEmptyPos.has(snakePos):
+					greenWayEmptyTilePos.append(snakePos)
 			elif snake.is_in_group("Yellow"):
 				if randY>=yellowWayEmptyTilePos.size():
 					randY-=1
 				snake.position.x = yellowWayEmptyTilePos[randY][0]
 				snake.position.y = yellowWayEmptyTilePos[randY][1]
-				yellowWayEmptyTilePos.remove(yellowWayEmptyTilePos.find([snake.position.x,snake.position.y]))
+				var removeTile= yellowWayEmptyTilePos.find([snake.position.x,snake.position.y])
+				if removeTile!=-1:
+					yellowWayEmptyTilePos.remove(yellowWayEmptyTilePos.find([snake.position.x,snake.position.y]))
 				if !playersEmptyPos.has(snakePos):
 					yellowWayEmptyTilePos.append(snakePos)
 			elif snake.is_in_group("Red"):
@@ -571,7 +576,9 @@ sync func move_snakes(randGreen,randYellow,randRed):
 					randR-=1
 				snake.position.x = redWayEmptyTilePos[randR][0]
 				snake.position.y = redWayEmptyTilePos[randR][1]
-				redWayEmptyTilePos.remove(redWayEmptyTilePos.find([snake.position.x,snake.position.y]))
+				var removeTile= redWayEmptyTilePos.find([snake.position.x,snake.position.y])
+				if removeTile!=-1:
+					redWayEmptyTilePos.remove(redWayEmptyTilePos.find([snake.position.x,snake.position.y]))
 				if !playersEmptyPos.has(snakePos):
 					redWayEmptyTilePos.append(snakePos)
 	yield(get_tree().create_timer(3),"timeout")
@@ -628,11 +635,62 @@ sync func player_Go_Backwards(collidedSnake,forfeitPlayer):
 func player_is_dead():
 	rpc("player_Go_Backwards",snakeCollidedWith,player.name)
 	rpc("delete_node",canvas.name,"SnakeBattle")
+
+
 func snake_is_dead():
 	print("Snake is dead!")
 	rpc("delete_node",canvas.name,"SnakeBattle")
-	loopTurns()
+	if snakeCollidedWith!="SnakeBoss":
+		loopTurns()
+	else:
+		rpc("victory",player.name)
 
 sync func delete_node(parentName,childName):
 	var parent = get_node(str(parentName))
 	parent.get_node(str(childName)).queue_free()
+
+func last_tile(playerOnLastTile):
+	snakeCollidedWith="SnakeBoss"
+	lastTilePopup.get_node("Fight").show()
+	lastTilePopup.get_node("Solve").show()
+	rpc("showLastTilePopup")
+
+sync func showLastTilePopup():
+	lastTilePopup.show()
+
+
+func _on_FightLastTile_pressed():
+	rpc("change_to_Snake_Battle","SnakeBoss",player.name)
+
+
+func _on_SolveLastTile_pressed():
+	pass # Replace with function body.
+
+sync func victory(playerWinner):
+	Persistent_nodes.get_node("CanvasLayer").get_node(str(playerWinner)).tile=101
+	var winner = players.get_node(playerWinner)
+	PlayersTurns.modify_player_tile(winner)
+	playersRanks.get_node("Congrats").text=str(winner.username)+" Is the winner!"
+	PlayersTurns.sort_players_Ranking_desc()
+	var playRank
+	for rank in rand_range(1,numberOfPlayers):
+		rank+=1
+		playRank = PlayersTurns.get_player_rank_now()
+		players.remove_child(playRank)
+		playRank.position = Vector2(0,0)
+		playersRanks.get_node(str(rank)).add_child(playRank)
+		playersRanks.get_node(str("rank"+str(rank))).show()
+		playersRanks.get_node(str("player"+str(rank))).text = playRank.username
+		playersRanks.get_node(str("player"+str(rank))).show()
+	playersRanks.show()
+	playersRanks.get_node("Timer").start()
+
+
+func _on_Timer_timeout():
+	for child in Persistent_nodes.get_node("CanvasLayer").get_children():
+					if child.is_in_group("Score"):
+						child.queue_free()
+	PlayersTurns.erase_everything()
+	Network.reset_network_connection()
+	get_tree().change_scene("res://UI/Main.tscn")
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Assets/tile.png" type="Texture" id=1]
 [ext_resource path="res://Game/Task.tscn" type="PackedScene" id=2]
@@ -21,6 +21,9 @@
 [ext_resource path="res://Game/PopUpMessages/YourTurn.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Game/PopUpMessages/SnakeBattlePopUp.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Game/PopUpMessages/SnakeBattleResult.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Game/PopUpMessages/LastTilePopUp.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Snakes/SnakeBoss.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Game/PopUpMessages/PlayersRanks.tscn" type="PackedScene" id=24]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tile.png 0"
@@ -436,6 +439,9 @@ position = Vector2( 288, -544 )
 [node name="SkeletonSnake" parent="YSortWorld/Snakes" instance=ExtResource( 15 )]
 position = Vector2( 224, -608 )
 
+[node name="SnakeBoss" parent="YSortWorld/Snakes" instance=ExtResource( 23 )]
+position = Vector2( 32, -588 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="DiceAllPlayers" parent="CanvasLayer" instance=ExtResource( 11 )]
@@ -454,6 +460,24 @@ position = Vector2( 192, 112 )
 visible = false
 position = Vector2( 192, 112 )
 
+[node name="LastTilePopUp" parent="CanvasLayer" instance=ExtResource( 22 )]
+visible = false
+position = Vector2( 192, 112 )
+
+[node name="Fight" parent="CanvasLayer/LastTilePopUp" index="5"]
+visible = false
+
+[node name="Solve" parent="CanvasLayer/LastTilePopUp" index="6"]
+visible = false
+
+[node name="PlayersRanks" parent="CanvasLayer" instance=ExtResource( 24 )]
+visible = false
+position = Vector2( 192, 112 )
+
+[node name="Timer" parent="CanvasLayer/PlayersRanks" index="14"]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="pressed" from="CanvasLayer/DiceAllPlayers/Roll1" to="." method="_on_Roll1_pressed"]
 [connection signal="pressed" from="CanvasLayer/DiceAllPlayers/Roll2" to="." method="_on_Roll2_pressed"]
 [connection signal="pressed" from="CanvasLayer/DiceAllPlayers/Roll3" to="." method="_on_Roll3_pressed"]
@@ -461,8 +485,13 @@ position = Vector2( 192, 112 )
 [connection signal="pressed" from="CanvasLayer/YourTurn/RollButton" to="." method="_on_RollButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/SnakeBattlePopUp/Fight" to="." method="_on_Fight_pressed"]
 [connection signal="pressed" from="CanvasLayer/SnakeBattlePopUp/Forfeit" to="." method="_on_Forfeit_pressed"]
+[connection signal="pressed" from="CanvasLayer/LastTilePopUp/Fight" to="." method="_on_FightLastTile_pressed"]
+[connection signal="pressed" from="CanvasLayer/LastTilePopUp/Solve" to="." method="_on_SolveLastTile_pressed"]
+[connection signal="timeout" from="CanvasLayer/PlayersRanks/Timer" to="." method="_on_Timer_timeout"]
 
 [editable path="CanvasLayer/DiceAllPlayers"]
 [editable path="CanvasLayer/YourTurn"]
 [editable path="CanvasLayer/SnakeBattlePopUp"]
 [editable path="CanvasLayer/SnakeBattleResult"]
+[editable path="CanvasLayer/LastTilePopUp"]
+[editable path="CanvasLayer/PlayersRanks"]

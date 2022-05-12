@@ -54,3 +54,9 @@ func sort_playersArray_desc():
 func delete_player(player):
 	if playersTurns.has(player):
 		playersTurns.remove(playersTurns.find(player))
+
+
+func erase_everything():
+	players=[]
+	playersTurns=[]
+	playersRanking=[]
