@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Fonts/FFFFORWA.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Game/ScoreBoardSystem.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 7
+font_data = ExtResource( 1 )
+
+[node name="ScoreBoardSystem" type="Node2D" groups=["Score"]]
+script = ExtResource( 2 )
+
+[node name="PlayerColor" type="ColorRect" parent="."]
+margin_left = -32.0
+margin_top = -32.0
+margin_right = 32.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Sprite" parent="."]
+position = Vector2( -16, 16 )
+
+[node name="PlayerName" type="Label" parent="."]
+margin_left = -31.0
+margin_top = -28.0
+margin_right = 32.0
+margin_bottom = -17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Player name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rank" type="Label" parent="."]
+margin_left = 1.0
+margin_top = 19.0
+margin_right = 30.0
+margin_bottom = 32.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "1st"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TileNumber" type="Label" parent="."]
+margin_left = 1.0
+margin_right = 30.0
+margin_bottom = 13.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

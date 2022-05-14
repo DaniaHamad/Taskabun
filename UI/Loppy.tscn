@@ -1,0 +1,328 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://UI/Loppy.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/FFFFORWA.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Assets/PopUp/Popup.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UI/Charecters.gd" type="Script" id=4]
+[ext_resource path="res://Assets/background.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Background/popUp2.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Triangle.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Triangle Mask.png" type="BitMap" id=8]
+[ext_resource path="res://Assets/Animation/RectAnimation/0.png" type="Texture" id=9]
+[ext_resource path="res://Assets/redOval.png" type="Texture" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+size = 6
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 6
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 6
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 8
+font_data = ExtResource( 2 )
+
+[node name="Loppy" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Multiplayer_configure" type="Control" parent="."]
+margin_right = 383.0
+margin_bottom = 86.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Multiplayer_configure"]
+margin_right = 384.0
+margin_bottom = 216.0
+texture = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="Multiplayer_configure"]
+margin_left = 42.0
+margin_top = 10.0
+margin_right = 336.0
+margin_bottom = 208.0
+texture = ExtResource( 9 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Charecters" type="ItemList" parent="Multiplayer_configure"]
+margin_left = 95.0
+margin_top = 24.0
+margin_right = 273.0
+margin_bottom = 72.0
+allow_reselect = true
+max_columns = 4
+same_column_width = true
+fixed_icon_size = Vector2( 32, 32 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName" type="Label" parent="Multiplayer_configure"]
+margin_left = 97.0
+margin_top = 81.0
+margin_right = 147.0
+margin_bottom = 91.0
+custom_fonts/font = SubResource( 1 )
+text = "Player Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Username_text_edit" type="LineEdit" parent="Multiplayer_configure"]
+margin_left = 150.0
+margin_top = 78.0
+margin_right = 273.0
+margin_bottom = 97.0
+custom_fonts/font = SubResource( 2 )
+align = 1
+max_length = 15
+placeholder_text = "enter name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UI" type="Control" parent="."]
+margin_right = 8.0
+margin_bottom = 8.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start_game" type="Button" parent="UI"]
+margin_left = 159.0
+margin_top = 41.0
+margin_right = 212.0
+margin_bottom = 60.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = SubResource( 3 )
+text = "Start game"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Device_ip_address" type="Label" parent="UI"]
+margin_left = 125.0
+margin_top = 199.0
+margin_right = 239.0
+margin_bottom = 221.0
+custom_fonts/font = SubResource( 1 )
+text = "00.00.00.00"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeaveButton" type="TextureButton" parent="UI"]
+margin_left = 3.0
+margin_top = 167.0
+margin_right = 27.0
+margin_bottom = 196.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 7 )
+texture_click_mask = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Leave" type="Label" parent="UI"]
+margin_left = 3.0
+margin_top = 193.0
+margin_right = 30.0
+margin_bottom = 215.0
+custom_fonts/font = SubResource( 1 )
+text = "Leave"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Spawn_locations" type="Node" parent="."]
+
+[node name="oval" type="TextureRect" parent="Spawn_locations"]
+margin_left = 46.0
+margin_top = 128.0
+margin_right = 110.0
+margin_bottom = 192.0
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ready" type="Button" parent="Spawn_locations"]
+margin_left = 281.0
+margin_top = 170.0
+margin_right = 320.0
+margin_bottom = 189.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = SubResource( 3 )
+text = "Ready"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MasterReady" type="Button" parent="Spawn_locations"]
+margin_left = 59.0
+margin_top = 170.0
+margin_right = 98.0
+margin_bottom = 189.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = SubResource( 3 )
+text = "Ready"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite1" type="TextureRect" parent="Spawn_locations"]
+margin_left = 47.0
+margin_top = 99.0
+margin_right = 111.0
+margin_bottom = 163.0
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 78, 160 )
+
+[node name="Sprite2" type="TextureRect" parent="Spawn_locations"]
+margin_left = 115.0
+margin_top = 98.0
+margin_right = 179.0
+margin_bottom = 162.0
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 145, 160 )
+
+[node name="Sprite3" type="TextureRect" parent="Spawn_locations"]
+margin_left = 193.0
+margin_top = 98.0
+margin_right = 257.0
+margin_bottom = 162.0
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 223, 160 )
+
+[node name="Sprite4" type="TextureRect" parent="Spawn_locations"]
+margin_left = 270.0
+margin_top = 98.0
+margin_right = 334.0
+margin_bottom = 162.0
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4" type="Position2D" parent="Spawn_locations"]
+position = Vector2( 300, 160 )
+
+[node name="Popup" parent="." instance=ExtResource( 3 )]
+margin_left = -100.0
+margin_top = -70.0
+margin_right = 100.0
+margin_bottom = 70.0
+
+[node name="header" parent="Popup" index="3"]
+margin_left = 31.0
+margin_top = 31.0
+margin_right = 66.0
+margin_bottom = 43.0
+
+[node name="Popup_ok" parent="Popup" index="4"]
+margin_left = -20.0
+margin_right = 23.0
+
+[node name="Popup2" type="Popup" parent="."]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -38.4
+margin_top = -21.5
+margin_right = 38.4
+margin_bottom = 21.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Popup2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -81.5
+margin_top = -46.5
+margin_right = 81.5
+margin_bottom = 46.5
+texture = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Message" type="Label" parent="Popup2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -44.0
+margin_top = -19.5
+margin_right = 44.0
+margin_bottom = 19.5
+custom_colors/font_color = Color( 0.12549, 0.113725, 0.113725, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "This charecter is taken, please try another one."
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="item_selected" from="Multiplayer_configure/Charecters" to="." method="_on_Charecters_item_selected"]
+[connection signal="pressed" from="UI/Start_game" to="." method="_on_Start_game_pressed"]
+[connection signal="pressed" from="UI/LeaveButton" to="." method="_on_LeaveButton_pressed"]
+[connection signal="pressed" from="Spawn_locations/Ready" to="." method="_on_Ready_pressed"]
+[connection signal="pressed" from="Spawn_locations/MasterReady" to="." method="_on_MasterReady_pressed"]
+[connection signal="pressed" from="Popup/Popup_ok" to="." method="_on_Popup_ok_pressed"]
+
+[editable path="Popup"]
