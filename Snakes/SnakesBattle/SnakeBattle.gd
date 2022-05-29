@@ -48,6 +48,7 @@ func set_opponent(snakeWillSnake):
 	opponentParent = get_parent().get_parent().get_node("YSortWorld").get_node("Snakes")
 	opponent = get_parent().get_parent().get_node("YSortWorld").get_node("Snakes").get_node(str(snakeWillSnake))
 	opponentPos = opponent.position
+	opponent.show()
 	opponentParent.remove_child(opponent)
 	$SnakePosition.add_child(opponent)
 	opponent.position = Vector2(0,0)

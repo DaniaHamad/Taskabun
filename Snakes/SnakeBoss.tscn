@@ -10,10 +10,11 @@ extents = Vector2( 26, 13.5 )
 extents = Vector2( 21, 8 )
 
 [node name="SnakeBoss" type="KinematicBody2D" groups=["Snake"]]
+visible = false
 script = ExtResource( 2 )
 
 [node name="Snake" type="Sprite" parent="."]
-position = Vector2( 0, -20 )
+position = Vector2( 0, -21 )
 texture = ExtResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="."]

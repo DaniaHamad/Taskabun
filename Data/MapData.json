@@ -1,0 +1,26 @@
+{
+  "Game": {
+		"firstTile" : [32,-32],
+		"lastTile" : [-32,-608],
+		"mapMovement" : 64,
+		"boundaryRight":625,
+		"boundaryLeft" : 10,
+		"mapGoal" : 100,
+		"hopNumTile" : 1,
+		"greenArea" : [-32.0,-224.0],
+		"yellowArea" : [-288.0, -544.0],
+		"redArea" : [-608,-608]
+  },
+  "TestGame": {
+		"firstTile" : [32,-32],
+		"lastTile" : [416,-160],
+		"mapMovement" : 64,
+		"boundaryRight" : 416,
+		"boundaryLeft" : 10,
+		"mapGoal" : 21,
+		"hopNumTile" : 1,
+		"greenArea" : [-32.0,-32.0],
+		"yellowArea" : [-96.0, -96.0],
+		"redArea" : [-160,-160]
+  }
+}

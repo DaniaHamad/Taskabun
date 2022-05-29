@@ -32,8 +32,8 @@ func _on_Server_listener_remove_server(serverIp):
 				break
 
 func _on_Manual_setup_pressed():
-	$window/ManualColor.color="#292828"
-	$window/LocalColor.color="#201d1d"
+	$window/ManualColor.color="#0c0096"
+	$window/LocalColor.color="#0c0050"
 	$LocalControl.hide()
 	$ManualControl.show()
 	server_ip_text_edit.call_deferred("grab_focus")
@@ -51,7 +51,7 @@ func _on_BackButton_pressed():
 
 
 func _on_Local_pressed():
-	$window/LocalColor.color="#292828"
-	$window/ManualColor.color="#201d1d"
+	$window/LocalColor.color="#0c0096"
+	$window/ManualColor.color="#0c0050"
 	$ManualControl.hide()
 	$LocalControl.show()

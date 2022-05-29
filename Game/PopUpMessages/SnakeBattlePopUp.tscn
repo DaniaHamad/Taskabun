@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Game/PopUpMessages/PopUpGameMessage.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Fonts/FFFFORWA.ttf" type="DynamicFontData" id=2]
@@ -10,6 +10,24 @@ font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
 
 [node name="SnakeBattlePopUp" type="Node2D"]
 
@@ -52,7 +70,11 @@ margin_top = 38.0
 margin_right = 108.0
 margin_bottom = 75.0
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
 text = "Fight"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -69,7 +91,11 @@ margin_top = 38.0
 margin_right = -24.3334
 margin_bottom = 75.0
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
 text = "Forfeit"
 __meta__ = {
 "_edit_use_anchors_": false

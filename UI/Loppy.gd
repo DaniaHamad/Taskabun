@@ -13,6 +13,7 @@ onready var multiplayer_config_ui = $Multiplayer_configure
 onready var username_text_edit = $Multiplayer_configure/Username_text_edit
 onready var device_ip_address = $UI/Device_ip_address
 onready var start_game = $UI/Start_game
+onready var start_test_game = $UI/Test_game
 onready var master_ready = $Spawn_locations/MasterReady
 onready var chars_list=$Multiplayer_configure/Charecters
 
@@ -22,7 +23,7 @@ func _ready() -> void:
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
 	start_game.hide()
-	
+	start_test_game.hide()
 
 	device_ip_address.text = Network.ip_address
 	
@@ -61,14 +62,15 @@ func _player_disconnected(id) -> void:
 		
 sync func remove_player(id):
 	if Persistent_nodes.has_node(str(id)):
-		Persistent_nodes.get_node(str(id)).queue_free()	
+		Persistent_nodes.get_node(str(id)).username_text_instance.queue_free()
+		Persistent_nodes.get_node(str(id)).queue_free()
 		Persistent_nodes.get_node("CanvasLayer").get_node(str(id)).queue_free()
 	yield(get_tree().create_timer(.7),"timeout")	
 	var c=1	
 	for player in Persistent_nodes.get_children():
 		if player.is_in_group("Player"):
 			var location=get_node("Spawn_locations/" + str(c)).global_position
-			location.y-=150/5
+			#location.y-=150/5
 			player.rpc("update_position", location)	
 			c+=1
 	#for playerscore in Persistent_nodes.get_node("CanvasLayer").get_children():
@@ -86,6 +88,7 @@ func _on_MasterReady_pressed():
 		$Multiplayer_configure.hide()
 		$Spawn_locations/oval.hide()
 		start_game.show()
+		start_test_game.show()
 		my_Id=get_tree().get_network_unique_id()
 		instance_player(my_Id)
 		Global.instance_node(load("res://Scripts/Server_advertiser.tscn"), get_tree().current_scene)	
@@ -137,14 +140,14 @@ func _connected_to_server() -> void:
 				chars_list.set_item_disabled(3,true)
 	if current_spawn_location_instance_number==2:
 		$Spawn_locations/Ready.rect_position=Vector2(634/5,850/5)	
-		$Spawn_locations/oval.rect_position.x=534/5	
+		$Spawn_locations/oval.rect_position.x=(534/5)+7	
 		ovalLoc=534/5
 	if current_spawn_location_instance_number==3:
 		$Spawn_locations/Ready.rect_position=Vector2(1004/5,850/5)	
-		$Spawn_locations/oval.rect_position.x=920/5
+		$Spawn_locations/oval.rect_position.x=(920/5)+7
 		ovalLoc=920/5
 	elif current_spawn_location_instance_number==4:
-		$Spawn_locations/oval.rect_position.x=1304/5
+		$Spawn_locations/oval.rect_position.x=(1304/5)+7
 		ovalLoc=1304/5
 	
 	$Multiplayer_configure.show()
@@ -155,7 +158,7 @@ func _connected_to_server() -> void:
 
 func instance_player(id) -> void:
 	var location=get_node("Spawn_locations/" + str(current_spawn_location_instance_number)).global_position
-	location.y-=150/5
+	#location.y-=150/5
 	var player_instance = Global.instance_node_at_location(player, Persistent_nodes, location)
 	var score_instance = Global.instance_node_at_location(scorePlayer, Persistent_nodes.get_node("CanvasLayer"), 
 	Vector2(
@@ -174,7 +177,7 @@ func instance_player(id) -> void:
 	
 	player_instance.username = username_text_edit.text
 	print(str(player_instance.username))
-	score_instance.username = player_instance.username
+	score_instance.username = username_text_edit.text
 	print(str(score_instance.username))
 	score_instance.tile = 1
 	var c="Spawn_locations/Sprite"+str(current_spawn_location_instance_number)
@@ -221,6 +224,9 @@ func _on_Start_game_pressed():
 	Network.allow_join=false
 	rpc("switch_to_game")
 
+func _on_Test_game_pressed():
+	Network.allow_join=false
+	rpc("switch_to_test_game")
 
 sync func switch_to_game() -> void:
 	for child in Persistent_nodes.get_children():
@@ -234,7 +240,17 @@ sync func switch_to_game() -> void:
 	Persistent_nodes.get_node("TextureRect").queue_free()
 	get_tree().change_scene("res://Game/Game.tscn")
 
-
+sync func switch_to_test_game() -> void:
+	for child in Persistent_nodes.get_children():
+		if child.is_in_group("Player"):
+			child.set_myOval("")
+			child.get_node("oval").hide()
+		elif child.is_in_group("Score"):
+			child.show()
+	print("moving to Test game")
+	Persistent_nodes.get_node("background").queue_free()
+	Persistent_nodes.get_node("TextureRect").queue_free()
+	get_tree().change_scene("res://Game/TestGame.tscn")
 
 func _on_Popup_ok_pressed():
 	$Popup.hide()
@@ -301,3 +317,6 @@ sync func leave_game() -> void:
 						child.queue_free()
 	get_tree().change_scene("res://UI/Main.tscn")	
 			
+
+
+

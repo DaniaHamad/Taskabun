@@ -8,7 +8,7 @@ var numberOfPlayers=0
 var Oddrow = true
 var backwards = false
 onready var tasks =  $Tasks
-
+onready var emptyTiles = $EmptyTiles
 onready var camera = $Camera2D
 onready var diceAllPlayers = $CanvasLayer/DiceAllPlayers
 onready var yourTurn = $CanvasLayer/YourTurn
@@ -27,59 +27,27 @@ var taskCollidedWith
 var clearedTask=false
 var clearedSnake=false
 
-var greenWayEmptyTilePos=[
-	[96.0,-32.0],
-	[416.0,-32.0],
-	[544.0,-32.0],
-	[608.0,-96.0],
-	[544.0,-96.0],
-	[288.0,-96.0],
-	[160.0,-96],
-	[96.0,-96.0],
-	[32.0,-160.0],
-	[352.0,-160.0],
-	[480.0,-160.0],
-	[608.0,-160.0],
-	[544.0,-224.0],
-	[480.0,-224.0],
-	[416.0,-224.0],
-	[160.0,-224.0],
-	[96.0,-224.0],
-]
-var yellowWayEmptyTilePos=[
-	[160.0 , -288.0],
-	[288.0 , -288.0],
-	[480.0, -288.0],
-	[608.0 , -288.0],
-	[416.0 , -352.0],
-	[288.0, -352.0],
-	[96.0, -352.0],
-	[32.0, -352.0],
-	[288.0, -416.0],
-	[416.0 , -416.0],
-	[608.0 , -416.0],
-	[608.0 , -480.0],
-	[480.0 , -480.0],
-	[352.0 , -480.0],
-	[224.0 , -480.0],
-	[32.0 , -480.0],
-	[160.0 , -544.0],
-	[416.0 , -544.0],
-	[480.0 , -544.0],
-	[544.0 , -544.0],
-]
-var redWayEmptyTilePos=[
-	[608.0 , -608.0],
-	[480.0 , -608.0],
-	[352.0,  -608.0],
-	[96.0,-608.0],
-]
+var greenWayEmptyTilePos=[]
+var yellowWayEmptyTilePos=[]
+var redWayEmptyTilePos=[]
 
 var greenTaskPos=[]
 var yellowTaskPos=[]
 var redTaskPos=[]
 
 var playersEmptyPos=[]
+
+var map_data
+var firstTile= []
+var lastTile=[]
+var boundaryLeft
+var boundaryRight
+var mapMovement 
+var mapGoal
+var hopNumTile
+var greenArea = []
+var yellowArea = []
+var redArea =[]
 
 func _ready():
 	randomize()
@@ -88,7 +56,9 @@ func _ready():
 	instance_player(get_tree().get_network_unique_id()) #player and score enter game
 	rpc("move_Children") #from persistent_node to ysort players
 	store_Tile_Pos()
-	yield(move_camera(speed),"completed")#move the camera until it's completed
+	store_Empty_Pos()
+	get_map_config()
+	#yield(move_camera(speed),"completed")#move the camera until it's completed
 	player = players.get_node(str(get_tree().get_network_unique_id())) #we are the current player (this is me)
 
 
@@ -113,6 +83,7 @@ sync func remove_player(id):
 	if Persistent_nodes.get_node("CanvasLayer").has_node(str(id)):
 		Persistent_nodes.get_node("CanvasLayer").get_node(str(id)).queue_free()
 	if players.has_node(str(id)):
+		players.get_node(str(id)).username_text_instance.queue_free()
 		players.get_node(str(id)).queue_free()
 	yield(get_tree().create_timer(.7),"timeout")	
 	#var c=1	
@@ -179,6 +150,57 @@ func move_camera(delta):
 
 	yield(get_tree(), "idle_frame")
 
+
+func store_Tile_Pos():
+	
+	var tempTaskPos
+	for taskGroup in tasks.get_children():
+		for taskIndv in taskGroup.get_children():
+			if taskIndv.is_in_group("Task"):
+				if taskIndv.task=="green":
+					tempTaskPos = [taskIndv.position.x,taskIndv.position.y]
+					greenTaskPos.append(tempTaskPos)
+				elif taskIndv.task =="yellow":
+					tempTaskPos = [taskIndv.position.x,taskIndv.position.y]
+					yellowTaskPos.append(tempTaskPos)
+				else:
+					tempTaskPos = [taskIndv.position.x,taskIndv.position.y]
+					redTaskPos.append(tempTaskPos)
+
+func store_Empty_Pos():
+	var emptyPos
+	for empty in emptyTiles.get_children():
+		for childEmpty in empty.get_children():
+			if childEmpty.is_in_group("EmptyGreen"):
+				emptyPos = [childEmpty.position.x,childEmpty.position.y]
+				greenWayEmptyTilePos.append(emptyPos)
+			elif childEmpty.is_in_group("EmptyYellow"):
+				emptyPos = [childEmpty.position.x,childEmpty.position.y]
+				yellowWayEmptyTilePos.append(emptyPos)
+			else:
+				emptyPos = [childEmpty.position.x,childEmpty.position.y]
+				redWayEmptyTilePos.append(emptyPos)
+
+func get_map_config():
+	var mapData_file= File.new()
+	mapData_file.open ( "res://Data/MapData.json" , File.READ )
+	var mapDatajson= JSON.parse ( mapData_file.get_as_text())
+	
+	map_data=mapDatajson.result
+
+
+
+	firstTile = map_data[name]["firstTile"]
+	lastTile = map_data[name]["lastTile"]
+	mapMovement = map_data[name]["mapMovement"]
+	boundaryRight= map_data[name]["boundaryRight"]
+	boundaryLeft = map_data[name]["boundaryLeft"]
+	mapGoal = map_data[name]["mapGoal"]
+	hopNumTile =map_data[name]["hopNumTile"]
+	greenArea = map_data[name]["greenArea"]
+	yellowArea = map_data[name]["yellowArea"]
+	redArea = map_data[name]["redArea"]
+	mapData_file.close()
 
 
 func _on_Roll1_pressed():
@@ -335,34 +357,34 @@ func move_player(playerToMoveName,diceNum):
 				break
 	onTile = int(scoreHolder.get_node("TileNumber").text)
 
-	if onTile ==100:
+	if onTile ==mapGoal:
 		last_tile(player.name)
 		return 
 
 	var hopTile = onTile
-	var oneTile =1
-	var movement = 64
+	hopNumTile = map_data[name]["hopNumTile"]
+	var movement = mapMovement
 	if !Oddrow:
 		movement*=-1
 	
 	if backwards:
 		movement*=-1
-		oneTile*=-1
+		hopNumTile*=-1
 		diceNum*=-1
 	
 	var goalTile = onTile+diceNum
-	if goalTile >100:
-		goalTile =100
+	if goalTile >mapGoal:
+		goalTile =mapGoal
 	elif goalTile<1:
 		goalTile=1
-	#print("goal Tile "+ str(goalTile))
-	#print("hope tile "+ str(hopTile))
+	print("goal Tile "+ str(goalTile))
+	print("hope tile "+ str(hopTile))
 
 	var calculateMove = playerToMove.position.x
 	while(hopTile!=goalTile):
 		calculateMove+=movement
-	#	print(calculateMove)
-		if calculateMove>625:#odd is true then go up be false
+		#print("calculateMove = "+ str(calculateMove))
+		if calculateMove>boundaryRight:#odd is true then go up be false
 	#		print("#odd is true then go down be false")
 			if !backwards:
 				playerToMove.position.y -=movement
@@ -371,7 +393,9 @@ func move_player(playerToMoveName,diceNum):
 			calculateMove = playerToMove.position.x
 			movement*=-1
 			Oddrow=false  
-		elif calculateMove<10:#odd is false then go up be true
+			backwards = false
+			
+		elif calculateMove<boundaryLeft:#odd is false then go up be true
 	#		print("#odd is false then go down be true")
 			if !backwards:
 				playerToMove.position.y +=movement
@@ -383,14 +407,14 @@ func move_player(playerToMoveName,diceNum):
 		else:
 			playerToMove.position.x +=movement
 			calculateMove = playerToMove.position.x
-		hopTile+=oneTile
+		hopTile+=hopNumTile
 		scoreHolder.tile = hopTile
 		scoreHolder.get_node("TileNumber").text = str(hopTile)
 		yield(get_tree().create_timer(1),"timeout")
 	backwards=false
 	rpc("refresh_ranking",str(playerToMoveName)) #rpc sync
 	yield(get_tree().create_timer(3),"timeout")
-	if hopTile ==100:
+	if hopTile ==mapGoal:
 		last_tile(player.name)
 		return
 	match where_Is_The_Player_Standing(playerToMoveName):
@@ -412,7 +436,27 @@ func move_player(playerToMoveName,diceNum):
 
 func loopTurns():
 	yield(get_tree().create_timer(3),"timeout")
-	rpc("move_snakes",(randi()%greenWayEmptyTilePos.size()),(randi()%yellowWayEmptyTilePos.size()),(randi()%redWayEmptyTilePos.size()))
+	var rand = randi()
+	while rand==0:
+		rand = randi()
+	
+	var randG
+	var randY
+	var randR
+	if greenWayEmptyTilePos.size()<=0:
+		randG = 0
+	else:
+		randG=rand%greenWayEmptyTilePos.size()
+	if yellowWayEmptyTilePos.size()<=0:
+		randY=0
+	else:
+		randY = (rand%yellowWayEmptyTilePos.size())
+	if redWayEmptyTilePos.size()<=0:
+		randR=0
+	else:
+		randR = (rand%redWayEmptyTilePos.size())
+	
+	rpc("move_snakes",randG,randY,randR)
 	yield(get_tree().create_timer(3),"timeout")
 	rpc("player_turn")
 
@@ -435,21 +479,6 @@ sync func refresh_ranking(playerToMoveName):
 				scorePlayerHolder.myRank = "4th"
 	playerToMove.get_node("follow").set_remote_node("")
 
-func store_Tile_Pos():
-	
-	var tempTaskPos
-	for taskGroup in tasks.get_children():
-		for taskIndv in taskGroup.get_children():
-			if taskIndv.is_in_group("Task"):
-				if taskIndv.task=="green":
-					tempTaskPos = [taskIndv.position.x,taskIndv.position.y]
-					greenTaskPos.append(tempTaskPos)
-				elif taskIndv.task =="yellow":
-					tempTaskPos = [taskIndv.position.x,taskIndv.position.y]
-					yellowTaskPos.append(tempTaskPos)
-				else:
-					tempTaskPos = [taskIndv.position.x,taskIndv.position.y]
-					redTaskPos.append(tempTaskPos)
 
 func where_Is_The_Player_Standing(playerHasMovedName):
 	
@@ -485,14 +514,15 @@ sync func add_empty_tile_pos(playerHasMovedName,wayType):
 	var playerHasMoved = players.get_node(str(playerHasMovedName))
 	var temp = [playerHasMoved.position.x,playerHasMoved.position.y]#old pos
 	playersEmptyPos[playerHasMoved.playerCount-1]=0
-	match wayType:
-		"green":
-			greenWayEmptyTilePos.append(temp)
-		"yellow":
-			yellowWayEmptyTilePos.append(temp)
-		"red":
-			redWayEmptyTilePos.append(temp)
-	print(str(temp)+" has been added to "+wayType+" arrayEmpty")
+	if !playersEmptyPos.has(temp):
+		match wayType:
+			"green":
+				greenWayEmptyTilePos.append(temp)
+			"yellow":
+				yellowWayEmptyTilePos.append(temp)
+			"red":
+				redWayEmptyTilePos.append(temp)
+		print(str(temp)+" has been added to "+wayType+" arrayEmpty")
 	
 sync func add_player_empty_pos(playerHasMovedName):
 	var playerToMove = players.get_node(str(playerHasMovedName))
@@ -520,15 +550,15 @@ func check_if_on_empty_tile(playerMove):
 	playersEmptyPos[playerHasMoved.playerCount-1]=[playerHasMoved.position.x,playerHasMoved.position.y]
 	var temp = playersEmptyPos[playerHasMoved.playerCount-1]
 	#print(str(temp))
-	if (temp[0]!=32||temp[1]!=-32)&&(temp[0]!=32||temp[1]!=-608):
+	if (temp[0]!=firstTile[0]||temp[1]!=firstTile[1])&&(temp[0]!=lastTile[0]||temp[1]!=lastTile[1]):
 		
-		if temp[1]<=-32.0&&temp[1]>=-224.0:
+		if temp[1]<=greenArea[0]&&temp[1]>=greenArea[1]:
 			print("Player has been is on an empty green way tile")
 			return "green"
-		elif temp[1]<=-288.0&&temp[1]>=-544.0:
+		elif temp[1]<=yellowArea[0]&&temp[1]>=yellowArea[1]:
 			print("Player has been is on an empty yellow way tile")
 			return "yellow"
-		elif temp[1]==-608:
+		elif temp[1]<=redArea[0]&&temp[1]>=redArea[1]:
 			print("Player has been is on an empty red way tile")
 			return "red"
 
@@ -552,35 +582,32 @@ sync func move_snakes(randGreen,randYellow,randRed):
 			snakePos = [snake.position.x,snake.position.y]
 			if snake.is_in_group("Green"):
 				#print("RandGreen= "+str(randG))
-				if randG>=greenWayEmptyTilePos.size():
-					randG-=1
-				snake.position.x = greenWayEmptyTilePos[randG][0]
-				snake.position.y = greenWayEmptyTilePos[randG][1]
-				var removeTile= greenWayEmptyTilePos.find([snake.position.x,snake.position.y])
-				if removeTile!=-1:
-					greenWayEmptyTilePos.remove(greenWayEmptyTilePos.find([snake.position.x,snake.position.y]))
-				if !playersEmptyPos.has(snakePos):
-					greenWayEmptyTilePos.append(snakePos)
+				if greenWayEmptyTilePos.size()>0||randGreen==0:
+					snake.position.x = greenWayEmptyTilePos[randG][0]
+					snake.position.y = greenWayEmptyTilePos[randG][1]
+					var removeTile= greenWayEmptyTilePos.find([snake.position.x,snake.position.y])
+					if removeTile!=-1:
+						greenWayEmptyTilePos.remove(greenWayEmptyTilePos.find([snake.position.x,snake.position.y]))
+					if !playersEmptyPos.has(snakePos):
+						greenWayEmptyTilePos.append(snakePos)
 			elif snake.is_in_group("Yellow"):
-				if randY>=yellowWayEmptyTilePos.size():
-					randY-=1
-				snake.position.x = yellowWayEmptyTilePos[randY][0]
-				snake.position.y = yellowWayEmptyTilePos[randY][1]
-				var removeTile= yellowWayEmptyTilePos.find([snake.position.x,snake.position.y])
-				if removeTile!=-1:
-					yellowWayEmptyTilePos.remove(yellowWayEmptyTilePos.find([snake.position.x,snake.position.y]))
-				if !playersEmptyPos.has(snakePos):
-					yellowWayEmptyTilePos.append(snakePos)
+				if yellowWayEmptyTilePos.size()>0||randY==0:
+					snake.position.x = yellowWayEmptyTilePos[randY][0]
+					snake.position.y = yellowWayEmptyTilePos[randY][1]
+					var removeTile= yellowWayEmptyTilePos.find([snake.position.x,snake.position.y])
+					if removeTile!=-1:
+						yellowWayEmptyTilePos.remove(yellowWayEmptyTilePos.find([snake.position.x,snake.position.y]))
+					if !playersEmptyPos.has(snakePos):
+						yellowWayEmptyTilePos.append(snakePos)
 			elif snake.is_in_group("Red"):
-				if randR>=redWayEmptyTilePos.size():
-					randR-=1
-				snake.position.x = redWayEmptyTilePos[randR][0]
-				snake.position.y = redWayEmptyTilePos[randR][1]
-				var removeTile= redWayEmptyTilePos.find([snake.position.x,snake.position.y])
-				if removeTile!=-1:
-					redWayEmptyTilePos.remove(redWayEmptyTilePos.find([snake.position.x,snake.position.y]))
-				if !playersEmptyPos.has(snakePos):
-					redWayEmptyTilePos.append(snakePos)
+				if redWayEmptyTilePos.size()>0||randR==0:
+					snake.position.x = redWayEmptyTilePos[randR][0]
+					snake.position.y = redWayEmptyTilePos[randR][1]
+					var removeTile= redWayEmptyTilePos.find([snake.position.x,snake.position.y])
+					if removeTile!=-1:
+						redWayEmptyTilePos.remove(redWayEmptyTilePos.find([snake.position.x,snake.position.y]))
+					if !playersEmptyPos.has(snakePos):
+						redWayEmptyTilePos.append(snakePos)
 	yield(get_tree().create_timer(3),"timeout")
 
 sync func Show_SnakeBattlePopUp(playerWillFight,snakeOpponent):
@@ -690,6 +717,9 @@ func _on_Timer_timeout():
 	for child in Persistent_nodes.get_node("CanvasLayer").get_children():
 					if child.is_in_group("Score"):
 						child.queue_free()
+	for child in Persistent_nodes.get_children():
+		if child.is_in_group("Username"):
+			child.queue_free()
 	PlayersTurns.erase_everything()
 	Network.reset_network_connection()
 	get_tree().change_scene("res://UI/Main.tscn")

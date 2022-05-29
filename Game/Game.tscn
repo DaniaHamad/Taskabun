@@ -113,6 +113,137 @@ limit_right = 640
 limit_bottom = 0
 smoothing_enabled = true
 
+[node name="EmptyTiles" type="YSort" parent="."]
+
+[node name="EmptyGreen" type="YSort" parent="EmptyTiles"]
+
+[node name="Position" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 96, -32 )
+
+[node name="Position2" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 416, -32 )
+
+[node name="Position3" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 544, -32 )
+
+[node name="Position4" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 608, -96 )
+
+[node name="Position5" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 544, -96 )
+
+[node name="Position6" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 288, -96 )
+
+[node name="Position7" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 160, -96 )
+
+[node name="Position8" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 96, -96 )
+
+[node name="Position9" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 32, -160 )
+
+[node name="Position10" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 352, -160 )
+
+[node name="Position11" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 480, -160 )
+
+[node name="Position12" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 608, -160 )
+
+[node name="Position13" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 544, -224 )
+
+[node name="Position14" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 480, -224 )
+
+[node name="Position15" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 416, -224 )
+
+[node name="Position16" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 160, -224 )
+
+[node name="Position17" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 96, -224 )
+
+[node name="EmptyYellow" type="YSort" parent="EmptyTiles"]
+
+[node name="Position" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 160, -288 )
+
+[node name="Position2" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 288, -288 )
+
+[node name="Position3" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 480, -288 )
+
+[node name="Position4" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 608, -288 )
+
+[node name="Position5" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 416, -352 )
+
+[node name="Position6" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 288, -352 )
+
+[node name="Position7" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 96, -352 )
+
+[node name="Position8" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 32, -352 )
+
+[node name="Position9" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 288, -416 )
+
+[node name="Position10" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 416, -416 )
+
+[node name="Position11" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 608, -416 )
+
+[node name="Position12" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 608, -480 )
+
+[node name="Position13" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 480, -480 )
+
+[node name="Position14" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 352, -480 )
+
+[node name="Position15" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 224, -480 )
+
+[node name="Position16" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 32, -480 )
+
+[node name="Position17" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 160, -544 )
+
+[node name="Position18" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 416, -544 )
+
+[node name="Position19" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 480, -544 )
+
+[node name="Position20" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 544, -544 )
+
+[node name="EmptyRed" type="YSort" parent="EmptyTiles"]
+
+[node name="Position" type="Position2D" parent="EmptyTiles/EmptyRed" groups=["EmptyRed"]]
+position = Vector2( 608, -608 )
+
+[node name="Position2" type="Position2D" parent="EmptyTiles/EmptyRed" groups=["EmptyRed"]]
+position = Vector2( 480, -608 )
+
+[node name="Position3" type="Position2D" parent="EmptyTiles/EmptyRed" groups=["EmptyRed"]]
+position = Vector2( 352, -608 )
+
+[node name="Position4" type="Position2D" parent="EmptyTiles/EmptyRed" groups=["EmptyRed"]]
+position = Vector2( 96, -608 )
+
 [node name="Tasks" type="YSort" parent="."]
 
 [node name="GreenTasks" type="YSort" parent="Tasks"]

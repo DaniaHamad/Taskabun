@@ -10,6 +10,9 @@ var myOval="" setget set_myOval
 
 
 var username setget username_set
+var username_text = load("res://Player/Username_text.tscn")
+
+var username_text_instance = null
 
 puppet var puppet_myOval="" setget puppet_myOval_set
 puppet var puppet_playerCount =1 setget puppet_playerCount_set
@@ -25,9 +28,13 @@ onready var sprite = $Sprite
 func _ready():
 	
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
-
+	
+	username_text_instance = Global.instance_node_at_location(username_text, Persistent_nodes, global_position)
+	
+	username_text_instance.player_following = self
 func _process(delta: float) -> void:
-	pass
+	if username_text_instance != null:
+		username_text_instance.name = "username" + name
 		
 func set_myOval(x):
 	myOval=x
@@ -108,16 +115,18 @@ func puppet_charhead_set(new_value):
 func username_set(new_value) -> void:
 	username = new_value
 	if get_tree().has_network_peer():
-		if is_network_master():
+		if is_network_master() and username_text_instance!=null:
+			username_text_instance.text = username
 			rset("puppet_username", username)
 			
 		
 
-			
+
 func puppet_username_set(new_value) -> void:
 	puppet_username = new_value
 	if get_tree().has_network_peer():
-		if not is_network_master():
+		if not is_network_master() and username_text_instance!=null:
+			username_text_instance.text=puppet_username
 			username = puppet_username
 
 
