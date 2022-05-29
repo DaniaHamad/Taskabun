@@ -1,6 +1,6 @@
 # Taskabun
 
-The project is on the Pixil branch
+The project is on the Pixel branch
 
 ## Naming 
 - Scenescene
