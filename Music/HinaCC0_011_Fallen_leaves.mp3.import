@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/HinaCC0_011_Fallen_leaves.mp3-21cf4dac73412fadcf1efe5b7bf696d9.mp3str"
+
+[deps]
+
+source_file="res://Music/HinaCC0_011_Fallen_leaves.mp3"
+dest_files=[ "res://.import/HinaCC0_011_Fallen_leaves.mp3-21cf4dac73412fadcf1efe5b7bf696d9.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

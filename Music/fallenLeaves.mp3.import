@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/fallenLeaves.mp3-0aba7e961f352f2907bae319f110bdf7.mp3str"
+
+[deps]
+
+source_file="res://Music/fallenLeaves.mp3"
+dest_files=[ "res://.import/fallenLeaves.mp3-0aba7e961f352f2907bae319f110bdf7.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -7,7 +7,7 @@ var playerCount =1 setget set_playerCount
 var mychar="" setget set_mychar,get_mychar
 var mycharhead="" setget set_mycharhead,get_mycharhead
 var myOval="" setget set_myOval
-
+var charNum =1 setget set_charNum, get_charNum
 
 var username setget username_set
 var username_text = load("res://Player/Username_text.tscn")
@@ -17,6 +17,7 @@ var username_text_instance = null
 puppet var puppet_myOval="" setget puppet_myOval_set
 puppet var puppet_playerCount =1 setget puppet_playerCount_set
 puppet var puppet_char = "" setget puppet_char_set
+puppet var puppet_charNum = "" setget puppet_charNum_set
 puppet var puppet_charhead = "" setget puppet_charhead_set
 puppet var puppet_position = Vector2(0, 0) setget puppet_position_set
 puppet var puppet_username = "" setget puppet_username_set
@@ -25,6 +26,8 @@ puppet var puppet_username = "" setget puppet_username_set
 onready var tween = $Tween
 onready var sprite = $Sprite 
 
+signal animation_Attack_Finished_Player()
+signal player_got_hurt()
 func _ready():
 	
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
@@ -95,6 +98,22 @@ func puppet_char_set(new_value):
 			$Sprite.texture=load(puppet_char)
 			mychar = puppet_char
 
+func set_charNum(new_value):
+	charNum = new_value
+	if get_tree().has_network_peer():
+		if is_network_master():
+			rset("puppet_charNum", charNum)
+			
+func get_charNum():
+	return charNum
+
+func puppet_charNum_set(new_value):
+	puppet_charNum = new_value
+	if get_tree().has_network_peer():
+		if not is_network_master():
+			charNum = puppet_charNum
+
+
 func set_mycharhead(new_value):
 	mycharhead = new_value
 	if get_tree().has_network_peer():
@@ -135,6 +154,9 @@ func _network_peer_connected(id) -> void:
 	rset_id(id, "puppet_char", mychar)
 	rset_id(id, "puppet_myOval", myOval)
 	rset_id(id, "puppet_playerCount", playerCount)
+	rset_id(id,"puppet_charhead",mycharhead)
+	rset_id(id,"puppet_charNum",charNum)
+	
 
 
 
@@ -151,4 +173,9 @@ sync func update_position(pos):
 func _exit_tree() -> void:
 	pass
 
+func attack_animation_finished():
+	emit_signal("animation_Attack_Finished_Player")
 
+
+func _on_HurtBox_area_entered(area):
+	emit_signal("player_got_hurt")

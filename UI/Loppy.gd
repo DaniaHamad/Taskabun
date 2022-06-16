@@ -158,7 +158,7 @@ func _connected_to_server() -> void:
 
 func instance_player(id) -> void:
 	var location=get_node("Spawn_locations/" + str(current_spawn_location_instance_number)).global_position
-	#location.y-=150/5
+	location.y=150
 	var player_instance = Global.instance_node_at_location(player, Persistent_nodes, location)
 	var score_instance = Global.instance_node_at_location(scorePlayer, Persistent_nodes.get_node("CanvasLayer"), 
 	Vector2(
@@ -185,11 +185,13 @@ func instance_player(id) -> void:
 	player_instance.playerCount = current_spawn_location_instance_number
 	
 	get_node(c).hide()
+	
 	var s="res://Assets/players/body"+str(player_char)+".png"
 	var s2 ="res://Assets/players/head"+str(player_char)+".png"
+	var s3 = player_char
 	player_instance.mychar=s
 	player_instance.mycharhead=s2
-	
+	player_instance.charNum = s3
 	match player_instance.playerCount:
 		1:
 			score_instance.myRank = "1st"
