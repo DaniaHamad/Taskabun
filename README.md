@@ -8,6 +8,8 @@ You can connect between desktop devices or mobile devices or the mix of both!
 
 This game only currently available LAN means that all the devices but be connected with the same internet 
 
+At the moment the game can only be played on Windows and Android devies
+
 To play the game on mobile first you need to make sure that you have downloaded Android SDK and set Android SDK and Debug Keystore paths in:
 Editor -> Editor Settings -> Export -> Android 
 
