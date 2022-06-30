@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Game/PopUpMessages/SnakeBattleResult.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Fonts/FFFFORWA.ttf" type="DynamicFontData" id=2]
@@ -9,11 +9,12 @@
 [ext_resource path="res://Assets/Background/texture.png" type="Texture" id=7]
 [ext_resource path="res://Assets/GUI/ArrowUnpressed.png" type="Texture" id=8]
 [ext_resource path="res://Assets/GUI/ArrowPressed.png" type="Texture" id=9]
-[ext_resource path="res://Assets/GUI/healthbar.png" type="Texture" id=10]
+[ext_resource path="res://Assets/GUI/healthchar.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Snakes/GreenSnakeHead.png" type="Texture" id=11]
 [ext_resource path="res://Assets/players/head1Dark.png" type="Texture" id=12]
 [ext_resource path="res://Assets/GUI/PunchUnpressed.png" type="Texture" id=13]
 [ext_resource path="res://Assets/GUI/PunchPressed.png" type="Texture" id=14]
+[ext_resource path="res://Assets/GUI/healthsnake.png" type="Texture" id=15]
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 2 )
@@ -237,12 +238,17 @@ action = "attack"
 
 [node name="HealthBarSnake" type="Sprite" parent="."]
 position = Vector2( 127, -80 )
-texture = ExtResource( 10 )
 flip_h = true
 
-[node name="SnakeHead" type="Sprite" parent="HealthBarSnake"]
-position = Vector2( 42, -2 )
-texture = ExtResource( 11 )
+[node name="HolderHealthSnake" type="ColorRect" parent="HealthBarSnake"]
+margin_left = -42.0
+margin_top = -7.0
+margin_right = 21.0
+margin_bottom = 7.0
+color = Color( 0.282353, 1, 0.286275, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="SnakeHealth" type="ColorRect" parent="HealthBarSnake"]
 margin_left = -40.0
@@ -254,14 +260,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Healthsnake" type="Sprite" parent="HealthBarSnake"]
+position = Vector2( 39, -2 )
+texture = ExtResource( 15 )
+
+[node name="SnakeHead" type="Sprite" parent="HealthBarSnake"]
+position = Vector2( 42, -2 )
+texture = ExtResource( 11 )
+
 [node name="HealthBarPlayer" type="Sprite" parent="."]
 position = Vector2( -129, -80 )
-texture = ExtResource( 10 )
 
-[node name="PlayerHead" type="Sprite" parent="HealthBarPlayer"]
-position = Vector2( -43, 0 )
-texture = ExtResource( 12 )
-flip_h = true
+[node name="HolderHealthPlayer" type="ColorRect" parent="HealthBarPlayer"]
+margin_left = -21.0
+margin_top = -7.0
+margin_right = 42.0
+margin_bottom = 7.0
+color = Color( 0.388235, 0.207843, 0.176471, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PlayerHealth" type="ColorRect" parent="HealthBarPlayer"]
 margin_left = -20.0
@@ -272,6 +290,15 @@ color = Color( 0.835294, 0.0392157, 0.0392157, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Healthchar" type="Sprite" parent="HealthBarPlayer"]
+position = Vector2( -40, -2 )
+texture = ExtResource( 10 )
+
+[node name="PlayerHead" type="Sprite" parent="HealthBarPlayer"]
+position = Vector2( -40, -2 )
+texture = ExtResource( 12 )
+flip_h = true
 
 [connection signal="timeout" from="TimeLeft/Timer" to="." method="_on_Timer_timeout"]
 

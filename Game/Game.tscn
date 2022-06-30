@@ -623,7 +623,6 @@ script = ExtResource( 25 )
 [node name="PopUpLayer" type="CanvasLayer" parent="."]
 
 [node name="Popup2" parent="PopUpLayer" instance=ExtResource( 26 )]
-visible = false
 margin_left = 110.0
 margin_top = 70.0
 margin_right = 150.0

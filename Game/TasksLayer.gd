@@ -1,52 +1,57 @@
 extends CanvasLayer
 signal task_finished(x)
-var number=0
+var number_of_cups=0
 var duration=0
 var hardness=0 
 var cup_list=[]
 var cup_list_next=[]
-var length=0
+var equation_length=0
 var equation
-var rt
-var loc
-var active=false
+var task_number
+var my_position
+var active_player=false
 var direction
-func select_task(v):
-	#var rt= range(1,2)[randi()%range(1,2).size()]	
-	rt=2
-	var task="res://Tasks/Task"+str(rt)+"/Task"+str(rt)+".tscn"
+var player_name
+func select_task(task_hardness,playerName):
+	#var task_number= range(1,3)[randi()%range(1,3).size()]	
+	task_number= range(1,3)[randi()%range(1,3).size()]
+	
+	player_name=playerName
+	var task="res://Tasks/Task"+str(task_number)+"/Task"+str(task_number)+".tscn"
 	var t=load(task).instance()
-	match rt:	
+	match task_number:	
 		0:
-			active=true;
+			active_player=true;
 			var id=Global.my_id
-		
-			rpc("upload_task0",id,v)
+			rpc("upload_task0",id,task_hardness)
 		1:
-			generate_values_1(v)
-			t.set_values(number,duration,hardness,cup_list,cup_list_next,true)
+			active_player=true;
+			generate_values_1(task_hardness)
+			t.set_values(number_of_cups,duration,hardness,cup_list,cup_list_next,true)
 		2:
-			generate_values_2(v)	
-			t.set_values(duration,hardness,length,true)
-	if rt!=0:
+			active_player=true;
+			generate_values_2(task_hardness)	
+			t.set_values(duration,hardness,equation_length,true)
+	if task_number!=0:
 		add_child(t)
 		t.connect("task_ended",self,"on_task_ended")
-		rpc("set_values",number,duration,hardness,cup_list,cup_list_next,length)
-		rpc("start_task",rt)
+		rpc("set_values",number_of_cups,duration,hardness,cup_list,cup_list_next,equation_length)
+		rpc("start_task",task_number)
 
 
-signal task0_started(x)
 
-sync func upload_task0(id,v):
-	emit_signal("task0_started",true)
+
+sync func upload_task0(id,task_hardness):
 	get_parent().get_node("Camera2D").current=false
-	rt=0
-	direction=Global.player_master.get_direction()
-	var task="res://Tasks/Task"+str(rt)+"/Task"+str(rt)+".tscn"
+	task_number=0	
+	var task="res://Tasks/Task"+str(task_number)+"/Task"+str(task_number)+".tscn"
 	var t=load(task).instance()
-	loc=Global.player_master.get_position()
-	Global.player_master.set_init_pos(loc)
-	t.set_values(id,active,v)	
+	my_position=Global.player_master.get_position()
+	print("player >> ",Global.player_master)
+	print("before<< ",my_position)
+	#Global.player_master.set_init_pos(my_position)
+	Global.Player_pos=my_position
+	t.set_values(id,active_player,task_hardness)	
 	get_parent().get_node("Task0Layer").add_child(t)
 	t.connect("task_ended",self,"on_task_ended")
 	
@@ -55,7 +60,7 @@ var rng = RandomNumberGenerator.new()
 func generate_values_1(x):
 	cup_list=[]
 	cup_list_next=[]
-	number=range(2,5)[randi()%range(2,5).size()]				
+	number_of_cups=range(2,5)[randi()%range(2,5).size()]				
 	if x=="easy":
 		duration=range(5,10)[randi()%range(5,10).size()]
 		hardness=rng.randf_range(.7,2.5)
@@ -65,7 +70,7 @@ func generate_values_1(x):
 	else:
 		duration=range(15,20)[randi()%range(15,20).size()]	
 		hardness=rng.randf_range(.7,2.5)-.5
-	var n=number
+	var n=number_of_cups
 	for i in range(6):
 		var r=range(1,n+1)[randi()%range(1,n+1).size()]	
 		var pos=range(1,n+1)[randi()%range(1,n+1).size()]	
@@ -83,45 +88,47 @@ func generate_values_2(x):
 		hardness=1
 	else:
 		hardness=2
-	length=range(2,4+hardness)[randi()%range(2,4+hardness).size()]	
-	duration=(length*(length-hardness))
+	equation_length=range(2,4+hardness)[randi()%range(2,4+hardness).size()]	
+	duration=(equation_length*(equation_length-hardness))
 		
 	
 remote func set_values(n,d,h,s,c,l):
-	number=n
+	number_of_cups=n
 	duration=d
 	hardness=h
 	cup_list=s
 	cup_list_next=c
-	length=l
+	equation_length=l
 				
 
 remote func start_task(r):
-	rt=r
-	var task="res://Tasks/Task"+str(rt)+"/Task"+str(rt)+".tscn"
+	task_number=r
+	var task="res://Tasks/Task"+str(task_number)+"/Task"+str(task_number)+".tscn"
 	var t=load(task).instance()
-	match rt:
+	match task_number:
 		1:
-			t.set_values(number,duration,hardness,cup_list,cup_list_next,false)
+			t.set_values(number_of_cups,duration,hardness,cup_list,cup_list_next,false)
 		2:
-			t.set_values(duration,hardness,length,false)	
+			t.set_values(duration,hardness,equation_length,false)	
 	
 	add_child(t)
-	if rt==0:
-		t.connect("task_ended",self,"on_task_ended")
+	
 
 	
-	
-func on_task_ended(val,playerWonName):
-	if rt==0:
-		emit_signal("task0_started",false)
+signal task0_finished	
+func on_task_ended(val):
+	if task_number==0:
 		get_parent().get_node("Camera2D").make_current()
-		Global.player_master.set_direction(direction)	
-		Global.player_master.update_position(loc)
-	if active:		
-		emit_signal("task_finished",val,playerWonName)
+		#print("next>> ",Global.Player_pos)
+		print("pp before>> ",Global.player_master.get_position())
+		Global.player_master.update_position(Global.Player_pos)
+		print("pp next>> ",Global.player_master.get_position())
+		emit_signal("task0_finished")
+	if active_player:		
+		emit_signal("task_finished",val,player_name)
 	else:
-		emit_signal("task_finished",val,playerWonName)
-	active=false	
+		emit_signal("task_finished",val,player_name)
+	active_player=false	
+
 
 

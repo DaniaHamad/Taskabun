@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Tasks/cupwin3.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Tasks/cupwin1.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Tasks/cupDown.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Tasks/cupUp.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Tasks/cupwin2.png" type="Texture" id=5]
+[ext_resource path="res://Tasks/Task1/Cup.gd" type="Script" id=6]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": false,
+"name": "cupWin",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": false,
+"name": "cupIdle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": false,
+"name": "cupUp",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 3 ) ],
+"loop": false,
+"name": "cupDown",
+"speed": 5.0
+} ]
+
+[node name="Cup" type="Area2D"]
+script = ExtResource( 6 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 1.00002, 1.00001 )
+scale = Vector2( 0.361872, 0.364583 )
+frames = SubResource( 1 )
+animation = "cupIdle"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+z_index = 2
+polygon = PoolVector2Array( 0, -46, 11, -46, 24, -43, 27, -40, 27, -38, 29, -36, 34, 24, 36, 25, 37, 35, 41, 39, 41, 43, 38, 47, 20, 52, -2, 53, -17, 52, -32, 48, -36, 43, -35, 38, -32, 36, -31, 26, -29, 23, -23, -36, -22, -38, -21, -42, -10, -45 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+margin_left = -37.0
+margin_top = -46.0
+margin_right = 42.0
+margin_bottom = 53.0
+mouse_default_cursor_shape = 2
+border_color = Color( 0.0588235, 0.65098, 0.882353, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="gui_input" from="ReferenceRect" to="." method="_on_ReferenceRect_gui_input"]

@@ -19,10 +19,12 @@ onready var timeLeft = $TimeLeft
 onready var timer = $TimeLeft/Timer
 onready var buttons =$Buttons 
 onready var healthBarSnake = $HealthBarSnake
+onready var holderHealthSnake = $HealthBarSnake/HolderHealthSnake
 onready var healthBarPlayer =$HealthBarPlayer 
 onready var snakeHead =$HealthBarSnake/SnakeHead
 onready var snakeHealth = $HealthBarSnake/SnakeHealth
 onready var playerHead = $HealthBarPlayer/PlayerHead
+onready var holderHealthPlayer = $HealthBarPlayer/HolderHealthPlayer
 onready var playerHealth = $HealthBarPlayer/PlayerHealth 
 
 
@@ -102,6 +104,7 @@ func set_fighter(playerWillFight):
 	fighter.connect("animation_Attack_Finished_Player",self,"Animation_Finished_Player_Attack")
 	fighter.connect("player_got_hurt",self,"player_hurt")
 	playerHealth.rect_size.x = playerHB
+	holderHealthPlayer.rect_size.x = playerHB+3
 	playerHead.texture = load("res://Assets/players/head"+str(fighter.charNum)+".png")
 	if get_parent().get_parent().player.username == fighter.username:
 		snakeBattleResult.get_node("OK").show()
@@ -123,7 +126,9 @@ func set_opponent(snakeWillSnake):
 	opponent.position = Vector2(0,0)
 	snakeHB = opponent.snakeHB
 	snakeHealth.rect_size.x = snakeHB
+	holderHealthSnake.rect_size.x = snakeHB *1.2
 	snakeHealth.rect_position.x = (snakeHB-20)*-1
+	holderHealthSnake.rect_position.x =(snakeHealth.rect_position.x)-2
 	snakeHead.texture = load("res://Assets/Snakes/"+str(opponent.name)+"Head.png")
 	timer.start()
 

@@ -198,7 +198,7 @@ sync func task_ended(val):
 		else:
 			$equation.text="Player "+""+" lost!"	
 	yield(get_tree().create_timer(3),"timeout")
-	emit_signal("task_ended",val,playerPlayedTask)
+	emit_signal("task_ended",val)
 	queue_free()
 
 sync func set_player_won_name(playerName):

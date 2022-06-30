@@ -140,6 +140,8 @@ sync func remove_player(id):
 	
 	if playerTurnNowName=="Quit":
 		if get_tree().is_network_server():
+			show_popup2("The Player has diconnected")
+			yield(get_tree().create_timer(2.0),"timeout")
 			loopTurns()
 	if isDiceAllPlayers:
 		resetDiceAllPlayers()
@@ -522,17 +524,17 @@ func move_player(playerToMoveName,diceNum):
 			rpc("Show_SnakeBattlePopUp",playerToMoveName,snakeCollidedWith)
 		"easy":
 			if triggerIt:
-				tasksLayer.select_task("easy")
+				tasksLayer.select_task("easy",player.name)
 			else:
 				loopTurns()
 		"medium":
 			if triggerIt:
-				tasksLayer.select_task("medium")
+				tasksLayer.select_task("medium",player.name)
 			else:
 				loopTurns()
 		"hard":
 			if triggerIt:
-				tasksLayer.select_task("hard")
+				tasksLayer.select_task("hard",player.name)
 			else:
 				loopTurns()
 		_:
