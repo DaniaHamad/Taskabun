@@ -180,7 +180,7 @@ __meta__ = {
 }
 
 [node name="Timer" type="Timer" parent="TimeLeft"]
-wait_time = 60.0
+wait_time = 10.0
 one_shot = true
 
 [node name="PlayerPosition" type="Position2D" parent="."]

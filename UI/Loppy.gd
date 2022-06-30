@@ -22,6 +22,7 @@ func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
+	get_tree().connect("server_disconnected", self, "_server_disconnected")
 	start_game.hide()
 	start_test_game.hide()
 
@@ -57,28 +58,38 @@ func _player_connected(id) -> void:
 
 
 func _player_disconnected(id) -> void:
-	rpc("remove_player",id)
+	remove_player(id)
 
 		
 sync func remove_player(id):
 	if Persistent_nodes.has_node(str(id)):
 		Persistent_nodes.get_node(str(id)).username_text_instance.queue_free()
 		Persistent_nodes.get_node(str(id)).queue_free()
-		Persistent_nodes.get_node("CanvasLayer").get_node(str(id)).queue_free()
+		
 	yield(get_tree().create_timer(.7),"timeout")	
 	var c=1	
 	for player in Persistent_nodes.get_children():
 		if player.is_in_group("Player"):
+			
 			var location=get_node("Spawn_locations/" + str(c)).global_position
-			#location.y-=150/5
+			player.playerCount = c
+			location.y-=50/5
 			player.rpc("update_position", location)	
 			c+=1
-	#for playerscore in Persistent_nodes.get_node("CanvasLayer").get_children():
-	#	if playerscore.is_in_group("Score"):
-	#		playerscore.rpc("update_position", Vector2(playerscore.global_position.x-64,playerscore.global_position.y))	
-	
+	var scoreShiftPlace = false
+	for playerscore in Persistent_nodes.get_node("CanvasLayer").get_children():
+		if playerscore.is_in_group("Score"):
+			if playerscore.name ==str(id):
+				scoreShiftPlace = true
+				Persistent_nodes.get_node("CanvasLayer").get_node(str(id)).queue_free()
+			else:
+				if scoreShiftPlace:
+					playerscore.global_position.x-=64
+					
+		
+				
 	Network.No_of_current_players=c-1
-			
+	current_spawn_location_instance_number=c
 		
 		
 
@@ -257,11 +268,11 @@ sync func switch_to_test_game() -> void:
 func _on_Popup_ok_pressed():
 	$Popup.hide()
 	
-func show_popup2(c):	
+func show_popup2(c):
 	$Popup2/Message.text=c
 	$Popup2.popup()
 	yield(get_tree().create_timer(2.0),"timeout")
-	$Popup2.hide()	
+	$Popup2.hide()
 
 onready var sprite1=$Spawn_locations/Sprite1
 onready var sprite2=$Spawn_locations/Sprite2
@@ -321,4 +332,20 @@ sync func leave_game() -> void:
 			
 
 
+func back_to_main_menu():
+	for child in Persistent_nodes.get_node("CanvasLayer").get_children():
+		if child.is_in_group("Score"):
+			child.queue_free()
 
+	Network.reset_network_connection()
+	for child in Persistent_nodes.get_children():
+		if child.is_in_group("Net"):
+			child.queue_free()
+	get_tree().change_scene("res://UI/Main.tscn")
+
+func _server_disconnected() -> void:
+	show_popup2("The server has been disconnected")
+	yield(get_tree().create_timer(2),"timeout")
+	back_to_main_menu()
+	print("Disconnected from the server")
+	

@@ -33,7 +33,7 @@ margin_right = 137.0
 margin_bottom = -32.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
-text = "Victory!/Defeat!"
+text = "Disconnected"
 align = 1
 valign = 1
 __meta__ = {
@@ -47,15 +47,16 @@ margin_right = 136.0
 margin_bottom = 32.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
-text = "You shall stay on your tile
-you shall go backwards"
+text = "Tha player has left the game, going back to the board"
 align = 1
 valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="OK" type="Button" parent="."]
+visible = false
 margin_left = -23.0
 margin_top = 41.0
 margin_right = 23.0

@@ -9,6 +9,8 @@ var Oddrow = true
 var backwards = false
 var triggerIt = true
 var bossSnakeGoBackwords = false
+var isDiceAllPlayers = false
+
 onready var tasks =  $Tasks
 onready var emptyTiles = $EmptyTiles
 onready var camera = $Camera2D
@@ -20,6 +22,9 @@ onready var snakes = $YSortWorld/Snakes
 onready var canvas = $CanvasLayer
 onready var lastTilePopup =$CanvasLayer/LastTilePopUp 
 onready var playersRanks = $CanvasLayer/PlayersRanks
+onready var tasksLayer = $TasksLayer
+onready var popUpLayer = $PopUpLayer
+onready var popUp2 = $PopUpLayer/Popup2
 
 var player #we are the current player
 var rolls=0 
@@ -27,8 +32,7 @@ var rolls=0
 var snakeCollidedWith
 var taskCollidedWith
 
-var clearedTask=false
-var clearedSnake=false
+var playerTurnNowName
 
 var greenWayEmptyTilePos=[]
 var yellowWayEmptyTilePos=[]
@@ -57,15 +61,21 @@ func _ready():
 	randomize()
 	var speed = 0.006 #camera speed
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected") #to remove player
+	get_tree().connect("server_disconnected", self, "_server_disconnected")
 	instance_player(get_tree().get_network_unique_id()) #player and score enter game
 	rpc("move_Children") #from persistent_node to ysort players
 	store_Tile_Pos()
 	store_Empty_Pos()
 	get_map_config()
-	yield(move_camera(speed),"completed")#move the camera until it's completed
+#	yield(move_camera(speed),"completed")#move the camera until it's completed
 	player = players.get_node(str(get_tree().get_network_unique_id())) #we are the current player (this is me)
 
+	showDiceAllPlayers()
 
+func showDiceAllPlayers():
+	isDiceAllPlayers= true
+	diceAllPlayers.get_node("PopUpGameMessage").show()
+	diceAllPlayers.get_node("Label").show()
 	var i=0
 	while(numberOfPlayers>i):#function to show all the dices only on the DiceAllPlayers scene
 		i+=1
@@ -75,27 +85,81 @@ func _ready():
 		dice.show()
 
 
-	var r = player.playerCount #show the button for me only (current player)
-	var roll= diceAllPlayers.get_node("Roll"+str(r)) #get the button roll for me
+	var rollNumber = player.playerCount #show the button for me only (current player)
+	var roll= diceAllPlayers.get_node("Roll"+str(rollNumber)) #get the button roll for me
 	roll.show()
 	rpc("hide_Score")
 	diceAllPlayers.show()
 
+func resetDiceAllPlayers():
+	var diceHolder
+	for i in range(1,5):
+		diceHolder = diceAllPlayers.get_node("Dice"+str(i))
+		diceHolder.texture = load("res://Assets/Dice/0.png")
+		diceHolder.diceId = 0
+		diceHolder.diceValue = 0
+	playersEmptyPos.clear()
+	rolls=0 
+	for child in diceAllPlayers.get_children():
+		child.hide()
+
 func _player_disconnected(id) -> void:
-	rpc("remove_player",id)
+	remove_player(id)
 sync func remove_player(id):
-	if Persistent_nodes.get_node("CanvasLayer").has_node(str(id)):
-		Persistent_nodes.get_node("CanvasLayer").get_node(str(id)).queue_free()
+	if !isDiceAllPlayers:  
+		if canvas.has_node("SnakeBattle"):
+			var snakeBattle = canvas.get_node("SnakeBattle")
+			if snakeBattle.fighter.name == str(id):
+				snakeBattle.go_back_to_parent()
+				yield(get_tree().create_timer(2),"timeout")
+				snakeBattle.queue_free()
+		
+		if players.has_node(str(id)):
+			if playerTurnNowName ==str(id):
+				playerTurnNowName="Quit"
+		if playerTurnNowName=="Quit":
+			for popUp in canvas.get_children():
+				popUp.hide()
+			if tasksLayer.get_child_count() != 0:
+				for taskChild in tasksLayer.get_children():
+					taskChild.hide()
+					taskChild.queue_free()
+		
 	if players.has_node(str(id)):
 		players.get_node(str(id)).username_text_instance.queue_free()
+		if !isDiceAllPlayers: 
+			PlayersTurns.delete_player(players.get_node(str(id)))
+		players.get_node(str(id)).remove_from_group("Player")
+		players.get_node(str(id)).remove_from_group("Net")
+		playersEmptyPos.remove(players.get_node(str(id)).playerCount-1)
+		shiftPlayerCount(players.get_node(str(id)).playerCount)
 		players.get_node(str(id)).queue_free()
-	yield(get_tree().create_timer(.7),"timeout")	
-	#var c=1	
-	#for playerscore in Persistent_nodes.get_node("CanvasLayer").get_children():
-		#if playerscore.is_in_group("Score"):
-		#	playerscore.rpc("update_position", Vector2(playerscore.global_position.x-64,playerscore.global_position.y))	
-			#c+=1
-	#Network.No_of_current_players=c-1
+	shift_score_board_after_remove(id)
+	numberOfPlayers-=1
+	Network.No_of_current_players-=1
+	
+	if playerTurnNowName=="Quit":
+		if get_tree().is_network_server():
+			loopTurns()
+	if isDiceAllPlayers:
+		resetDiceAllPlayers()
+		showDiceAllPlayers()
+
+func shift_score_board_after_remove(id):
+	var scoreShiftPlace = false
+	for playerscore in Persistent_nodes.get_node("CanvasLayer").get_children():
+		if playerscore.is_in_group("Score"):
+			if playerscore.name ==str(id):
+				scoreShiftPlace = true
+				Persistent_nodes.get_node("CanvasLayer").get_node(str(id)).queue_free()
+			else:
+				if scoreShiftPlace:
+					playerscore.global_position.x-=64
+
+func shiftPlayerCount(playerCountDeleted):
+	for playerChild in players.get_children():
+		if playerChild.playerCount>playerCountDeleted:
+			playerChild.playerCount-=1
 
 func instance_player(id) -> void:
 	for child in Persistent_nodes.get_children(): #location of the players
@@ -232,13 +296,17 @@ sync func show_dice(diceId,diceNum):#show every body including me my dice
 	diceHolder.texture=load("res://Assets/Dice/"+str(diceNum)+".png") #change my dice texture
 	diceHolder.diceValue = diceNum
 	var roll = diceAllPlayers.get_node("Roll"+str(diceId)) #get my roll button
-	for i in range(numberOfPlayers+1):#start from zero to numberOfPlayers
-		var dice= diceAllPlayers.get_node(str("Dice"+str(i+1)))
+	for i in range(1,numberOfPlayers+1):#start from 1 to numberOfPlayers
+		var dice= diceAllPlayers.get_node(str("Dice"+str(i)))
 		if dice.texture.resource_path == "res://Assets/Dice/"+str(diceNum)+".png" && dice.diceId!=diceId&&player.playerCount==diceId:
 			#if the other dice is qual to my dice && the dice is not mine && I'm the owner of this dice that has been dublicated with
-			rpc("show_Roll_Button_Puppet",dice.diceId) #make the other dice roll again
-			dublicate=true
-
+			if !dublicate:
+				rpc("show_Roll_Button_Puppet",dice.diceId) #make the other dice roll again
+				print("dublicated")
+				dublicate=true
+			else:
+				print("not dublicated")
+				dublicate = false
 	if dublicate:
 		if player.playerCount == diceId:
 			roll.show()
@@ -259,13 +327,16 @@ sync func show_Roll_Button_Puppet(playerId):
 
 sync func i_rolled():
 	rolls+=1
+	print(str(rolls))
 sync func i_unrolled():
 	if rolls -1>=0:
 		rolls-=1
+		print(str(rolls))
 
 sync func the_order():
-	for i in range(numberOfPlayers+1):
-		i+=1
+	isDiceAllPlayers= false
+	for i in range(1,numberOfPlayers+1):
+		
 		var dice = diceAllPlayers.get_node(str("Dice"+str(i)))#get the player's dice
 		for playery in players.get_children():
 			if playery.is_in_group("Player"):
@@ -274,8 +345,8 @@ sync func the_order():
 					PlayersTurns.add_player_to_Array_to_get_sorted(playerDice)#add the player with their dice to an array
 					break
 	PlayersTurns.sort_players_Turns_desc()# sort all the added players
-	for i in range(numberOfPlayers):
-		i+=1
+	for i in range(1,numberOfPlayers+1):
+		
 		var playerHolder = PlayersTurns.get_player_turn_now()
 		var namePlayerPopUp = diceAllPlayers.get_node(str("Name"+str(playerHolder.playerCount)))
 		namePlayerPopUp.text = str(playerHolder.username)
@@ -298,7 +369,7 @@ sync func the_order():
 	player_turn("",0)#move forward with the game
 
 sync func player_turn(playerName,task):
-	
+
 	rpc("hide_Score")
 	var playerHolder
 	if task:
@@ -320,6 +391,7 @@ sync func player_turn(playerName,task):
 	diceHolder.texture=load("res://Assets/Dice/"+str(0)+".png")
 	if(player.username == playerHolder.username):
 		yourTurn.get_node("RollButton").show()
+	playerTurnNowName = playerHolder.name
 	yourTurn.show()
 
 
@@ -428,7 +500,10 @@ func move_player(playerToMoveName,diceNum):
 		scoreHolder.get_node("TileNumber").text = str(hopTile)
 		yield(get_tree().create_timer(1),"timeout")
 	backwards=false
-	rpc("refresh_ranking",str(playerToMoveName)) #rpc sync
+	rpc("update_current_player_turn_tile",str(playerToMoveName)) #rpc sync
+	
+	rpc("refresh_ranking") #rpc sync
+	
 	yield(get_tree().create_timer(1),"timeout")
 	if hopTile ==mapGoal:
 		last_tile(player.name)
@@ -447,17 +522,17 @@ func move_player(playerToMoveName,diceNum):
 			rpc("Show_SnakeBattlePopUp",playerToMoveName,snakeCollidedWith)
 		"easy":
 			if triggerIt:
-				$TasksLayer.select_task("easy")
+				tasksLayer.select_task("easy")
 			else:
 				loopTurns()
 		"medium":
 			if triggerIt:
-				$TasksLayer.select_task("medium")
+				tasksLayer.select_task("medium")
 			else:
 				loopTurns()
 		"hard":
 			if triggerIt:
-				$TasksLayer.select_task("hard")
+				tasksLayer.select_task("hard")
 			else:
 				loopTurns()
 		_:
@@ -489,10 +564,9 @@ func loopTurns():
 	yield(get_tree().create_timer(1),"timeout")
 	rpc("player_turn","",0)
 
-sync func refresh_ranking(playerToMoveName):
+sync func refresh_ranking():
 	print("Entered refresh_ranking")
-	var playerToMove = players.get_node(str(playerToMoveName))
-	PlayersTurns.modify_player_tile(playerToMove)
+	
 	PlayersTurns.sort_players_Ranking_desc()
 	for i in range(numberOfPlayers):
 		var playerHolder = PlayersTurns.get_player_rank_now()
@@ -506,8 +580,11 @@ sync func refresh_ranking(playerToMoveName):
 				scorePlayerHolder.myRank = "3rd"
 			4:
 				scorePlayerHolder.myRank = "4th"
-	playerToMove.get_node("follow").set_remote_node("")
+		playerHolder.get_node("follow").set_remote_node("")
 
+sync func update_current_player_turn_tile(playerToMoveName):
+	var playerToMove = players.get_node(str(playerToMoveName))
+	PlayersTurns.modify_player_tile(playerToMove)
 
 func where_Is_The_Player_Standing(playerHasMovedName):
 	
@@ -704,9 +781,10 @@ sync func player_Go_Backwards(collidedSnake,forfeitPlayer):
 	
 func player_is_dead():
 	snakeBattleResult.get_node("OK").hide()
+
+	rpc("delete_node",canvas.name,"SnakeBattle")
 	rpc("player_Go_Backwards",snakeCollidedWith,player.name)
-	if canvas.has_node("snakeBattlePopUp"):
-		rpc("delete_node",canvas.name,"SnakeBattle")
+
 
 
 func snake_is_dead():
@@ -719,7 +797,8 @@ func snake_is_dead():
 
 sync func delete_node(parentName,childName):
 	var parent = get_node(str(parentName))
-	parent.get_node(str(childName)).queue_free()
+	if parent.has_node(str(childName)):
+		parent.get_node(str(childName)).queue_free()
 
 func last_tile(playerOnLastTile):
 	snakeCollidedWith="BossSnake"
@@ -765,17 +844,33 @@ sync func victory(playerWinner):
 
 
 func _on_Timer_timeout():
+	back_to_main_menu()
+
+func back_to_main_menu():
 	for child in Persistent_nodes.get_node("CanvasLayer").get_children():
-					if child.is_in_group("Score"):
-						child.queue_free()
+		if child.is_in_group("Score"):
+			child.queue_free()
+	
+	Network.reset_network_connection()
 	for child in Persistent_nodes.get_children():
-		if child.is_in_group("Username"):
+		if child.is_in_group("Net"):
 			child.queue_free()
 	PlayersTurns.erase_everything()
-	Network.reset_network_connection()
+	yield(get_tree().create_timer(0.1),"timeout")
 	get_tree().change_scene("res://UI/Main.tscn")
 
+func show_popup2(c):
+	popUp2.get_node("Message").text=c
+	popUp2.popup()
+	yield(get_tree().create_timer(2.0),"timeout")
+	popUp2.hide()
 
+func _server_disconnected() -> void:
+	show_popup2("The server has been disconnected")
+	yield(get_tree().create_timer(2.0),"timeout")
+	back_to_main_menu()
+	print("Disconnected from the server")
+	
 
 func _on_TasksLayer_task_finished(taskPassingResult,playerName):
 	if taskPassingResult:

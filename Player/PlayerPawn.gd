@@ -35,10 +35,7 @@ func _ready():
 	username_text_instance = Global.instance_node_at_location(username_text, Persistent_nodes, global_position)
 	
 	username_text_instance.player_following = self
-func _process(delta: float) -> void:
-	if username_text_instance != null:
-		username_text_instance.name = "username" + name
-		
+
 func set_myOval(x):
 	myOval=x
 	if get_tree().has_network_peer():

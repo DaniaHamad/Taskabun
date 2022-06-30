@@ -53,7 +53,13 @@ func sort_playersArray_desc():
 
 func delete_player(player):
 	if playersTurns.has(player):
-		playersTurns.remove(playersTurns.find(player))
+		var index =0
+		for playerAndTileArray in players:
+			if playerAndTileArray[0]==player:
+				playersTurns.remove(playersTurns.find(player))
+				playersRanking.remove(playersTurns.find(player))
+				players.remove(players.find(playerAndTileArray))
+				break
 
 
 func erase_everything():

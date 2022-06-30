@@ -83,7 +83,7 @@ func _server_disconnected() -> void:
 		#if child.is_in_group("Net"):
 		#	child.queue_free()
 	
-	reset_network_connection()
+	#reset_network_connection()
 	
 	#if Global.ui != null:
 	#	var prompt = Global.instance_node(load("res://Simple_prompt.tscn"), Global.ui)
