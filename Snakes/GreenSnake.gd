@@ -5,8 +5,9 @@ signal player_in_reach()
 
 func _ready():
 	set_snakeName("Green Snake")
-	set_goBack(6)
+	set_goBack(5)
 	set_snakeHB(60)
+	set_snakeBite(10)
 
 func attack_animation_finished():
 	emit_signal("animation_Attack_Finished_Snake")

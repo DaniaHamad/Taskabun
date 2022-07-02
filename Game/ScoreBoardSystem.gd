@@ -47,9 +47,7 @@ func puppet_myRank_set(new_value):
 
 func set_tile(new_value):
 	tile = new_value
-	#after changeing our hp value we need to update it on all clients as well
 	if get_tree().has_network_peer():
-		#this means that we are the active player and we need to tell all the other players
 		if is_network_master():
 			$TileNumber.text = str(tile)
 			rset("puppet_tile", str(tile))
@@ -100,9 +98,7 @@ func puppet_username_set(new_value) -> void:
 
 func set_colorPlayer(new_value):
 	colorPlayer = Color(new_value)
-	#after changeing our hp value we need to update it on all clients as well
 	if get_tree().has_network_peer():
-		#this means that we are the active player and we need to tell all the other players
 		if is_network_master():
 			$PlayerColor.color = colorPlayer
 			rset("puppet_colorPlayer", colorPlayer)

@@ -1,6 +1,5 @@
 extends Area2D
 onready var animatedSprit=$AnimatedSprite
-#onready var parent=get_tree().get_root().get_node("world")
 var coin=false
 
 func enable_click(x):

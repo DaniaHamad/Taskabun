@@ -14,13 +14,10 @@ var current_player_username = ""
 var allow_join=true
 
 var client_connected_to_server = false
-#var servers_names_list=[]
 
 
 
-#reason for this is to create a unique name(index) for each bullet when there's multiple bullets shooting cuncruntly
 var networked_object_name_index = 0 setget networked_object_name_index_set
-#this will make sure all clients or on the same track bullet3 name will be bullet3 on all clients (no lag will affect)
 puppet var puppet_networked_object_name_index = 0 setget puppet_networked_object_name_index_set
 
 onready var client_connection_timeout_timer = Timer.new()
@@ -79,35 +76,18 @@ func _connected_to_server() -> void:
 
 func _server_disconnected() -> void:
 	print("Disconnected from the server")
-	#for child in  Persistent_nodes.get_children():
-		#if child.is_in_group("Net"):
-		#	child.queue_free()
-	
-	#reset_network_connection()
-	
-	#if Global.ui != null:
-	#	var prompt = Global.instance_node(load("res://Simple_prompt.tscn"), Global.ui)
-	#	prompt.set_text("Disconnected from server")
 
 func _client_connection_timeout():
 	if client_connected_to_server == false:
 		print("Client has been timed out")
 		
 		reset_network_connection()
-		
-		#var connection_timeout_prompt = Global.instance_node(load("res://Simple_prompt.tscn"), get_tree().current_scene)
-		#connection_timeout_prompt.set_text("Connection timed out")
+
 
 func _connection_failed():
-#	for child in Persistent_nodes.get_children():
-	#	if child.is_in_group("Net"):
-	#		child.queue_free()
-	
+
 	reset_network_connection()
 	
-	#if Global.ui != null:
-	#	var prompt = Global.instance_node(load("res://Simple_prompt.tscn"), Global.ui)
-	#	prompt.set_text("Connection failed")
 
 func puppet_networked_object_name_index_set(new_value):
 	networked_object_name_index = new_value

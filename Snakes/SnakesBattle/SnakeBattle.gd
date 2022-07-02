@@ -11,8 +11,9 @@ var opponentParent
 
 
 var playerHB=60
+var playerAttack =10
 var snakeHB
-
+var snakeAttack =10 
 
 onready var snakeBattleResult = $SnakeBattleResult
 onready var timeLeft = $TimeLeft
@@ -88,13 +89,9 @@ func _physics_process(delta):
 				snake_bite()
 			
 func set_fighter(playerWillFight):
-	print("enter set_fighter")
 	fighterParent = get_parent().get_parent().get_node("YSortWorld").get_node("Players")
-	print("The father of "+playerWillFight+" is "+fighterParent.name)
 	fighter = get_parent().get_parent().get_node("YSortWorld").get_node("Players").get_node(str(playerWillFight))
-	print("fighter is "+ fighter.name)
 	fighterPos = fighter.position
-	print("fighter pos is "+ str(fighter.position))
 	fighterParent.remove_child(fighter)
 	$PlayerPosition.add_child(fighter)
 	fighter.position = Vector2(0,0)
@@ -125,11 +122,21 @@ func set_opponent(snakeWillSnake):
 	$SnakePosition.add_child(opponent)
 	opponent.position = Vector2(0,0)
 	snakeHB = opponent.snakeHB
+	snakeAttack = opponent.snakeBite
 	snakeHealth.rect_size.x = snakeHB
 	holderHealthSnake.rect_size.x = snakeHB *1.2
 	snakeHealth.rect_position.x = (snakeHB-20)*-1
 	holderHealthSnake.rect_position.x =(snakeHealth.rect_position.x)-2
 	snakeHead.texture = load("res://Assets/Snakes/"+str(opponent.name)+"Head.png")
+	
+	if opponent.is_in_group("Green"):
+		timer.wait_time = 10
+	elif opponent.is_in_group("Yellow"):
+		timer.wait_time=15
+	elif opponent.is_in_group("Red"):
+		timer.wait_time = 20
+	else:
+		timer.wait_time=30
 	timer.start()
 
 func move_state(delta):
@@ -177,16 +184,16 @@ func Animation_Finished_Snake_Attack():
 	snakeState =CHASE
 
 func player_hurt():
-	playerHB-=10
-	playerHealth.rect_size.x-=10
+	playerHB-=snakeAttack
+	playerHealth.rect_size.x-=snakeAttack
 	if playerHB==0&&snakeHB!=0:
 		rpc("player_lose")
 
 func snake_Hurt():
 	snakeKnockback = knockback_vector*150
-	snakeHealth.rect_size.x-=10
-	snakeHealth.rect_position.x+=10
-	snakeHB-=10
+	snakeHealth.rect_size.x-=playerAttack
+	snakeHealth.rect_position.x+=playerAttack
+	snakeHB-=playerAttack
 	if snakeHB==0&&playerHB!=0:
 		rpc("player_won")
 

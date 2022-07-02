@@ -184,12 +184,7 @@ func _on_secondTimer_timeout():
 				x.enable_click(false)
 			$lose.play()
 			rpc("stop_timer",false)
-			#self.stop_timer(false)
-			#self.show_static_message("Sorry you lost!")
-			
 signal task_ended(c)
-
-#var Coin=preload("res://Tasks/Task1/coin.tscn")	
 signal cup_selected(x)	
 sync func stop_timer(val):
 	$secondTimer.stop()
@@ -200,13 +195,11 @@ sync func stop_timer(val):
 		x.enable_click(false)
 	$music.stop()
 	if val:
-		#var coin=Coin.instance()
 		$win.play()
 		if player:
 			self.show_static_message("Congrats you won!")
 		else:
 			self.show_static_message("Player "+""+" won!")	
-		#$coinPosition.add_child(Coin.instance())	
 		yield(get_tree().create_timer(2.5),"timeout")
 		emit_signal("task_ended",true)
 	else:

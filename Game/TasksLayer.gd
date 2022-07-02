@@ -13,7 +13,6 @@ var active_player=false
 var direction
 var player_name
 func select_task(task_hardness,playerName):
-	#var task_number= range(1,3)[randi()%range(1,3).size()]	
 	task_number= range(1,3)[randi()%range(1,3).size()]
 	
 	player_name=playerName
@@ -47,9 +46,6 @@ sync func upload_task0(id,task_hardness):
 	var task="res://Tasks/Task"+str(task_number)+"/Task"+str(task_number)+".tscn"
 	var t=load(task).instance()
 	my_position=Global.player_master.get_position()
-	print("player >> ",Global.player_master)
-	print("before<< ",my_position)
-	#Global.player_master.set_init_pos(my_position)
 	Global.Player_pos=my_position
 	t.set_values(id,active_player,task_hardness)	
 	get_parent().get_node("Task0Layer").add_child(t)
@@ -60,7 +56,7 @@ var rng = RandomNumberGenerator.new()
 func generate_values_1(x):
 	cup_list=[]
 	cup_list_next=[]
-	number_of_cups=range(2,5)[randi()%range(2,5).size()]				
+	number_of_cups=range(2,5)[randi()%range(2,5).size()]
 	if x=="easy":
 		duration=range(5,10)[randi()%range(5,10).size()]
 		hardness=rng.randf_range(.7,2.5)
@@ -119,12 +115,9 @@ signal task0_finished
 func on_task_ended(val):
 	if task_number==0:
 		get_parent().get_node("Camera2D").make_current()
-		#print("next>> ",Global.Player_pos)
-		print("pp before>> ",Global.player_master.get_position())
 		Global.player_master.update_position(Global.Player_pos)
-		print("pp next>> ",Global.player_master.get_position())
 		emit_signal("task0_finished")
-	if active_player:		
+	if active_player:
 		emit_signal("task_finished",val,player_name)
 	else:
 		emit_signal("task_finished",val,player_name)

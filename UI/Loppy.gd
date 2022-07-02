@@ -60,14 +60,13 @@ func _player_connected(id) -> void:
 func _player_disconnected(id) -> void:
 	remove_player(id)
 
-		
 sync func remove_player(id):
 	if Persistent_nodes.has_node(str(id)):
 		Persistent_nodes.get_node(str(id)).username_text_instance.queue_free()
 		Persistent_nodes.get_node(str(id)).queue_free()
 		
 	yield(get_tree().create_timer(.7),"timeout")	
-	var c=1	
+	var c=1
 	for player in Persistent_nodes.get_children():
 		if player.is_in_group("Player"):
 			
@@ -90,11 +89,9 @@ sync func remove_player(id):
 				
 	Network.No_of_current_players=c-1
 	current_spawn_location_instance_number=c
-		
-		
 
 func _on_MasterReady_pressed():
-	if username_text_edit.text != "":				
+	if username_text_edit.text != "":
 		$Spawn_locations/MasterReady.hide()
 		$Multiplayer_configure.hide()
 		$Spawn_locations/oval.hide()
@@ -105,12 +102,12 @@ func _on_MasterReady_pressed():
 		Global.instance_node(load("res://Scripts/Server_advertiser.tscn"), get_tree().current_scene)	
 	else:
 		$Popup/message.text="please enter a valid name"
-		$Popup.popup() 	
+		$Popup.popup() 
 
 func _on_Ready_pressed():
 	if player_char==-1:
 		show_popup2("please select a charecter")
-	else:	
+	else:
 		if username_text_edit.text != "":
 			var c=true
 			for child in Persistent_nodes.get_children():
@@ -127,7 +124,7 @@ func _on_Ready_pressed():
 				
 			else:
 				$Popup/message.text="This name is taken ,please try another one"
-				$Popup.popup() 	
+				$Popup.popup() 
 		else:
 			$Popup/message.text="please enter a valid name"
 			$Popup.popup() 
@@ -144,17 +141,17 @@ func _connected_to_server() -> void:
 			if x=="res://Assets/players/body1.png":
 				chars_list.set_item_disabled(0,true)
 			elif x=="res://Assets/players/body2.png":
-				chars_list.set_item_disabled(1,true)	
+				chars_list.set_item_disabled(1,true)
 			elif x=="res://Assets/players/body3.png":
-				chars_list.set_item_disabled(2,true)	
+				chars_list.set_item_disabled(2,true)
 			elif x=="res://Assets/players/body4.png":
 				chars_list.set_item_disabled(3,true)
 	if current_spawn_location_instance_number==2:
-		$Spawn_locations/Ready.rect_position=Vector2(634/5,850/5)	
-		$Spawn_locations/oval.rect_position.x=(534/5)+7	
+		$Spawn_locations/Ready.rect_position=Vector2(634/5,850/5)
+		$Spawn_locations/oval.rect_position.x=(534/5)+7
 		ovalLoc=534/5
 	if current_spawn_location_instance_number==3:
-		$Spawn_locations/Ready.rect_position=Vector2(1004/5,850/5)	
+		$Spawn_locations/Ready.rect_position=Vector2(1004/5,850/5)
 		$Spawn_locations/oval.rect_position.x=(920/5)+7
 		ovalLoc=920/5
 	elif current_spawn_location_instance_number==4:
@@ -187,9 +184,7 @@ func instance_player(id) -> void:
 	
 	
 	player_instance.username = username_text_edit.text
-	print(str(player_instance.username))
 	score_instance.username = username_text_edit.text
-	print(str(score_instance.username))
 	score_instance.tile = 1
 	var c="Spawn_locations/Sprite"+str(current_spawn_location_instance_number)
 	
@@ -216,22 +211,18 @@ func instance_player(id) -> void:
 	var charSprite=player_instance.get_mychar()
 	if charSprite=="res://Assets/players/body1.png":
 		score_instance.mychar = "res://Assets/players/head1.png"
-		score_instance.colorPlayer = Color("8BD7DC")#8BD7DC
+		score_instance.colorPlayer = Color("8BD7DC")
 	elif charSprite=="res://Assets/players/body2.png":
 		score_instance.mychar = "res://Assets/players/head2.png"
 		score_instance.colorPlayer = Color("479D2E")
 	elif charSprite=="res://Assets/players/body3.png":
 		score_instance.mychar = "res://Assets/players/head3.png"
-		score_instance.colorPlayer = Color("CB3F43")#479D2E
+		score_instance.colorPlayer = Color("CB3F43")
 	elif charSprite=="res://Assets/players/body4.png":
 		score_instance.mychar = "res://Assets/players/head4.png"
 		score_instance.colorPlayer = Color("DB9233")
 	
 	current_spawn_location_instance_number += 1
-	#if get_tree().network_peer != null:
-	#		if get_tree().is_network_server():
-	#			Persistent_nodes.rpc("update_number_of_players",true)
-	
 
 func _on_Start_game_pressed():
 	Network.allow_join=false
@@ -248,7 +239,6 @@ sync func switch_to_game() -> void:
 			child.get_node("oval").hide()
 		elif child.is_in_group("Score"):
 			child.show()
-	print("moving to game")
 	Persistent_nodes.get_node("background").queue_free()
 	Persistent_nodes.get_node("TextureRect").queue_free()
 	get_tree().change_scene("res://Game/Game.tscn")
@@ -260,7 +250,6 @@ sync func switch_to_test_game() -> void:
 			child.get_node("oval").hide()
 		elif child.is_in_group("Score"):
 			child.show()
-	print("moving to Test game")
 	Persistent_nodes.get_node("background").queue_free()
 	Persistent_nodes.get_node("TextureRect").queue_free()
 	get_tree().change_scene("res://Game/TestGame.tscn")
@@ -280,10 +269,6 @@ onready var sprite3=$Spawn_locations/Sprite3
 onready var sprite4=$Spawn_locations/Sprite4
 
 
-	
-			
-			
-
 func _on_Charecters_item_selected(index):
 	if chars_list.is_item_disabled(index):
 		show_popup2("This charecter is taken, please try another one.")
@@ -294,11 +279,11 @@ func _on_Charecters_item_selected(index):
 		if current_spawn_location_instance_number==1:	
 			sprite1.texture=load(s)
 		if current_spawn_location_instance_number==2:
-			sprite2.texture=load(s)	
+			sprite2.texture=load(s)
 		if current_spawn_location_instance_number==3:
-			sprite3.texture=load(s)		
+			sprite3.texture=load(s)
 		if current_spawn_location_instance_number==4:
-			sprite4.texture=load(s)		
+			sprite4.texture=load(s)
 
 
 
@@ -314,7 +299,7 @@ func _on_LeaveButton_pressed():
 				for child in Persistent_nodes.get_children():
 					if child.is_in_group("Net"):
 						child.queue_free()
-				get_tree().change_scene("res://UI/Main.tscn")		
+				get_tree().change_scene("res://UI/Main.tscn")
 
 
 		
@@ -328,7 +313,7 @@ sync func leave_game() -> void:
 	for child in Persistent_nodes.get_children():
 					if child.is_in_group("Net"):
 						child.queue_free()
-	get_tree().change_scene("res://UI/Main.tscn")	
+	get_tree().change_scene("res://UI/Main.tscn")
 			
 
 

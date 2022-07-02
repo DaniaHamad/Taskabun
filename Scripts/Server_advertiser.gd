@@ -2,7 +2,7 @@ extends Node
 
 export (float) var broadcast_interval = .5
 var server_info = {"name": "LAN Game","number_of_players":2,"current_players":1}
-#var server_info = {"name": "LAN Game"}
+
 
 
 var socket_udp
@@ -34,16 +34,3 @@ func _exit_tree():
 	broadcast_timer.stop()
 	if socket_udp != null:
 		socket_udp.close()
-
-
-#func _on_Timer_timeout():
-	#get_tree().connect("network_peer_connected", self, "_player_connected")
-	#get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-
-"""
-func _player_connected():
-	print(server_info.current_players)
-	server_info.current_players+=1
-	
-func _player_disconnected():
-	server_info.current_players-=1	"""

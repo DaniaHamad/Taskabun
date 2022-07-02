@@ -1,12 +1,9 @@
 extends Node
 
-#a reference to player
+
 var player_master = null
 var ui = null
 
-#this because we don't actually know which player is alive and which is destroied
-#because the dead players are actually just headen not destroied
-#each player will add itself to this array at the begining (at ready func)
 var alive_players = []
 var servers_name=[]
 var pos=400

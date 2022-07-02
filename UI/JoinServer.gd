@@ -16,19 +16,12 @@ func _on_Server_listener_new_server(serverInfo):
 	server_node.set_name( "%s - %s" % [serverInfo.ip, serverInfo.name])
 	server_node.server_info=serverInfo
 	server_node.ip_address = str(serverInfo.ip)
-	#server_node.global_position.x=300
-	#Global.pos+=100
-	
-	
-	
-	
 
 func _on_Server_listener_remove_server(serverIp):
 	for serverNode in server_container.get_children():
 		if serverNode.is_in_group("Server_display"):
 			if serverNode.ip_address == serverIp:
 				serverNode.queue_free()
-				#Global.pos-=100
 				break
 
 func _on_Manual_setup_pressed():

@@ -10,6 +10,7 @@ var backwards = false
 var triggerIt = true
 var bossSnakeGoBackwords = false
 var isDiceAllPlayers = false
+var isLastTileTask = false
 
 onready var tasks =  $Tasks
 onready var emptyTiles = $EmptyTiles
@@ -304,10 +305,8 @@ sync func show_dice(diceId,diceNum):#show every body including me my dice
 			#if the other dice is qual to my dice && the dice is not mine && I'm the owner of this dice that has been dublicated with
 			if !dublicate:
 				rpc("show_Roll_Button_Puppet",dice.diceId) #make the other dice roll again
-				print("dublicated")
 				dublicate=true
 			else:
-				print("not dublicated")
 				dublicate = false
 	if dublicate:
 		if player.playerCount == diceId:
@@ -329,11 +328,9 @@ sync func show_Roll_Button_Puppet(playerId):
 
 sync func i_rolled():
 	rolls+=1
-	print(str(rolls))
 sync func i_unrolled():
 	if rolls -1>=0:
 		rolls-=1
-		print(str(rolls))
 
 sync func the_order():
 	isDiceAllPlayers= false
@@ -399,7 +396,6 @@ sync func player_turn(playerName,task):
 
 func _on_RollButton_pressed():
 	var diceNum = randi()%6+1
-	#print(str(player.name))
 	rpc("move_dice_message",str(player.name),diceNum)
 	
 
@@ -463,15 +459,11 @@ func move_player(playerToMoveName,diceNum):
 		goalTile =mapGoal
 	elif goalTile<1:
 		goalTile=1
-	print("goal Tile "+ str(goalTile))
-	print("hope tile "+ str(hopTile))
 
 	var calculateMove = playerToMove.position.x
 	while(hopTile!=goalTile):
 		calculateMove+=movement
-		#print("calculateMove = "+ str(calculateMove))
 		if calculateMove>boundaryRight:#odd is true then go up be false
-	#		print("#odd is true then go down be false")
 			if !backwards:
 				playerToMove.position.y -=movement
 				Oddrow=false
@@ -484,7 +476,6 @@ func move_player(playerToMoveName,diceNum):
 			backwards = false
 			
 		elif calculateMove<boundaryLeft:#odd is false then go up be true
-	#		print("#odd is false then go down be true")
 			if !backwards:
 				playerToMove.position.y +=movement
 				Oddrow=true 
@@ -567,8 +558,6 @@ func loopTurns():
 	rpc("player_turn","",0)
 
 sync func refresh_ranking():
-	print("Entered refresh_ranking")
-	
 	PlayersTurns.sort_players_Ranking_desc()
 	for i in range(numberOfPlayers):
 		var playerHolder = PlayersTurns.get_player_rank_now()
@@ -590,33 +579,24 @@ sync func update_current_player_turn_tile(playerToMoveName):
 
 func where_Is_The_Player_Standing(playerHasMovedName):
 	
-	print("Entered where_Is_The_Player_Standing")
 	var temp = [player.position.x,player.position.y]
-	print (temp)
 	for i in snakes.get_children():
 		if i.is_in_group("Snake"):
 			if player.position.x == i.position.x&&player.position.y==i.position.y:
 				rpc("add_player_empty_pos",playerHasMovedName)
-				print("collided with "+i.name)
 				snakeCollidedWith = i.name
 				return "Snake"
 
 	if greenTaskPos.has(temp):
-		
-		print("Player has been collided with a green task ")
 		taskCollidedWith = "greenTask"
 		return "easy"
 	if yellowTaskPos.has(temp):
-		
-		print("Player has been collided with a yellow task ")
 		taskCollidedWith = "yellowTask"
 		return "medium"
 	
 	if redTaskPos.has(temp):
-		print("Player has been collided with a red task ")
 		taskCollidedWith = "RedTask"
 		return "hard"
-	print("Player is on empty tile")
 	return check_if_on_empty_tile(playerHasMovedName)
 	
 
@@ -632,7 +612,6 @@ sync func add_empty_tile_pos(playerHasMovedName,wayType):
 				yellowWayEmptyTilePos.append(temp)
 			"red":
 				redWayEmptyTilePos.append(temp)
-		print(str(temp)+" has been added to "+wayType+" arrayEmpty")
 	
 sync func add_player_empty_pos(playerHasMovedName):
 	var playerToMove = players.get_node(str(playerHasMovedName))
@@ -653,26 +632,19 @@ sync func pop_empty_tile_pos(playerHasMovedName,wayType):
 			yellowWayEmptyTilePos.remove(yellowWayEmptyTilePos.find(playersEmptyPos[playerHasMoved.playerCount-1]))
 		"red":
 			redWayEmptyTilePos.remove(redWayEmptyTilePos.find(playersEmptyPos[playerHasMoved.playerCount-1]))
-	print(str(player.position)+" has been deleted from "+wayType+" arrayEmpty")
 
 func check_if_on_empty_tile(playerMove):
 	var playerHasMoved = players.get_node(str(playerMove))
 	playersEmptyPos[playerHasMoved.playerCount-1]=[playerHasMoved.position.x,playerHasMoved.position.y]
 	var temp = playersEmptyPos[playerHasMoved.playerCount-1]
-	#print(str(temp))
 	if (temp[0]!=firstTile[0]||temp[1]!=firstTile[1])&&(temp[0]!=lastTile[0]||temp[1]!=lastTile[1]):
 		
 		if temp[1]<=greenArea[0]&&temp[1]>=greenArea[1]:
-			print("Player has been is on an empty green way tile")
 			return "green"
 		elif temp[1]<=yellowArea[0]&&temp[1]>=yellowArea[1]:
-			print("Player has been is on an empty yellow way tile")
 			return "yellow"
 		elif temp[1]<=redArea[0]&&temp[1]>=redArea[1]:
-			print("Player has been is on an empty red way tile")
 			return "red"
-
-	print("non")
 	return null
 
 
@@ -680,18 +652,15 @@ func check_if_on_empty_tile(playerMove):
 
 
 sync func move_snakes(randGreen,randYellow,randRed):
-	print("entered move_snakes")
 	var snakePos = []
 	var newPos=[]
-	var randG = randGreen
-	var randY = randYellow
-	var randR = randRed
-	#print("RandGreen= "+randGreen+" \n RandYellow= "+randYellow+" \n RandRed= "+randRed)
+	var randG = randGreen-1
+	var randY = randYellow-1
+	var randR = randRed-1
 	for snake in snakes.get_children():
 		if snake.is_in_group("Snake"):
 			snakePos = [snake.position.x,snake.position.y]
 			if snake.is_in_group("Green"):
-				#print("RandGreen= "+str(randG))
 				if greenWayEmptyTilePos.size()>0||randGreen>0:
 					snake.position.x = greenWayEmptyTilePos[randG][0]
 					snake.position.y = greenWayEmptyTilePos[randG][1]
@@ -739,7 +708,6 @@ func _on_Fight_pressed():
 	rpc("change_to_Snake_Battle",snakeCollidedWith,player.name)
 
 sync func change_to_Snake_Battle(snakeWillFight,playerWillFightName):
-	print("Will change to battle scene for "+str(snakeWillFight)+" and "+str(player.name))
 	snakeBattlePopUp.get_node("Fight").hide()
 	snakeBattlePopUp.get_node("Forfeit").hide()
 	snakeBattlePopUp.hide()
@@ -767,7 +735,6 @@ sync func player_Go_Backwards(collidedSnake,forfeitPlayer):
 	snakeBattleResult.hide()
 	var snake = snakes.get_node(collidedSnake)
 	var forfiet = players.get_node(forfeitPlayer)
-	print("Will go backward according to "+str(collidedSnake)+" and "+str(forfeitPlayer))
 	snakeBattlePopUp.get_node("Fight").hide()
 	snakeBattlePopUp.get_node("Forfeit").hide()
 	snakeBattlePopUp.hide()
@@ -790,7 +757,6 @@ func player_is_dead():
 
 
 func snake_is_dead():
-	print("Snake is dead!")
 	rpc("delete_node",canvas.name,"SnakeBattle")
 	if snakeCollidedWith!="BossSnake":
 		loopTurns()
@@ -823,7 +789,7 @@ func _on_FightLastTile_pressed():
 
 
 func _on_SolveLastTile_pressed():
-	pass # Replace with function body.
+	tasksLayer.select_task("hard",player.name)
 
 sync func victory(playerWinner):
 	Persistent_nodes.get_node("CanvasLayer").get_node(str(playerWinner)).tile=101
@@ -875,8 +841,11 @@ func _server_disconnected() -> void:
 	
 
 func _on_TasksLayer_task_finished(taskPassingResult,playerName):
-	if taskPassingResult:
+	rpc("hideLastTilePopup")
+	if taskPassingResult&&snakeCollidedWith!="BossSnake":
 		triggerIt=false
 		rpc("player_turn",playerName,1)
+	elif taskPassingResult&&snakeCollidedWith=="BossSnake":
+		rpc("victory",player.name)
 	else:
 		loopTurns()

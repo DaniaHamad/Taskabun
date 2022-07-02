@@ -8,7 +8,6 @@ func _ready():
 		task = "yellow"
 	else:
 		task = "red"
-	#print(task);
 
 func getTaskType():
 	return task

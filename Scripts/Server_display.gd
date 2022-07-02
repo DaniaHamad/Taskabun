@@ -1,4 +1,3 @@
-#extends Area2D
 extends Control
 var ip_address = ""
 var server_info

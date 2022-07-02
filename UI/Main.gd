@@ -1,12 +1,7 @@
 extends Control
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	if !Persistent_nodes.has_node("background"):
 		var background = TextureRect.new()
@@ -24,9 +19,6 @@ func _ready():
 		Persistent_nodes.add_child(textureRect)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 
 func _on_TouchScreenButton_pressed():
@@ -35,7 +27,6 @@ func _on_TouchScreenButton_pressed():
 
 func _on_JoinGame_pressed():
 	Global.instance_node(load("res://UI/JoinServer.tscn"), self)
-	#get_tree().change_scene("res://UI/JoinServer.tscn")
 
 onready var create_screen=preload("res://UI/CreateServer.tscn")
 

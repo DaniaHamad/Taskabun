@@ -24,6 +24,4 @@ func _on_Timer_timeout():
 		emit_signal("timeIsDone")
 	else:
 		$Label.text=str(duration)
-		
-		
-			
+
