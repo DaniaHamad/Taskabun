@@ -1,0 +1,108 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Game/PopUpMessages/PopUpGameMessage.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Fonts/FFFFORWA.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Assets/Background/snakebosslogo.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Background/TaskHardRed.png" type="Texture" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.639216, 1, 0.282353, 1 )
+
+[node name="LastTilePopUp" type="Node2D"]
+
+[node name="PopUpGameMessage" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, -1 )
+
+[node name="LastTile" type="Label" parent="."]
+margin_left = -118.0
+margin_top = -67.0
+margin_right = 118.0
+margin_bottom = -45.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "The last Tile challenge!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = -140.0
+margin_top = -39.0
+margin_right = 139.0
+margin_bottom = -14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "To win the game you must pick and win the challange!"
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Snakebosslogo" type="Sprite" parent="."]
+position = Vector2( -85, 13 )
+texture = ExtResource( 3 )
+
+[node name="TaskHardRed" type="Sprite" parent="."]
+position = Vector2( 76, 12 )
+texture = ExtResource( 4 )
+
+[node name="Fight" type="Button" parent="."]
+margin_left = -106.0
+margin_top = 52.0
+margin_right = -65.0
+margin_bottom = 69.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+text = "Fight!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Solve" type="Button" parent="."]
+margin_left = 45.0
+margin_top = 52.0
+margin_right = 86.0
+margin_bottom = 69.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 8 )
+custom_styles/normal = SubResource( 9 )
+text = "Solve!"
+__meta__ = {
+"_edit_use_anchors_": false
+}

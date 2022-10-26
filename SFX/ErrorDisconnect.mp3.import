@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ErrorDisconnect.mp3-65325b2ab5968c539b98f6b98b38038a.mp3str"
+
+[deps]
+
+source_file="res://SFX/ErrorDisconnect.mp3"
+dest_files=[ "res://.import/ErrorDisconnect.mp3-65325b2ab5968c539b98f6b98b38038a.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,305 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Game/PopUpMessages/SnakeBattleResult.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Fonts/FFFFORWA.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Snakes/SnakesBattle/SnakeBattle.gd" type="Script" id=3]
+[ext_resource path="res://Game/GameScenesAssets/Bin.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Game/GameScenesAssets/BenchFront.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Game/GameScenesAssets/Tree-1-4.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Background/texture.png" type="Texture" id=7]
+[ext_resource path="res://Assets/GUI/ArrowUnpressed.png" type="Texture" id=8]
+[ext_resource path="res://Assets/GUI/ArrowPressed.png" type="Texture" id=9]
+[ext_resource path="res://Assets/GUI/healthchar.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Snakes/GreenSnakeHead.png" type="Texture" id=11]
+[ext_resource path="res://Assets/players/head1Dark.png" type="Texture" id=12]
+[ext_resource path="res://Assets/GUI/PunchUnpressed.png" type="Texture" id=13]
+[ext_resource path="res://Assets/GUI/PunchPressed.png" type="Texture" id=14]
+[ext_resource path="res://Assets/GUI/healthsnake.png" type="Texture" id=15]
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 2 )
+
+[node name="SnakeBattle" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -204.0
+margin_top = -109.0
+margin_right = 202.0
+margin_bottom = 107.0
+color = Color( 1, 0.968627, 0.439216, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = -204.0
+margin_top = -109.0
+margin_right = 202.0
+margin_bottom = -60.0
+color = Color( 0.364706, 0.568627, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+margin_left = -203.0
+margin_top = -60.0
+margin_right = 201.0
+margin_bottom = -52.0
+color = Color( 0.937255, 0.901961, 0.321569, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Tree-1-4" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -185, -76 )
+
+[node name="Tree-1-5" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -181, -94 )
+
+[node name="Tree-1-6" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -150, -93 )
+
+[node name="Tree-1-7" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -123, -103 )
+
+[node name="Tree-1-8" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -91, -103 )
+
+[node name="Tree-1-9" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -62, -103 )
+
+[node name="Tree-1-10" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -29, -105 )
+
+[node name="Tree-1-11" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 0, -103 )
+
+[node name="Tree-1-12" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 25, -96 )
+
+[node name="Tree-1-13" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 44, -84 )
+
+[node name="Tree-1-14" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 54, -96 )
+
+[node name="Tree-1-15" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 74, -83 )
+
+[node name="Tree-1-16" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 102, -103 )
+
+[node name="Tree-1-17" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 105, -86 )
+
+[node name="Tree-1-18" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 131, -88 )
+
+[node name="Tree-1-19" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 153, -103 )
+
+[node name="Tree-1-20" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 158, -84 )
+
+[node name="Tree-1-21" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 183, -83 )
+
+[node name="Tree-1-22" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 179, -102 )
+
+[node name="Tree-1-23" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 19, -80 )
+
+[node name="Tree-1-24" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -4, -84 )
+
+[node name="Tree-1-25" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -27, -79 )
+
+[node name="Tree-1-26" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -50, -86 )
+
+[node name="Tree-1-27" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -69, -78 )
+
+[node name="Tree-1-28" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -88, -85 )
+
+[node name="Tree-1-29" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -111, -78 )
+
+[node name="Tree-1-4" parent="YSort/Tree-1-29" instance=ExtResource( 6 )]
+position = Vector2( -35, 0 )
+
+[node name="Bench" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 117, -68 )
+
+[node name="Bin" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 75, -64 )
+
+[node name="YSort2" type="YSort" parent="."]
+
+[node name="Texture" type="Sprite" parent="YSort2"]
+position = Vector2( -129, -18 )
+texture = ExtResource( 7 )
+
+[node name="Texture2" type="Sprite" parent="YSort2"]
+position = Vector2( -130, 68 )
+texture = ExtResource( 7 )
+
+[node name="Texture3" type="Sprite" parent="YSort2"]
+position = Vector2( 1, -15 )
+texture = ExtResource( 7 )
+
+[node name="Texture4" type="Sprite" parent="YSort2"]
+position = Vector2( -4, 71 )
+texture = ExtResource( 7 )
+
+[node name="Texture5" type="Sprite" parent="YSort2"]
+position = Vector2( 126, 70 )
+texture = ExtResource( 7 )
+
+[node name="Texture6" type="Sprite" parent="YSort2"]
+position = Vector2( 132, -15 )
+texture = ExtResource( 7 )
+
+[node name="TimeLeft" type="Label" parent="."]
+margin_left = -20.0
+margin_top = -88.0
+margin_right = 20.0
+margin_bottom = -66.0
+custom_fonts/font = SubResource( 2 )
+text = "10"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="TimeLeft"]
+wait_time = 10.0
+one_shot = true
+
+[node name="PlayerPosition" type="Position2D" parent="."]
+position = Vector2( -118, 0 )
+
+[node name="SnakePosition" type="Position2D" parent="."]
+position = Vector2( 110, 0 )
+
+[node name="SnakeBattleResult" parent="." instance=ExtResource( 1 )]
+visible = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2( -178, 75 )
+polygon = PoolVector2Array( 391, -156, -42, -158, -43, 30, -26, 30, -27, -136, 380, -136, 380, 33, -43, 31, -43, 42, 391, 43 )
+
+[node name="Buttons" type="YSort" parent="."]
+visible = false
+position = Vector2( 23, -7 )
+
+[node name="TouchScreenButtonRight" type="TouchScreenButton" parent="Buttons"]
+position = Vector2( -150, 79 )
+normal = ExtResource( 8 )
+pressed = ExtResource( 9 )
+action = "ui_right"
+
+[node name="TouchScreenButtonLeft" type="TouchScreenButton" parent="Buttons"]
+position = Vector2( -182, 111 )
+rotation = -3.14159
+normal = ExtResource( 8 )
+pressed = ExtResource( 9 )
+action = "ui_left"
+
+[node name="TouchScreenButtonUp" type="TouchScreenButton" parent="Buttons"]
+position = Vector2( -182, 79 )
+rotation = -1.5708
+normal = ExtResource( 8 )
+pressed = ExtResource( 9 )
+action = "ui_up"
+
+[node name="TouchScreenButtonDown" type="TouchScreenButton" parent="Buttons"]
+position = Vector2( -150, 79 )
+rotation = 1.5708
+normal = ExtResource( 8 )
+pressed = ExtResource( 9 )
+action = "ui_down"
+
+[node name="TouchScreenButtonPunch" type="TouchScreenButton" parent="Buttons"]
+position = Vector2( 106, 76 )
+normal = ExtResource( 13 )
+pressed = ExtResource( 14 )
+action = "attack"
+
+[node name="HealthBarSnake" type="Sprite" parent="."]
+position = Vector2( 127, -80 )
+flip_h = true
+
+[node name="HolderHealthSnake" type="ColorRect" parent="HealthBarSnake"]
+margin_left = -42.0
+margin_top = -7.0
+margin_right = 21.0
+margin_bottom = 7.0
+color = Color( 0.282353, 1, 0.286275, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SnakeHealth" type="ColorRect" parent="HealthBarSnake"]
+margin_left = -40.0
+margin_top = -5.0
+margin_right = 20.0
+margin_bottom = 5.0
+color = Color( 0.835294, 0.0392157, 0.0392157, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Healthsnake" type="Sprite" parent="HealthBarSnake"]
+position = Vector2( 39, -2 )
+texture = ExtResource( 15 )
+
+[node name="SnakeHead" type="Sprite" parent="HealthBarSnake"]
+position = Vector2( 42, -2 )
+texture = ExtResource( 11 )
+
+[node name="HealthBarPlayer" type="Sprite" parent="."]
+position = Vector2( -129, -80 )
+
+[node name="HolderHealthPlayer" type="ColorRect" parent="HealthBarPlayer"]
+margin_left = -21.0
+margin_top = -7.0
+margin_right = 42.0
+margin_bottom = 7.0
+color = Color( 0.388235, 0.207843, 0.176471, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerHealth" type="ColorRect" parent="HealthBarPlayer"]
+margin_left = -20.0
+margin_top = -5.0
+margin_right = 40.0
+margin_bottom = 5.0
+color = Color( 0.835294, 0.0392157, 0.0392157, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Healthchar" type="Sprite" parent="HealthBarPlayer"]
+position = Vector2( -40, -2 )
+texture = ExtResource( 10 )
+
+[node name="PlayerHead" type="Sprite" parent="HealthBarPlayer"]
+position = Vector2( -40, -2 )
+texture = ExtResource( 12 )
+flip_h = true
+
+[connection signal="timeout" from="TimeLeft/Timer" to="." method="_on_Timer_timeout"]
+
+[editable path="SnakeBattleResult"]

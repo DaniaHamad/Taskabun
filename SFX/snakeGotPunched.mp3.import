@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/snakeGotPunched.mp3-ffc440d8260ee70f850208d19dfdcf1b.mp3str"
+
+[deps]
+
+source_file="res://SFX/snakeGotPunched.mp3"
+dest_files=[ "res://.import/snakeGotPunched.mp3-ffc440d8260ee70f850208d19dfdcf1b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

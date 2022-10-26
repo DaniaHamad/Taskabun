@@ -1,0 +1,15 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/Triangle Mask.png-ae69db7c2d5dc34b7024c7aea727e82f.res"
+
+[deps]
+
+source_file="res://Assets/Triangle Mask.png"
+dest_files=[ "res://.import/Triangle Mask.png-ae69db7c2d5dc34b7024c7aea727e82f.res" ]
+
+[params]
+
+create_from=0
+threshold=0.5

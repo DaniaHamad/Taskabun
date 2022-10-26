@@ -1,0 +1,242 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Assets/MovingClouds/MovingClouds.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/background.png" type="Texture" id=2]
+[ext_resource path="res://Fonts/FFFFORWA.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/Tasks/label.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Tasks/button.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Tasks/buttonShadow.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Tasks/triButton.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Tasks/triButtonOrange.png" type="Texture" id=8]
+[ext_resource path="res://Tasks/counter.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Tasks/Task2/Task2.gd" type="Script" id=10]
+[ext_resource path="res://Music/MathTask_funk_brothers.mp3" type="AudioStream" id=13]
+[ext_resource path="res://Assets/Tasks/border.png" type="Texture" id=14]
+[ext_resource path="res://SFX/win.mp3" type="AudioStream" id=15]
+[ext_resource path="res://SFX/YouLost.mp3" type="AudioStream" id=16]
+
+[sub_resource type="DynamicFont" id=1]
+size = 14
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 14
+font_data = ExtResource( 3 )
+
+[node name="Task2" type="Node2D"]
+script = ExtResource( 10 )
+
+[node name="Background" type="Control" parent="."]
+margin_right = 384.0
+margin_bottom = 216.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background" type="TextureRect" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PurpleLabel" type="TextureRect" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.0
+margin_top = -18.0
+margin_right = -1.0
+margin_bottom = -18.0
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MovingClouds" parent="Background" instance=ExtResource( 1 )]
+
+[node name="equation" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 73.0
+margin_top = 72.0
+margin_right = 309.0
+margin_bottom = 105.0
+custom_colors/font_color = Color( 0.858824, 0.54902, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Taskabun"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="result" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 73.0
+margin_top = 72.0
+margin_right = 309.0
+margin_bottom = 105.0
+custom_colors/font_color = Color( 0.858824, 0.54902, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Taskabun"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="options" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="option1" type="TextureButton" parent="options"]
+margin_left = 76.0
+margin_top = 130.0
+margin_right = 150.0
+margin_bottom = 180.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="options/option1"]
+margin_left = 17.0
+margin_top = 17.0
+margin_right = 57.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 2 )
+text = "100"
+align = 1
+valign = 1
+
+[node name="option2" type="TextureButton" parent="options"]
+margin_left = 157.0
+margin_top = 130.0
+margin_right = 231.0
+margin_bottom = 180.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="options/option2"]
+margin_left = 17.0
+margin_top = 17.0
+margin_right = 57.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 2 )
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="option3" type="TextureButton" parent="options"]
+margin_left = 238.0
+margin_top = 130.0
+margin_right = 312.0
+margin_bottom = 180.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="options/option3"]
+margin_left = 17.0
+margin_top = 17.0
+margin_right = 57.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 2 )
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ready" type="TextureButton" parent="."]
+margin_left = 217.0
+margin_top = 12.0
+margin_right = 248.0
+margin_bottom = 52.0
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+border_color = Color( 0.654902, 0.654902, 0.654902, 1 )
+border_width = 10.0
+editor_only = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 4.0
+margin_bottom = 9.0
+texture = ExtResource( 14 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+autoplay = true
+
+[node name="win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+
+[node name="lose" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+
+[node name="counter" parent="." instance=ExtResource( 9 )]
+position = Vector2( 168, 24 )
+
+[node name="counter2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 7, 9 )
+
+[connection signal="pressed" from="options/option1" to="." method="_on_option1_pressed"]
+[connection signal="pressed" from="options/option2" to="." method="_on_option2_pressed"]
+[connection signal="pressed" from="options/option3" to="." method="_on_option3_pressed"]
+[connection signal="pressed" from="ready" to="." method="_on_ready_pressed"]
+[connection signal="timeIsDone" from="counter" to="." method="_on_counter_timeIsDone"]
+[connection signal="timeIsDone" from="counter2" to="." method="_on_counter2_timeIsDone"]

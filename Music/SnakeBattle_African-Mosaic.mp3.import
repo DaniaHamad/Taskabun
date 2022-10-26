@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/SnakeBattle_African-Mosaic.mp3-24412d794bd2a83a3cf6fc0fd8dac4fd.mp3str"
+
+[deps]
+
+source_file="res://Music/SnakeBattle_African-Mosaic.mp3"
+dest_files=[ "res://.import/SnakeBattle_African-Mosaic.mp3-24412d794bd2a83a3cf6fc0fd8dac4fd.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

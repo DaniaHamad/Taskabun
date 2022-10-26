@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/rolledTheDice.mp3-5f549b6586907e28c79bdc65203917ef.mp3str"
+
+[deps]
+
+source_file="res://SFX/rolledTheDice.mp3"
+dest_files=[ "res://.import/rolledTheDice.mp3-5f549b6586907e28c79bdc65203917ef.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

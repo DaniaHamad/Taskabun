@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/YouLost.mp3-9cf91bcd7561ce56778361ad6871d143.mp3str"
+
+[deps]
+
+source_file="res://SFX/YouLost.mp3"
+dest_files=[ "res://.import/YouLost.mp3-9cf91bcd7561ce56778361ad6871d143.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

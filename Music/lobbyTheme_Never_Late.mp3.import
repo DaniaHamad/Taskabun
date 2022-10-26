@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/lobbyTheme_Never_Late.mp3-752ef70c8385f243b89ee9b2acd860ba.mp3str"
+
+[deps]
+
+source_file="res://Music/lobbyTheme_Never_Late.mp3"
+dest_files=[ "res://.import/lobbyTheme_Never_Late.mp3-752ef70c8385f243b89ee9b2acd860ba.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

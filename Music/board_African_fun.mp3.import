@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/board_African_fun.mp3-48573a491714b16bc6380fa192dcfa91.mp3str"
+
+[deps]
+
+source_file="res://Music/board_African_fun.mp3"
+dest_files=[ "res://.import/board_African_fun.mp3-48573a491714b16bc6380fa192dcfa91.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

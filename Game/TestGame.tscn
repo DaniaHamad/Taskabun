@@ -1,0 +1,1143 @@
+[gd_scene load_steps=61 format=2]
+
+[ext_resource path="res://Assets/tile.png" type="Texture" id=1]
+[ext_resource path="res://Game/Task.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Background/TaskEasyGreen.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Background/TaskMediumYellow.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Background/TaskHardRed.png" type="Texture" id=5]
+[ext_resource path="res://Game/GameScenesAssets/Snakebosslogo.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Game/Game.gd" type="Script" id=7]
+[ext_resource path="res://Game/GameScenesAssets/Tree-1-4.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Game/GameScenesAssets/Bench.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Game/GameScenesAssets/Bin.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Game/PopUpMessages/DiceAllPlayers.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Snakes/BlackWhiteSnake.gd" type="Script" id=12]
+[ext_resource path="res://Assets/Background/tilefiller.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Animation/SnakeAnimation/SpriteSheetBlackWhiteSnake.png" type="Texture" id=14]
+[ext_resource path="res://Snakes/BossSnake.gd" type="Script" id=15]
+[ext_resource path="res://Assets/Snakes/SkeletonSnake.png" type="Texture" id=16]
+[ext_resource path="res://Snakes/TwinSnake.gd" type="Script" id=17]
+[ext_resource path="res://Assets/Animation/SnakeAnimation/SpriteSheetBlueSnake.png" type="Texture" id=18]
+[ext_resource path="res://Game/PopUpMessages/YourTurn.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Game/PopUpMessages/SnakeBattlePopUp.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Game/PopUpMessages/SnakeBattleResult.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Game/PopUpMessages/LastTilePopUp.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Game/PopUpMessages/PlayersRanks.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Game/TasksLayer.gd" type="Script" id=25]
+[ext_resource path="res://UI/Popup2.tscn" type="PackedScene" id=26]
+[ext_resource path="res://Snakes/Snake.tscn" type="PackedScene" id=27]
+[ext_resource path="res://Assets/Animation/SnakeAnimation/SpriteSheetGreenSnake.png" type="Texture" id=28]
+[ext_resource path="res://Assets/Snakes/GreenSnake.png" type="Texture" id=29]
+[ext_resource path="res://Snakes/GreenSnake.gd" type="Script" id=30]
+[ext_resource path="res://Assets/Snakes/BlueSnake.png" type="Texture" id=31]
+[ext_resource path="res://Snakes/BlueSnake.gd" type="Script" id=32]
+[ext_resource path="res://Assets/Snakes/BlackWhiteSnake.png" type="Texture" id=33]
+[ext_resource path="res://Assets/Animation/SnakeAnimation/SpriteSheetPinkWhiteSnake.png" type="Texture" id=34]
+[ext_resource path="res://Assets/Snakes/PinkWhiteSnake.png" type="Texture" id=35]
+[ext_resource path="res://Snakes/PinkWhiteSnake.gd" type="Script" id=36]
+[ext_resource path="res://Assets/Snakes/TwinSnake.png" type="Texture" id=37]
+[ext_resource path="res://Assets/Animation/SnakeAnimation/SpriteSheetTwinSnake.png" type="Texture" id=38]
+[ext_resource path="res://Assets/Animation/SnakeAnimation/SpriteSheetSkeletonSnake.png" type="Texture" id=39]
+[ext_resource path="res://Snakes/SkeletonSnake.gd" type="Script" id=40]
+[ext_resource path="res://Assets/Animation/SnakeAnimation/SpriteSheetBossSnake.png" type="Texture" id=41]
+[ext_resource path="res://Assets/Background/snakebosslogo.png" type="Texture" id=42]
+
+[sub_resource type="TileSet" id=1]
+0/name = "tile.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "tile.png 1"
+1/texture = ExtResource( 1 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 0, 64, 64 )
+1/tile_mode = 1
+1/autotile/bitmask_mode = 0
+1/autotile/bitmask_flags = [  ]
+1/autotile/icon_coordinate = Vector2( 0, 0 )
+1/autotile/tile_size = Vector2( 32, 32 )
+1/autotile/spacing = 0
+1/autotile/occluder_map = [  ]
+1/autotile/navpoly_map = [  ]
+1/autotile/priority_map = [  ]
+1/autotile/z_index_map = [  ]
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "tilefiller.png 2"
+2/texture = ExtResource( 13 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 0, 0, 64, 64 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+3/name = "tilefiller.png 3"
+3/texture = ExtResource( 13 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 32, 0, 32, 32 )
+3/tile_mode = 0
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
+
+[sub_resource type="Animation" id=2]
+resource_name = "Bite"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 8, 9, 10, 11 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_animation_finished"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Chase"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Bite"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 8, 9, 10, 11 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_animation_finished"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Chase"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Bite"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 8, 9, 10, 11 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_animation_finished"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Chase"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+
+[sub_resource type="Animation" id=10]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Bite"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 8, 9, 10, 11 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_animation_finished"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "Chase"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+
+[sub_resource type="Animation" id=13]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "Bite"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 8, 9, 10, 11 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_animation_finished"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "Chase"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+
+[sub_resource type="Animation" id=16]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "Bite"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 8, 9, 10, 11 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_animation_finished"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "Chase"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+
+[sub_resource type="Animation" id=19]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PlayerDetector/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[node name="TestGame" type="Node2D"]
+z_index = -1
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_horizontal_guides_": [ -255.0 ],
+"_edit_vertical_guides_": [ 448.0 ]
+}
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+format = 1
+tile_data = PoolIntArray( -262144, 2, 0, -262143, 2, 0, -262142, 2, 0, -262141, 2, 0, -262140, 2, 0, -262139, 2, 0, -262138, 2, 0, -196608, 0, 0, -196607, 0, 0, -196606, 0, 0, -196605, 0, 0, -196604, 0, 0, -196603, 0, 0, -196602, 0, 0, -131072, 0, 0, -131071, 0, 0, -131070, 0, 0, -131069, 0, 0, -131068, 0, 0, -131067, 0, 0, -131066, 0, 0, -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+limit_left = 0
+limit_top = -255
+limit_right = 448
+limit_bottom = 0
+smoothing_enabled = true
+
+[node name="EmptyTiles" type="YSort" parent="."]
+
+[node name="EmptyGreen" type="YSort" parent="EmptyTiles"]
+
+[node name="Position" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 96, -32 )
+
+[node name="Position2" type="Position2D" parent="EmptyTiles/EmptyGreen" groups=["EmptyGreen"]]
+position = Vector2( 416, -32 )
+
+[node name="EmptyYellow" type="YSort" parent="EmptyTiles"]
+
+[node name="Position" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 96, -96 )
+
+[node name="Position2" type="Position2D" parent="EmptyTiles/EmptyYellow" groups=["EmptyYellow"]]
+position = Vector2( 416, -96 )
+
+[node name="EmptyRed" type="YSort" parent="EmptyTiles"]
+
+[node name="Position" type="Position2D" parent="EmptyTiles/EmptyRed" groups=["EmptyRed"]]
+position = Vector2( 352, -160 )
+
+[node name="Position2" type="Position2D" parent="EmptyTiles/EmptyRed" groups=["EmptyRed"]]
+position = Vector2( 96, -160 )
+
+[node name="Position3" type="Position2D" parent="EmptyTiles/EmptyRed" groups=["EmptyRed"]]
+position = Vector2( 32, -160 )
+
+[node name="Tasks" type="YSort" parent="."]
+
+[node name="GreenTasks" type="YSort" parent="Tasks"]
+
+[node name="TaskEasyGreen3" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 160, -32 )
+texture = ExtResource( 3 )
+
+[node name="TaskEasyGreen4" parent="Tasks/GreenTasks" instance=ExtResource( 2 )]
+position = Vector2( 352, -32 )
+texture = ExtResource( 3 )
+
+[node name="YellowTasks" type="YSort" parent="Tasks"]
+
+[node name="TaskMediumYellow" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 32, -96 )
+texture = ExtResource( 4 )
+
+[node name="TaskMediumYellow2" parent="Tasks/YellowTasks" instance=ExtResource( 2 )]
+position = Vector2( 224, -96 )
+texture = ExtResource( 4 )
+
+[node name="RedTasks" type="YSort" parent="Tasks"]
+
+[node name="TaskRedHard3" parent="Tasks/RedTasks" instance=ExtResource( 2 )]
+position = Vector2( 160, -160 )
+texture = ExtResource( 5 )
+
+[node name="TaskRedHard4" parent="Tasks/RedTasks" instance=ExtResource( 2 )]
+position = Vector2( 288, -160 )
+texture = ExtResource( 5 )
+
+[node name="Snakebosslogo" parent="Tasks/RedTasks" instance=ExtResource( 6 )]
+position = Vector2( 416, -160 )
+
+[node name="YSortWorld" type="YSort" parent="."]
+
+[node name="Trees 1-4" type="YSort" parent="YSortWorld"]
+
+[node name="Tree-1-4" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 65, -71 )
+
+[node name="Tree-1-5" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 128, -195 )
+
+[node name="Tree-1-7" parent="YSortWorld/Trees 1-4" instance=ExtResource( 8 )]
+position = Vector2( 365, -132 )
+
+[node name="Benches" type="YSort" parent="YSortWorld"]
+
+[node name="Bench" parent="YSortWorld/Benches" instance=ExtResource( 9 )]
+position = Vector2( 34, -74 )
+
+[node name="Bench2" parent="YSortWorld/Benches" instance=ExtResource( 9 )]
+position = Vector2( 223, -131 )
+
+[node name="Bins" type="YSort" parent="YSortWorld"]
+
+[node name="Bin" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 86, -67 )
+
+[node name="Bin2" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 254, -127 )
+
+[node name="Bin4" parent="YSortWorld/Bins" instance=ExtResource( 10 )]
+position = Vector2( 50, -192 )
+
+[node name="Players" type="YSort" parent="YSortWorld"]
+
+[node name="Snakes" type="YSort" parent="YSortWorld"]
+
+[node name="GreenSnake" parent="YSortWorld/Snakes" groups=["Green"] instance=ExtResource( 27 )]
+position = Vector2( 288, -32 )
+script = ExtResource( 30 )
+
+[node name="Snake" parent="YSortWorld/Snakes/GreenSnake" index="0"]
+texture = ExtResource( 29 )
+
+[node name="SpriteAnimation" parent="YSortWorld/Snakes/GreenSnake" index="1"]
+texture = ExtResource( 28 )
+
+[node name="AnimationPlayer" parent="YSortWorld/Snakes/GreenSnake" index="4"]
+anims/Bite = SubResource( 2 )
+anims/Chase = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+
+[node name="BlueSnake" parent="YSortWorld/Snakes" groups=["Green"] instance=ExtResource( 27 )]
+position = Vector2( 224, -32 )
+script = ExtResource( 32 )
+
+[node name="Snake" parent="YSortWorld/Snakes/BlueSnake" index="0"]
+texture = ExtResource( 31 )
+
+[node name="SpriteAnimation" parent="YSortWorld/Snakes/BlueSnake" index="1"]
+texture = ExtResource( 18 )
+
+[node name="AnimationPlayer" parent="YSortWorld/Snakes/BlueSnake" index="4"]
+anims/Bite = SubResource( 5 )
+anims/Chase = SubResource( 6 )
+anims/RESET = SubResource( 7 )
+
+[node name="PinkWhiteSnake" parent="YSortWorld/Snakes" groups=["Yellow"] instance=ExtResource( 27 )]
+position = Vector2( 352, -96 )
+script = ExtResource( 36 )
+
+[node name="Snake" parent="YSortWorld/Snakes/PinkWhiteSnake" index="0"]
+texture = ExtResource( 35 )
+
+[node name="SpriteAnimation" parent="YSortWorld/Snakes/PinkWhiteSnake" index="1"]
+texture = ExtResource( 34 )
+
+[node name="AnimationPlayer" parent="YSortWorld/Snakes/PinkWhiteSnake" index="4"]
+anims/Bite = SubResource( 8 )
+anims/Chase = SubResource( 9 )
+anims/RESET = SubResource( 10 )
+
+[node name="BlackWhiteSnake" parent="YSortWorld/Snakes" groups=["Yellow"] instance=ExtResource( 27 )]
+position = Vector2( 160, -96 )
+script = ExtResource( 12 )
+
+[node name="Snake" parent="YSortWorld/Snakes/BlackWhiteSnake" index="0"]
+texture = ExtResource( 33 )
+
+[node name="SpriteAnimation" parent="YSortWorld/Snakes/BlackWhiteSnake" index="1"]
+texture = ExtResource( 14 )
+
+[node name="TwinSnake" parent="YSortWorld/Snakes" groups=["Yellow"] instance=ExtResource( 27 )]
+position = Vector2( 288, -96 )
+script = ExtResource( 17 )
+
+[node name="Snake" parent="YSortWorld/Snakes/TwinSnake" index="0"]
+texture = ExtResource( 37 )
+
+[node name="SpriteAnimation" parent="YSortWorld/Snakes/TwinSnake" index="1"]
+texture = ExtResource( 38 )
+
+[node name="AnimationPlayer" parent="YSortWorld/Snakes/TwinSnake" index="4"]
+anims/Bite = SubResource( 11 )
+anims/Chase = SubResource( 12 )
+anims/RESET = SubResource( 13 )
+
+[node name="SkeletonSnake" parent="YSortWorld/Snakes" groups=["Red"] instance=ExtResource( 27 )]
+position = Vector2( 224, -160 )
+script = ExtResource( 40 )
+
+[node name="Snake" parent="YSortWorld/Snakes/SkeletonSnake" index="0"]
+texture = ExtResource( 16 )
+
+[node name="SpriteAnimation" parent="YSortWorld/Snakes/SkeletonSnake" index="1"]
+texture = ExtResource( 39 )
+
+[node name="AnimationPlayer" parent="YSortWorld/Snakes/SkeletonSnake" index="4"]
+anims/Bite = SubResource( 14 )
+anims/Chase = SubResource( 15 )
+anims/RESET = SubResource( 16 )
+
+[node name="BossSnake" parent="YSortWorld/Snakes" instance=ExtResource( 27 )]
+visible = false
+position = Vector2( 416, -140 )
+script = ExtResource( 15 )
+
+[node name="Snake" parent="YSortWorld/Snakes/BossSnake" index="0"]
+texture = ExtResource( 42 )
+
+[node name="SpriteAnimation" parent="YSortWorld/Snakes/BossSnake" index="1"]
+texture = ExtResource( 41 )
+
+[node name="AnimationPlayer" parent="YSortWorld/Snakes/BossSnake" index="4"]
+anims/Bite = SubResource( 17 )
+anims/Chase = SubResource( 18 )
+anims/RESET = SubResource( 19 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DiceAllPlayers" parent="CanvasLayer" instance=ExtResource( 11 )]
+visible = false
+position = Vector2( 192, 112 )
+
+[node name="YourTurn" parent="CanvasLayer" instance=ExtResource( 19 )]
+visible = false
+position = Vector2( 192, 112 )
+
+[node name="SnakeBattlePopUp" parent="CanvasLayer" instance=ExtResource( 20 )]
+visible = false
+position = Vector2( 192, 112 )
+
+[node name="SnakeBattleResult" parent="CanvasLayer" instance=ExtResource( 21 )]
+visible = false
+position = Vector2( 192, 112 )
+
+[node name="LastTilePopUp" parent="CanvasLayer" instance=ExtResource( 22 )]
+visible = false
+position = Vector2( 192, 112 )
+
+[node name="Fight" parent="CanvasLayer/LastTilePopUp" index="5"]
+visible = false
+
+[node name="Solve" parent="CanvasLayer/LastTilePopUp" index="6"]
+visible = false
+
+[node name="PlayersRanks" parent="CanvasLayer" instance=ExtResource( 24 )]
+visible = false
+position = Vector2( 192, 112 )
+
+[node name="Timer" parent="CanvasLayer/PlayersRanks" index="14"]
+wait_time = 3.0
+one_shot = true
+
+[node name="TasksLayer" type="CanvasLayer" parent="."]
+script = ExtResource( 25 )
+
+[node name="PopUpLayer" type="CanvasLayer" parent="."]
+
+[node name="Popup2" parent="PopUpLayer" instance=ExtResource( 26 )]
+margin_left = 110.0
+margin_top = 70.0
+margin_right = 150.0
+margin_bottom = 110.0
+
+[node name="Message" parent="PopUpLayer/Popup2" index="1"]
+text = "The server has been disconnected"
+
+[connection signal="pressed" from="CanvasLayer/DiceAllPlayers/Roll1" to="." method="_on_Roll1_pressed"]
+[connection signal="pressed" from="CanvasLayer/DiceAllPlayers/Roll2" to="." method="_on_Roll2_pressed"]
+[connection signal="pressed" from="CanvasLayer/DiceAllPlayers/Roll3" to="." method="_on_Roll3_pressed"]
+[connection signal="pressed" from="CanvasLayer/DiceAllPlayers/Roll4" to="." method="_on_Roll4_pressed"]
+[connection signal="pressed" from="CanvasLayer/YourTurn/RollButton" to="." method="_on_RollButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/SnakeBattlePopUp/Fight" to="." method="_on_Fight_pressed"]
+[connection signal="pressed" from="CanvasLayer/SnakeBattlePopUp/Forfeit" to="." method="_on_Forfeit_pressed"]
+[connection signal="pressed" from="CanvasLayer/SnakeBattleResult/OK" to="." method="player_is_dead"]
+[connection signal="pressed" from="CanvasLayer/LastTilePopUp/Fight" to="." method="_on_FightLastTile_pressed"]
+[connection signal="pressed" from="CanvasLayer/LastTilePopUp/Solve" to="." method="_on_SolveLastTile_pressed"]
+[connection signal="timeout" from="CanvasLayer/PlayersRanks/Timer" to="." method="_on_Timer_timeout"]
+[connection signal="task_finished" from="TasksLayer" to="." method="_on_TasksLayer_task_finished"]
+
+[editable path="Tasks/RedTasks/Snakebosslogo"]
+[editable path="YSortWorld/Snakes/GreenSnake"]
+[editable path="YSortWorld/Snakes/BlueSnake"]
+[editable path="YSortWorld/Snakes/PinkWhiteSnake"]
+[editable path="YSortWorld/Snakes/BlackWhiteSnake"]
+[editable path="YSortWorld/Snakes/TwinSnake"]
+[editable path="YSortWorld/Snakes/SkeletonSnake"]
+[editable path="YSortWorld/Snakes/BossSnake"]
+[editable path="CanvasLayer/DiceAllPlayers"]
+[editable path="CanvasLayer/YourTurn"]
+[editable path="CanvasLayer/SnakeBattlePopUp"]
+[editable path="CanvasLayer/SnakeBattleResult"]
+[editable path="CanvasLayer/LastTilePopUp"]
+[editable path="CanvasLayer/PlayersRanks"]
+[editable path="PopUpLayer/Popup2"]

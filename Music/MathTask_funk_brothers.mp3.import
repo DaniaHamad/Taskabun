@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/MathTask_funk_brothers.mp3-8d75a1b44cf317e5aef35339a21316f9.mp3str"
+
+[deps]
+
+source_file="res://Music/MathTask_funk_brothers.mp3"
+dest_files=[ "res://.import/MathTask_funk_brothers.mp3-8d75a1b44cf317e5aef35339a21316f9.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
