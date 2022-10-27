@@ -1,7 +1,5 @@
 # Taskabun
 
-The project is on the game branch
-
 Taskabun is a multiplayer game Developed in the Godot engin with GDScript using the NetworkedMultiplayerEnet library
 
 You can connect between desktop devices or mobile devices or the mix of both!
