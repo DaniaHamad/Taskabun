@@ -106,9 +106,6 @@ max_columns = 4
 same_column_width = true
 fixed_icon_size = Vector2( 32, 32 )
 script = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PlayerName" type="Label" parent="Multiplayer_configure"]
 margin_left = 97.0
@@ -158,7 +155,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Test_game" type="Button" parent="UI"]
+[node name="Quick_game" type="Button" parent="UI"]
 margin_left = 224.0
 margin_top = 41.0
 margin_right = 277.0
@@ -168,11 +165,8 @@ custom_fonts/font = SubResource( 3 )
 custom_styles/hover = SubResource( 8 )
 custom_styles/pressed = SubResource( 9 )
 custom_styles/normal = SubResource( 10 )
-text = "Test game"
+text = "Quick game"
 clip_text = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Device_ip_address" type="Label" parent="UI"]
 margin_left = 125.0
@@ -381,7 +375,7 @@ autoplay = true
 
 [connection signal="item_selected" from="Multiplayer_configure/Charecters" to="." method="_on_Charecters_item_selected"]
 [connection signal="pressed" from="UI/Start_game" to="." method="_on_Start_game_pressed"]
-[connection signal="pressed" from="UI/Test_game" to="." method="_on_Test_game_pressed"]
+[connection signal="pressed" from="UI/Quick_game" to="." method="_on_Quick_game_pressed"]
 [connection signal="pressed" from="UI/LeaveButton" to="." method="_on_LeaveButton_pressed"]
 [connection signal="pressed" from="Spawn_locations/Ready" to="." method="_on_Ready_pressed"]
 [connection signal="pressed" from="Spawn_locations/MasterReady" to="." method="_on_MasterReady_pressed"]

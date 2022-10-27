@@ -1,8 +1,22 @@
-[gd_scene format=2]
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/Triangle Mask.png" type="BitMap" id=1]
+[ext_resource path="res://Assets/Triangle.png" type="Texture" id=2]
+[ext_resource path="res://Settings/Settings.gd" type="Script" id=3]
 
 [node name="Setting" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource( 3 )
+
+[node name="BackButton" type="TextureButton" parent="."]
+margin_left = 4.0
+margin_top = 175.0
+margin_right = 24.0
+margin_bottom = 202.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 2 )
+texture_click_mask = ExtResource( 1 )
+expand = true
+
+[connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]

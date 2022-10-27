@@ -8,7 +8,7 @@ var socket_udp = PacketPeerUDP.new()
 var listen_port = Network.DEFAULT_PORT
 var known_servers = {}
 
-export (int) var server_cleanup_threshold = 1.5
+export (int) var server_cleanup_threshold = 3
 
 func _init():
 	clean_up_timer.wait_time = server_cleanup_threshold

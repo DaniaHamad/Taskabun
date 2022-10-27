@@ -13,7 +13,7 @@ onready var multiplayer_config_ui = $Multiplayer_configure
 onready var username_text_edit = $Multiplayer_configure/Username_text_edit
 onready var device_ip_address = $UI/Device_ip_address
 onready var start_game = $UI/Start_game
-onready var start_test_game = $UI/Test_game
+onready var start_quick_game = $UI/Quick_game
 onready var master_ready = $Spawn_locations/MasterReady
 onready var chars_list=$Multiplayer_configure/Charecters
 
@@ -24,7 +24,7 @@ func _ready() -> void:
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 	start_game.hide()
-	start_test_game.hide()
+	start_quick_game.hide()
 
 	device_ip_address.text = Network.ip_address
 	
@@ -91,12 +91,13 @@ sync func remove_player(id):
 	current_spawn_location_instance_number=c
 
 func _on_MasterReady_pressed():
+	Music.play_BtnFX()
 	if username_text_edit.text != "":
 		$Spawn_locations/MasterReady.hide()
 		$Multiplayer_configure.hide()
 		$Spawn_locations/oval.hide()
 		start_game.show()
-		start_test_game.show()
+		start_quick_game.show()
 		my_Id=get_tree().get_network_unique_id()
 		instance_player(my_Id)
 		Global.instance_node(load("res://Scripts/Server_advertiser.tscn"), get_tree().current_scene)	
@@ -106,6 +107,7 @@ func _on_MasterReady_pressed():
 		$Popup.popup() 
 
 func _on_Ready_pressed():
+	Music.play_BtnFX()
 	if player_char==-1:
 		show_popup2("please select a charecter")
 		
@@ -230,12 +232,14 @@ func instance_player(id) -> void:
 	current_spawn_location_instance_number += 1
 
 func _on_Start_game_pressed():
+	Music.play_BtnFX()
 	Network.allow_join=false
 	rpc("switch_to_game")
 
-func _on_Test_game_pressed():
+func _on_Quick_game_pressed():
+	Music.play_BtnFX()
 	Network.allow_join=false
-	rpc("switch_to_test_game")
+	rpc("switch_to_quick_game")
 
 sync func switch_to_game() -> void:
 	for child in Persistent_nodes.get_children():
@@ -248,7 +252,7 @@ sync func switch_to_game() -> void:
 	Persistent_nodes.get_node("TextureRect").queue_free()
 	get_tree().change_scene("res://Game/Game.tscn")
 
-sync func switch_to_test_game() -> void:
+sync func switch_to_quick_game() -> void:
 	for child in Persistent_nodes.get_children():
 		if child.is_in_group("Player"):
 			child.set_myOval("")
@@ -257,13 +261,15 @@ sync func switch_to_test_game() -> void:
 			child.show()
 	Persistent_nodes.get_node("background").queue_free()
 	Persistent_nodes.get_node("TextureRect").queue_free()
-	get_tree().change_scene("res://Game/TestGame.tscn")
+	get_tree().change_scene("res://Game/QuickGame.tscn")
 
 func _on_Popup_ok_pressed():
+	Music.play_BtnFX()
 	$Popup.hide()
 	
 func show_popup2(c):
 	$Popup2/Message.text=c
+	$Popup2/error.play()
 	$Popup2.popup()
 	
 	yield(get_tree().create_timer(2.0),"timeout")
@@ -276,6 +282,7 @@ onready var sprite4=$Spawn_locations/Sprite4
 
 
 func _on_Charecters_item_selected(index):
+	Music.play_BtnFX()
 	if chars_list.is_item_disabled(index):
 		show_popup2("This charecter is taken, please try another one.")
 	else:	
@@ -294,6 +301,7 @@ func _on_Charecters_item_selected(index):
 
 
 func _on_LeaveButton_pressed():
+	Music.play_BtnFX()
 	if get_tree().network_peer != null:
 		if get_tree().is_network_server():
 			rpc("leave_game")
@@ -319,24 +327,26 @@ sync func leave_game() -> void:
 	for child in Persistent_nodes.get_children():
 					if child.is_in_group("Net"):
 						child.queue_free()
+					elif child.name == "CanvasLayer":
+							for childScore in Persistent_nodes.get_node("CanvasLayer").get_children():
+								if childScore.is_in_group("Score"):
+									childScore.queue_free()
+	 
 	get_tree().change_scene("res://UI/Main.tscn")
 			
 
 
-func back_to_main_menu():
-	for child in Persistent_nodes.get_node("CanvasLayer").get_children():
-		if child.is_in_group("Score"):
-			child.queue_free()
 
 	Network.reset_network_connection()
 	for child in Persistent_nodes.get_children():
 		if child.is_in_group("Net"):
 			child.queue_free()
+	 
 	get_tree().change_scene("res://UI/Main.tscn")
 
 func _server_disconnected() -> void:
 	show_popup2("The server has been disconnected")
 	yield(get_tree().create_timer(2),"timeout")
-	back_to_main_menu()
+	leave_game()
 	print("Disconnected from the server")
 	

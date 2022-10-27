@@ -28,7 +28,9 @@ onready var snakeHealth = $HealthBarSnake/SnakeHealth
 onready var playerHead = $HealthBarPlayer/PlayerHead
 onready var holderHealthPlayer = $HealthBarPlayer/HolderHealthPlayer
 onready var playerHealth = $HealthBarPlayer/PlayerHealth 
-
+onready var battleTheme = $BattleTheme
+onready var snakeHissingSound = $SnakeHissingSound
+onready var victorySound = $VictorySound
 
 var  playerAcceleration= 500
 var  playerMaxSpeed = 80
@@ -65,6 +67,7 @@ var snakeAnimation
 func _ready():
 	snakeBattleResult.get_node("OK").hide()
 	position = Vector2(192,112)
+	snakeHissingSound.play()
 
 func _physics_process(delta):
 	timeLeft.text = str(int(timer.get_time_left()))
@@ -185,12 +188,15 @@ func Animation_Finished_Snake_Attack():
 	snakeState =CHASE
 
 func player_hurt():
-	playerHB-=snakeAttack
-	playerHealth.rect_size.x-=snakeAttack
-	if playerHB==0&&snakeHB!=0:
-		rpc("player_lose")
+	if !verdict:
+		playerHB-=snakeAttack
+		fighter.get_node("HurtBox/HurtSound").play()
+		playerHealth.rect_size.x-=snakeAttack
+		if playerHB==0&&snakeHB!=0&&!verdict:
+			rpc("player_lose")
 
 func snake_Hurt():
+	opponent.get_node("HurtBox/SnakeHurtSound").play()
 	snakeKnockback = knockback_vector*150
 	snakeHealth.rect_size.x-=playerAttack
 	snakeHealth.rect_position.x+=playerAttack
@@ -202,6 +208,7 @@ func player_reach():
 	snakeState = BITE
 
 func snake_bite():
+	opponent.get_node("HitBox/SnakeAttackSound").play()
 	snakeAnimation.play("Bite")
 
 
@@ -227,12 +234,14 @@ sync func player_lose():
 
 
 sync func player_won():
+	verdict=true
 	snakeBattleResult.get_node("Status").text = "Victory!"
 	snakeBattleResult.get_node("Result").text = "You Shall stay on your place"
 	if snakeBattleResult.get_node("OK").is_connected("pressed",get_parent().get_parent(),"player_is_dead"):
 		snakeBattleResult.get_node("OK").disconnect("pressed",get_parent().get_parent(),"player_is_dead")
 	snakeBattleResult.get_node("OK").connect("pressed",get_parent().get_parent(),"snake_is_dead")
 	timer.stop()
+	victorySound.play()
 	go_back_to_parent()
 
 func go_back_to_parent():

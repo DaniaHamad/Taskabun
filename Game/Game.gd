@@ -26,6 +26,7 @@ onready var playersRanks = $CanvasLayer/PlayersRanks
 onready var tasksLayer = $TasksLayer
 onready var popUpLayer = $PopUpLayer
 onready var popUp2 = $PopUpLayer/Popup2
+onready var music = $Music
 
 var player #we are the current player
 var rolls=0 
@@ -59,6 +60,7 @@ var redArea =[]
 
 
 func _ready():
+	music.play()
 	randomize()
 	var speed = 0.006 #camera speed
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected") #to remove player
@@ -68,7 +70,8 @@ func _ready():
 	store_Tile_Pos()
 	store_Empty_Pos()
 	get_map_config()
-#	yield(move_camera(speed),"completed")#move the camera until it's completed
+	if name!="QuickGame":
+		yield(move_camera(speed),"completed")#move the camera until it's completed
 	player = players.get_node(str(get_tree().get_network_unique_id())) #we are the current player (this is me)
 
 	showDiceAllPlayers()
@@ -275,21 +278,25 @@ func get_map_config():
 
 
 func _on_Roll1_pressed():
+	Music.play_BtnFX()
 	var diceNum = randi()%6+1
 	rpc("show_dice",1,diceNum)
 
 
 func _on_Roll2_pressed():
+	Music.play_BtnFX()
 	var diceNum = randi()%6+1
 	rpc("show_dice",2,diceNum)
 
 
 func _on_Roll3_pressed():
+	Music.play_BtnFX()
 	var diceNum = randi()%6+1
 	rpc("show_dice",3,diceNum)#show every body including me my dice
 
 
 func _on_Roll4_pressed():
+	Music.play_BtnFX()
 	var diceNum = randi()%6+1
 	rpc("show_dice",4,diceNum)
 
@@ -361,6 +368,7 @@ sync func the_order():
 			4:
 				rankPlayerPopUp.text ="4th"
 		rankPlayerPopUp.show()
+	diceAllPlayers.get_node("theOrderSound").play()
 	diceAllPlayers.get_node("Label").text = "The order!"
 	PlayersTurns.modify_player_tile(player)
 	yield(get_tree().create_timer(3),"timeout")
@@ -368,7 +376,7 @@ sync func the_order():
 	player_turn("",0)#move forward with the game
 
 sync func player_turn(playerName,task):
-
+	
 	rpc("hide_Score")
 	var playerHolder
 	if task:
@@ -391,10 +399,12 @@ sync func player_turn(playerName,task):
 	if(player.username == playerHolder.username):
 		yourTurn.get_node("RollButton").show()
 	playerTurnNowName = playerHolder.name
+	yourTurn.get_node("RollPleaseSound").play()
 	yourTurn.show()
 
 
 func _on_RollButton_pressed():
+	Music.play_BtnFX()
 	var diceNum = randi()%6+1
 	rpc("move_dice_message",str(player.name),diceNum)
 	
@@ -407,6 +417,7 @@ sync func move_dice_message(playerToMoveName,diceNum):
 		yourTurn.get_node("Move").text = "Move "+str(diceNum) +" steps!"
 	else:
 		yourTurn.get_node("Move").text = "Move "+str(diceNum) +" step!"
+	yourTurn.get_node("RolledSound").play()
 	yourTurn.get_node("RollButton").hide()
 	yield(get_tree().create_timer(3),"timeout")
 	yourTurn.hide()
@@ -474,7 +485,6 @@ func move_player(playerToMoveName,diceNum):
 			movement*=-1
 			  
 			backwards = false
-			
 		elif calculateMove<boundaryLeft:#odd is false then go up be true
 			if !backwards:
 				playerToMove.position.y +=movement
@@ -484,9 +494,9 @@ func move_player(playerToMoveName,diceNum):
 				Oddrow=false 
 			calculateMove = playerToMove.position.x
 			movement*=-1 
-			
 		else:
 			playerToMove.position.x +=movement
+			rpc("flip_player",playerToMoveName,movement) 
 			calculateMove = playerToMove.position.x
 		hopTile+=hopNumTile
 		scoreHolder.tile = hopTile
@@ -515,22 +525,30 @@ func move_player(playerToMoveName,diceNum):
 			rpc("Show_SnakeBattlePopUp",playerToMoveName,snakeCollidedWith)
 		"easy":
 			if triggerIt:
+				rpc("stop_music")
 				tasksLayer.select_task("easy",player.name)
 			else:
 				loopTurns()
 		"medium":
 			if triggerIt:
+				rpc("stop_music")
 				tasksLayer.select_task("medium",player.name)
 			else:
 				loopTurns()
 		"hard":
 			if triggerIt:
+				rpc("stop_music")
 				tasksLayer.select_task("hard",player.name)
 			else:
 				loopTurns()
 		_:
 			loopTurns()
 	triggerIt=true
+
+sync func flip_player(playerToMoveName,movement):
+	var playerToMove = players.get_node(str(playerToMoveName)) #bring me the player
+	playerToMove.get_node("Sprite").flip_h = movement<0
+
 func loopTurns():
 	yield(get_tree().create_timer(1),"timeout")
 	var rand = randi()
@@ -702,6 +720,7 @@ sync func Show_SnakeBattlePopUp(playerWillFight,snakeOpponent):
 	if player.name == playerWillFight:
 		snakeBattlePopUp.get_node("Fight").show()
 		snakeBattlePopUp.get_node("Forfeit").show()
+	snakeBattlePopUp.get_node("LandOnSnakeSound").play()
 	snakeBattlePopUp.show()
 
 func _on_Fight_pressed():
@@ -711,7 +730,7 @@ sync func change_to_Snake_Battle(snakeWillFight,playerWillFightName):
 	snakeBattlePopUp.get_node("Fight").hide()
 	snakeBattlePopUp.get_node("Forfeit").hide()
 	snakeBattlePopUp.hide()
-
+	music.stop()
 	canvas.add_child(load("res://Snakes/SnakesBattle/SnakeBattle.tscn").instance())
 	var child = canvas.get_node("SnakeBattle")
 	child.position = yourTurn.position
@@ -746,18 +765,23 @@ sync func player_Go_Backwards(collidedSnake,forfeitPlayer):
 		backwards = true
 		triggerIt=false
 		move_player(forfeitPlayer,snake.get_goBack())
+	snakeCollidedWith=""
 
 	
 func player_is_dead():
+	Music.play_BtnFX()
 	snakeBattleResult.get_node("OK").hide()
 
 	rpc("delete_node",canvas.name,"SnakeBattle")
+	if !music.playing:
+		rpc("play_music")
 	rpc("player_Go_Backwards",snakeCollidedWith,player.name)
 
 
 
 func snake_is_dead():
 	rpc("delete_node",canvas.name,"SnakeBattle")
+	rpc("play_music")
 	if snakeCollidedWith!="BossSnake":
 		loopTurns()
 	else:
@@ -775,6 +799,7 @@ func last_tile(playerOnLastTile):
 	rpc("showLastTilePopup")
 
 sync func showLastTilePopup():
+	lastTilePopup.get_node("LandOnLastTileSound").play()
 	lastTilePopup.show()
 
 sync func hideLastTilePopup():
@@ -784,11 +809,14 @@ sync func hideLastTilePopup():
 	bossSnakeGoBackwords=true
 
 func _on_FightLastTile_pressed():
+	Music.play_BtnFX()
 	rpc("hideLastTilePopup")
 	rpc("change_to_Snake_Battle","BossSnake",player.name)
 
 
 func _on_SolveLastTile_pressed():
+	Music.play_BtnFX()
+	rpc("stop_music")
 	tasksLayer.select_task("hard",player.name)
 
 sync func victory(playerWinner):
@@ -807,12 +835,21 @@ sync func victory(playerWinner):
 		playersRanks.get_node(str("rank"+str(rank))).show()
 		playersRanks.get_node(str("player"+str(rank))).text = playRank.username
 		playersRanks.get_node(str("player"+str(rank))).show()
+	playersRanks.get_node("CongratsSound").play()
 	playersRanks.show()
 	playersRanks.get_node("Timer").start()
 
 
 func _on_Timer_timeout():
 	back_to_main_menu()
+
+sync func stop_music():
+	music.stop()
+
+
+sync func play_music():
+	music.play()
+
 
 func back_to_main_menu():
 	for child in Persistent_nodes.get_node("CanvasLayer").get_children():
@@ -830,6 +867,7 @@ func back_to_main_menu():
 func show_popup2(c):
 	popUp2.get_node("Message").text=c
 	popUp2.popup()
+	popUp2.get_node("ErrorSound").play()
 	yield(get_tree().create_timer(2.0),"timeout")
 	popUp2.hide()
 
@@ -841,6 +879,7 @@ func _server_disconnected() -> void:
 	
 
 func _on_TasksLayer_task_finished(taskPassingResult,playerName):
+	rpc("play_music")
 	rpc("hideLastTilePopup")
 	if taskPassingResult&&snakeCollidedWith!="BossSnake":
 		triggerIt=false

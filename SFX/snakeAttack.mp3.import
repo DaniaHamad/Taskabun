@@ -11,5 +11,5 @@ dest_files=[ "res://.import/snakeAttack.mp3-286d2c8246d243b3c34f78f162444b17.mp3
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

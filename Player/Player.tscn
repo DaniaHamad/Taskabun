@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Assets/redOval.png" type="Texture" id=1]
 [ext_resource path="res://Player/PlayerPawn.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Animation/PlayerAnimation/SpriteSheet1.png" type="Texture" id=3]
 [ext_resource path="res://Assets/players/PlayerPlaceholder.png" type="Texture" id=4]
+[ext_resource path="res://SFX/playerHurt.mp3" type="AudioStream" id=5]
 
 [sub_resource type="CapsuleShape2D" id=7]
 radius = 10.2917
@@ -294,6 +295,9 @@ collision_mask = 64
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2( 0, -11 )
 shape = SubResource( 16 )
+
+[node name="HurtSound" type="AudioStreamPlayer" parent="HurtBox"]
+stream = ExtResource( 5 )
 
 [connection signal="timeout" from="Network_tick_rate" to="." method="_on_Network_tick_rate_timeout"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]

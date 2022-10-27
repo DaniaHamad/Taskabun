@@ -151,9 +151,6 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 4 )
 texture_click_mask = ExtResource( 3 )
 expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="YSort"]
 margin_left = 6.0

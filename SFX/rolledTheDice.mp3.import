@@ -11,5 +11,5 @@ dest_files=[ "res://.import/rolledTheDice.mp3-5f549b6586907e28c79bdc65203917ef.m
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

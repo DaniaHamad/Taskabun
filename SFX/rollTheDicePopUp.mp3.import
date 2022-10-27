@@ -11,5 +11,5 @@ dest_files=[ "res://.import/rollTheDicePopUp.mp3-929a14769384a20785c2ad98c30cb2a
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

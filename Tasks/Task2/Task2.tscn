@@ -52,9 +52,6 @@ margin_right = -1.0
 margin_bottom = -18.0
 texture = ExtResource( 4 )
 expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MovingClouds" parent="Background" instance=ExtResource( 1 )]
 
@@ -63,10 +60,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 73.0
-margin_top = 72.0
-margin_right = 309.0
-margin_bottom = 105.0
+margin_left = 72.0
+margin_top = 76.0
+margin_right = 308.0
+margin_bottom = 109.0
 custom_colors/font_color = Color( 0.858824, 0.54902, 1, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "Taskabun"
@@ -111,7 +108,6 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 5 )
 texture_pressed = ExtResource( 6 )
 texture_hover = ExtResource( 6 )
-expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -135,7 +131,6 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 5 )
 texture_pressed = ExtResource( 6 )
 texture_hover = ExtResource( 6 )
-expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -162,7 +157,6 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 5 )
 texture_pressed = ExtResource( 6 )
 texture_hover = ExtResource( 6 )
-expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -214,9 +208,6 @@ margin_right = 4.0
 margin_bottom = 9.0
 texture = ExtResource( 14 )
 expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 13 )

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Assets/Background/popUp2.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/FFFFORWA.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://SFX/ErrorDisconnect.mp3" type="AudioStream" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 8
@@ -30,3 +31,6 @@ text = "blablablablabla"
 align = 1
 valign = 1
 autowrap = true
+
+[node name="ErrorSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )

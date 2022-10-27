@@ -11,5 +11,5 @@ dest_files=[ "res://.import/land on task.mp3-fd73586c5a1db97c22ebe3eeb437cc6d.mp
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

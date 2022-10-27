@@ -1,4 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://SFX/snakeGotPunched.mp3" type="AudioStream" id=1]
+[ext_resource path="res://SFX/snakeAttack.mp3" type="AudioStream" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 45, 37.5 )
@@ -156,6 +159,9 @@ monitorable = false
 position = Vector2( -5, -19.5 )
 shape = SubResource( 1 )
 
+[node name="SnakeAttackSound" type="AudioStreamPlayer" parent="HitBox"]
+stream = ExtResource( 2 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 3, 0 )
 shape = SubResource( 2 )
@@ -180,6 +186,9 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2( -5, -19 )
 shape = SubResource( 7 )
+
+[node name="SnakeHurtSound" type="AudioStreamPlayer" parent="HurtBox"]
+stream = ExtResource( 1 )
 
 [connection signal="area_entered" from="PlayerDetector" to="." method="_on_PlayerDetector_area_entered"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]

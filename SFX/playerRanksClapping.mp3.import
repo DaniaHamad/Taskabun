@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/playerRanksClapping.mp3-76d2155395465d1c03d8158f0de75e09.mp3str"
+
+[deps]
+
+source_file="res://SFX/playerRanksClapping.mp3"
+dest_files=[ "res://.import/playerRanksClapping.mp3-76d2155395465d1c03d8158f0de75e09.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

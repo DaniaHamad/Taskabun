@@ -11,7 +11,7 @@
 		"yellowArea" : [-288.0, -544.0],
 		"redArea" : [-608,-608]
   },
-  "TestGame": {
+  "QuickGame": {
 		"firstTile" : [32,-32],
 		"lastTile" : [416,-160],
 		"mapMovement" : 64,

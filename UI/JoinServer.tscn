@@ -145,9 +145,6 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 3 )
 texture_click_mask = ExtResource( 4 )
 expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="window" type="Control" parent="."]
 anchor_right = 1.0
@@ -214,9 +211,6 @@ custom_fonts/font = SubResource( 2 )
 text = "Manual Setup"
 flat = true
 clip_text = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ManualControl" type="Control" parent="."]
 margin_left = 74.0

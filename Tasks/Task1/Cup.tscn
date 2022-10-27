@@ -9,10 +9,10 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 3 ) ],
+"frames": [ ExtResource( 4 ), ExtResource( 3 ) ],
 "loop": false,
-"name": "cupWin",
-"speed": 10.0
+"name": "cupDown",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": false,
@@ -24,18 +24,16 @@ animations = [ {
 "name": "cupUp",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 3 ) ],
+"frames": [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 3 ) ],
 "loop": false,
-"name": "cupDown",
-"speed": 5.0
+"name": "cupWin",
+"speed": 10.0
 } ]
 
 [node name="Cup" type="Area2D"]
 script = ExtResource( 6 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 1.00002, 1.00001 )
-scale = Vector2( 0.361872, 0.364583 )
 frames = SubResource( 1 )
 animation = "cupIdle"
 
@@ -47,12 +45,9 @@ polygon = PoolVector2Array( 0, -46, 11, -46, 24, -43, 27, -40, 27, -38, 29, -36,
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 margin_left = -37.0
 margin_top = -46.0
-margin_right = 42.0
-margin_bottom = 53.0
+margin_right = 43.0
+margin_bottom = 54.0
 mouse_default_cursor_shape = 2
 border_color = Color( 0.0588235, 0.65098, 0.882353, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [connection signal="gui_input" from="ReferenceRect" to="." method="_on_ReferenceRect_gui_input"]

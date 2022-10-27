@@ -18,28 +18,33 @@ func _on_glowing_opened():
 	$control.show()	
 		
 func _on_BackButton_pressed():
+	Music.play_BtnFX()
 	get_tree().change_scene("res://UI/Main.tscn")
 
 
 func _on_No2_pressed():
+	Music.play_BtnFX()
 	$control/No3.pressed=false
 	$control/No4.pressed=false
 	No_of_players=2
 
 
 func _on_No3_pressed():
+	Music.play_BtnFX()
 	$control/No2.pressed=false
 	$control/No4.pressed=false
 	No_of_players=3
 
 
 func _on_No4_pressed():
+	Music.play_BtnFX()
 	$control/No3.pressed=false
 	$control/No2.pressed=false
 	No_of_players=4
 
 
 func _on_Create_pressed():
+	Music.play_BtnFX()
 	var val=$control/GameName.text.replace(" ","")
 	if val!="" and val.length()>3 and val.length()<25:
 		GameName=$control/GameName.text
@@ -64,6 +69,7 @@ func _on_glowing_closed():
 		
 	
 func show_popup(x):
+	$Popup/error.play()
 	$Popup/message.text=x
 	$control.hide()
 	$YSort/glowing.hide()
@@ -71,6 +77,7 @@ func show_popup(x):
 
 
 func _on_Popup_ok_pressed():
+	Music.play_BtnFX()
 	$Popup.hide()
 	$YSort/glowing.show()
 	$control.show()

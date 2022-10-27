@@ -3,6 +3,8 @@ extends Control
 
 
 func _ready():
+	if !Music.playing:
+		Music.play()
 	if !Persistent_nodes.has_node("background"):
 		var background = TextureRect.new()
 		background.texture = load("res://Assets/background.png")
@@ -22,13 +24,16 @@ func _ready():
 
 
 func _on_TouchScreenButton_pressed():
+	Music.play_BtnFX()
 	get_tree().change_scene("res://Settings/Settings.tscn")
 
 
 func _on_JoinGame_pressed():
+	Music.play_BtnFX()
 	Global.instance_node(load("res://UI/JoinServer.tscn"), self)
 
 onready var create_screen=preload("res://UI/CreateServer.tscn")
 
 func _on_CreateGame_pressed():
+	Music.play_BtnFX()
 	get_tree().change_scene("res://UI/CreateServer.tscn")

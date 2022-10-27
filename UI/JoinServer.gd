@@ -25,6 +25,7 @@ func _on_Server_listener_remove_server(serverIp):
 				break
 
 func _on_Manual_setup_pressed():
+	Music.play_BtnFX()
 	$window/ManualColor.color="#0c0096"
 	$window/LocalColor.color="#0c0050"
 	$LocalControl.hide()
@@ -33,6 +34,7 @@ func _on_Manual_setup_pressed():
 	
 
 func _on_Join_server_pressed():
+	Music.play_BtnFX()
 	Network.ip_address = server_ip_text_edit.text
 	hide()
 	Network.join_server()
@@ -40,10 +42,12 @@ func _on_Join_server_pressed():
 
 
 func _on_BackButton_pressed():
+	Music.play_BtnFX()
 	get_tree().change_scene("res://UI/Main.tscn")
 
 
 func _on_Local_pressed():
+	Music.play_BtnFX()
 	$window/LocalColor.color="#0c0096"
 	$window/ManualColor.color="#0c0050"
 	$ManualControl.hide()

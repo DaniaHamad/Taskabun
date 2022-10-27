@@ -93,9 +93,6 @@ custom_colors/font_color_pressed = Color( 0.541176, 0.0784314, 1, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "Create Game"
 flat = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Join-Game" type="Button" parent="YSort"]
 anchor_left = 0.5
@@ -118,6 +115,7 @@ __meta__ = {
 }
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+visible = false
 position = Vector2( 331, 5 )
 normal = ExtResource( 6 )
 

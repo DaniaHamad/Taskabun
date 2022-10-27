@@ -1,7 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Music/MainMenu_nomads.mp3" type="AudioStream" id=1]
+[ext_resource path="res://SFX/buttonClick.mp3" type="AudioStream" id=2]
+[ext_resource path="res://UI/Music.gd" type="Script" id=3]
 
 [node name="Music" type="AudioStreamPlayer"]
 stream = ExtResource( 1 )
 autoplay = true
+script = ExtResource( 3 )
+
+[node name="BtnFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )

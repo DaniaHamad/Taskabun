@@ -1,6 +1,6 @@
 extends Node
 
-export (float) var broadcast_interval = .5
+export (float) var broadcast_interval = 1
 var server_info = {"name": "LAN Game","number_of_players":2,"current_players":1}
 
 

@@ -9,16 +9,13 @@
 script = ExtResource( 4 )
 
 [node name="DownScene" type="Sprite" parent="."]
-position = Vector2( 206, 145 )
-scale = Vector2( 0.0696496, 0.0752051 )
+position = Vector2( 206, 157 )
 texture = ExtResource( 3 )
 
 [node name="LeftScene" type="Sprite" parent="."]
-position = Vector2( 55.5, 81.75 )
-scale = Vector2( 0.0772914, 0.0811765 )
+position = Vector2( 51, 72 )
 texture = ExtResource( 1 )
 
 [node name="RightScene" type="Sprite" parent="."]
-position = Vector2( 325, 94 )
-scale = Vector2( 0.10461, 0.102607 )
+position = Vector2( 347, 60 )
 texture = ExtResource( 2 )

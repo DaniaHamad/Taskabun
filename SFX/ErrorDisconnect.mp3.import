@@ -11,5 +11,5 @@ dest_files=[ "res://.import/ErrorDisconnect.mp3-65325b2ab5968c539b98f6b98b38038a
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
